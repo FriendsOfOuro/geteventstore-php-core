@@ -1,6 +1,6 @@
 {
     "name": "dbellettini/eventstore-client",
-    "type": "project",
+    "type": "library",
     "keywords": [
         "eventsourcing",
         "eventstore"
@@ -10,6 +10,10 @@
         {
             "name": "Davide Bellettini",
             "email": "davide.bellettini@gmail.com"
+        },
+        {
+            "name": "Nicolò Pignatelli",
+            "email": "pignatelli.nicolo@gmail.com"
         },
         {
             "name": "Contributors",
