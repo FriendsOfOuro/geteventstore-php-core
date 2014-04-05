@@ -1,0 +1,33 @@
+{
+    "name": "dbellettini/eventstore-client",
+    "type": "project",
+    "keywords": [
+        "eventsourcing",
+        "eventstore"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Davide Bellettini",
+            "email": "davide.bellettini@gmail.com"
+        },
+        {
+            "name": "Contributors",
+            "homepage": "https://github.com/dbellettini/php-eventstore-client/graphs/contributors"
+        }
+    ],
+    "require": {
+        "guzzle/guzzle": "~3.7"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~3.7"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        }
+    }
+}
