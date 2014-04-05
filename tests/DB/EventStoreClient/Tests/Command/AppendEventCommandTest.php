@@ -1,16 +1,16 @@
 <?php
 
-namespace DB\EventStoreClient\Tests;
+namespace DB\EventStoreClient\Tests\Command;
 
-use DB\EventStoreClient\Event;
+use DB\EventStoreClient\Command\AppendEventCommand;
 
-class EventTest extends \PHPUnit_Framework_TestCase
+class AppendEventCommandTest extends \PHPUnit_Framework_TestCase
 {
     public function testEventIdGetterReturnsProperValue()
     {
         $uuid = 'd776ad80-1471-4b42-a1e7-ae2960b84abc';
 
-        $event = new Event($uuid, 'event-type', []);
+        $event = new AppendEventCommand($uuid, 'event-type', []);
 
         $this->assertEquals($uuid, $event->getEventId());
     }
@@ -19,7 +19,7 @@ class EventTest extends \PHPUnit_Framework_TestCase
     {
         $eventType = 'event-type';
 
-        $event = new Event('d776ad80-1471-4b42-a1e7-ae2960b84abc', $eventType, []);
+        $event = new AppendEventCommand('d776ad80-1471-4b42-a1e7-ae2960b84abc', $eventType, []);
 
         $this->assertEquals($eventType, $event->getEventType());
     }
@@ -27,7 +27,7 @@ class EventTest extends \PHPUnit_Framework_TestCase
     public function testDataGetterReturnsProperValue()
     {
         $data = ['foo' => 'bar'];
-        $event = new Event('d776ad80-1471-4b42-a1e7-ae2960b84abc', 'event-type', $data);
+        $event = new AppendEventCommand('d776ad80-1471-4b42-a1e7-ae2960b84abc', 'event-type', $data);
         $this->assertEquals($data, $event->getData());
     }
 }

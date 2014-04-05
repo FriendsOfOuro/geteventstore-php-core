@@ -1,12 +1,12 @@
 <?php
 
-namespace DB\EventStoreClient;
+namespace DB\EventStoreClient\Command;
 
 /**
- * Class Event
- * @package DB\EventStoreClient
+ * Class AppendEventCommand
+ * @package DB\EventStoreClient\Command
  */
-class Event
+class AppendEventCommand
 {
     /**
      * @var string
