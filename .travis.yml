@@ -9,7 +9,7 @@ before_script:
     - curl -s http://getcomposer.org/installer | php
     - php composer.phar install --dev --prefer-dist --no-interaction
 
-script: bin/phpunit --coverage-clover=coverage.clover --coverage-text
+script: bin/phpunit --exclude-group end2end --coverage-clover=coverage.clover --coverage-text
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
