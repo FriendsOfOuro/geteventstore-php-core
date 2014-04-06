@@ -5,18 +5,14 @@ namespace DB\EventStoreClient\Tests\Adapter\Http;
 use DB\EventStoreClient\Adapter\Http\HttpStreamAdapter;
 use DB\EventStoreClient\Command\AppendEventCommandFactory;
 use DB\EventStoreClient\Model\StreamReference;
-use GuzzleHttp\Adapter\MockAdapter;
+use DB\EventStoreClient\Tests\Guzzle\GuzzleTestCase;
 use GuzzleHttp\Adapter\TransactionInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Message\Response;
 
-class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
+class HttpStreamAdapterTest extends GuzzleTestCase
 {
-    /**
-     * @var RequestInterface
-     */
-    private $request;
 
     /**
      * @var AppendEventCommandFactory
@@ -136,16 +132,5 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
         $adapter->applyAppend($command);
-    }
-
-    private function buildMockClient(callable $response)
-    {
-        $mockAdapter = new MockAdapter(function (TransactionInterface $trans) use ($response) {
-            $this->request = $trans->getRequest();
-
-            return $response($trans);
-        });
-
-        return new Client(['adapter' => $mockAdapter]);
     }
 }
