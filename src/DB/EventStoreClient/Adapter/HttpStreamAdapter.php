@@ -39,12 +39,21 @@ class HttpStreamAdapter
                 'headers' => [
                     'Content-type' => 'application/json'
                 ],
-                'body' => json_encode([[
-                    'eventId'   => $command->getEventId(),
-                    'eventType' => $command->getEventType(),
-                    'data'      => $command->getData(),
-                ]])
+                'body' => json_encode([$this->commandToArray($command)])
             ])
         ;
+    }
+
+    /**
+     * @param  AppendEventCommand $command
+     * @return array
+     */
+    private function commandToArray(AppendEventCommand $command)
+    {
+        return [
+            'eventId' => $command->getEventId(),
+            'eventType' => $command->getEventType(),
+            'data' => $command->getData(),
+        ];
     }
 }
