@@ -53,4 +53,14 @@ final class EventReference
     {
         return new self($streamReference, $streamVersion);
     }
+
+    /**
+     * @param  string         $streamName
+     * @param  string         $streamVersion
+     * @return EventReference
+     */
+    public static function fromStreamNameAndVersion($streamName, $streamVersion)
+    {
+        return new self(StreamReference::fromName($streamName), $streamVersion);
+    }
 }

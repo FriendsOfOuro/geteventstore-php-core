@@ -17,4 +17,15 @@ class EventReferenceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($streamName, $reference->getStreamReference()->getStreamName());
         $this->assertSame($streamVersion, $reference->getStreamVersion());
     }
+
+    public function testFromStreamNameAndVersionFactoryMethodWorksProperly()
+    {
+        $streamName = 'streamname';
+        $streamVersion = 10;
+
+        $reference = EventReference::fromStreamNameAndVersion($streamName, $streamVersion);
+
+        $this->assertSame($streamName, $reference->getStreamReference()->getStreamName());
+        $this->assertSame($streamVersion, $reference->getStreamVersion());
+    }
 }
