@@ -43,7 +43,7 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
 
         $adapter->applyAppend($command);
 
-        $this->assertInstanceOf('GuzzleHttp\Message\RequestInterface', $this->request);
+        $this->assertInstanceOf('GuzzleHttp\\Message\\RequestInterface', $this->request);
         $this->assertEquals('/streams/streamname', $this->request->getResource());
         $this->assertEquals('POST', $this->request->getMethod());
     }
@@ -68,6 +68,27 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
         ]]);
 
         $this->assertJsonStringEqualsJsonString($expectedBody, (string) $this->request->getBody());
+    }
+
+    public function testApplyReturnsEventReference()
+    {
+        $client = $this->buildMockClient(function (TransactionInterface $trans) {
+            $response = new Response(201);
+            $response->setHeader('Location', 'http://127.0.0.1:2113/streams/streamname/10');
+
+            return $response;
+        });
+
+        $streamName = 'streamname';
+        $adapter = new HttpStreamAdapter($client, $streamName);
+
+        $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
+        $reference = $adapter->applyAppend($command);
+
+        $this->assertInstanceOf('DB\\EventStoreClient\\Model\\EventReference', $reference);
+
+        $this->assertSame(10, $reference->getStreamVersion());
+        $this->assertSame($streamName, $reference->getStreamName());
     }
 
     /**

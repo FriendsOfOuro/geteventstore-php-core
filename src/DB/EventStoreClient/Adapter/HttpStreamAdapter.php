@@ -3,6 +3,7 @@
 namespace DB\EventStoreClient\Adapter;
 
 use DB\EventStoreClient\Command\AppendEventCommand;
+use DB\EventStoreClient\Model\EventReference;
 use GuzzleHttp\ClientInterface;
 
 /**
@@ -42,6 +43,17 @@ class HttpStreamAdapter
                 'body' => json_encode([$this->commandToArray($command)])
             ])
         ;
+
+        $locationExploded = explode('/', $response->getHeader('Location'));
+
+        if (count($locationExploded) < 6) {
+            return null;
+        }
+
+        $streamName = $locationExploded[4];
+        $streamVersion = (int) $locationExploded[5];
+
+        return new EventReference($streamName, $streamVersion);
     }
 
     /**
