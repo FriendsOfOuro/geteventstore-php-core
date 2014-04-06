@@ -33,6 +33,10 @@ class HttpStreamAdapter implements StreamAdapterInterface
         $this->streamName = $streamName;
     }
 
+    /**
+     * @param  AppendEventCommand  $command
+     * @return EventReference|null
+     */
     public function applyAppend(AppendEventCommand $command)
     {
         $response = $this
