@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Event stream 'example'</title>
+    <id>http://127.0.0.1:2113/streams/example</id>
+    <updated>2014-04-06T16:37:09.627023Z</updated>
+    <author>
+        <name>EventStore</name>
+    </author>
+    <link href="http://127.0.0.1:2113/streams/example" rel="self"/>
+    <link href="http://127.0.0.1:2113/streams/example/head/backward/20" rel="first"/>
+    <link href="http://127.0.0.1:2113/streams/example/2/forward/20" rel="previous"/>
+    <link href="http://127.0.0.1:2113/streams/example/metadata" rel="metadata"/>
+    <entry>
+        <title>1@example</title>
+        <id>http://127.0.0.1:2113/streams/example/1</id>
+        <updated>2014-04-06T16:37:09.627023Z</updated>
+        <author>
+            <name>EventStore</name>
+        </author>
+        <summary>event-type</summary>
+        <link href="http://127.0.0.1:2113/streams/example/1" rel="edit"/>
+        <link href="http://127.0.0.1:2113/streams/example/1" rel="alternate"/>
+    </entry>
+    <entry>
+        <title>0@example</title>
+        <id>http://127.0.0.1:2113/streams/example/0</id>
+        <updated>2014-04-06T16:37:09.626984Z</updated>
+        <author>
+            <name>EventStore</name>
+        </author>
+        <summary>event-type</summary>
+        <link href="http://127.0.0.1:2113/streams/example/0" rel="edit"/>
+        <link href="http://127.0.0.1:2113/streams/example/0" rel="alternate"/>
+    </entry>
+</feed>
