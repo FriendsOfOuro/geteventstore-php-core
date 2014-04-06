@@ -44,7 +44,12 @@ final class EventReference
         return $this->streamVersion;
     }
 
-    public static function fromNameAndVersion(StreamReference $streamReference, $streamVersion)
+    /**
+     * @param  StreamReference $streamReference
+     * @param  int             $streamVersion
+     * @return EventReference
+     */
+    public static function fromStreamReferenceAndVersion(StreamReference $streamReference, $streamVersion)
     {
         return new self($streamReference, $streamVersion);
     }

@@ -12,7 +12,7 @@ class EventReferenceTest extends \PHPUnit_Framework_TestCase
         $streamName = 'streamname';
         $streamVersion = 10;
 
-        $reference = EventReference::fromNameAndVersion(StreamReference::fromName($streamName), $streamVersion);
+        $reference = EventReference::fromStreamReferenceAndVersion(StreamReference::fromName($streamName), $streamVersion);
 
         $this->assertSame($streamName, $reference->getStreamReference()->getStreamName());
         $this->assertSame($streamVersion, $reference->getStreamVersion());
