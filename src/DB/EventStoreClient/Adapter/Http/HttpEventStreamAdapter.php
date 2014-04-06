@@ -2,6 +2,7 @@
 
 namespace DB\EventStoreClient\Adapter\Http;
 
+use DB\EventStoreClient\Model\EventReference;
 use DB\EventStoreClient\Model\StreamReference;
 use GuzzleHttp\ClientInterface;
 
@@ -40,5 +41,32 @@ abstract class HttpEventStreamAdapter
     protected function getStreamReference()
     {
         return $this->streamReference;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStreamUri()
+    {
+        return '/streams/' . $this->getStreamReference()->getStreamName();
+    }
+
+    /**
+     * @param $location
+     * @return EventReference|null
+     */
+    protected function locationToEventReference($location)
+    {
+        $locationExploded = explode('/', $location);
+
+        $count = count($locationExploded);
+        if ($count < 6) {
+            return null;
+        }
+
+        $streamReference = $locationExploded[$count - 2];
+        $streamVersion = (int) $locationExploded[$count - 1];
+
+        return EventReference::fromStreamReferenceAndVersion(StreamReference::fromName($streamReference), $streamVersion);
     }
 }

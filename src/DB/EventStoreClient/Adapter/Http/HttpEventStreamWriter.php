@@ -5,7 +5,6 @@ namespace DB\EventStoreClient\Adapter\Http;
 use DB\EventStoreClient\Adapter\EventStreamWriterInterface;
 use DB\EventStoreClient\Command\AppendEventCommand;
 use DB\EventStoreClient\Model\EventReference;
-use DB\EventStoreClient\Model\StreamReference;
 
 /**
  * Class HttpEventStreamWriter
@@ -64,24 +63,6 @@ class HttpEventStreamWriter extends HttpEventStreamAdapter implements EventStrea
     }
 
     /**
-     * @param $location
-     * @return EventReference|null
-     */
-    private function locationToEventReference($location)
-    {
-        $locationExploded = explode('/', $location);
-
-        if (count($locationExploded) < 6) {
-            return null;
-        }
-
-        $streamReference = $locationExploded[4];
-        $streamVersion = (int) $locationExploded[5];
-
-        return EventReference::fromStreamReferenceAndVersion(StreamReference::fromName($streamReference), $streamVersion);
-    }
-
-    /**
      * @param  AppendEventCommand                    $command
      * @return \GuzzleHttp\Message\ResponseInterface
      */
@@ -89,7 +70,7 @@ class HttpEventStreamWriter extends HttpEventStreamAdapter implements EventStrea
     {
         return $this
             ->getClient()
-            ->post('/streams/' . $this->getStreamReference()->getStreamName(), [
+            ->post($this->getStreamUri(), [
                 'headers' => $this->buildHeaders($command),
                 'body' => $this->buildBody($command)
             ])
