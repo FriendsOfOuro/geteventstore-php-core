@@ -4,6 +4,7 @@ namespace DB\EventStoreClient\Tests\Adapter\Http;
 
 use DB\EventStoreClient\Adapter\Http\HttpStreamAdapter;
 use DB\EventStoreClient\Command\AppendEventCommandFactory;
+use DB\EventStoreClient\Model\StreamReference;
 use GuzzleHttp\Adapter\MockAdapter;
 use GuzzleHttp\Adapter\TransactionInterface;
 use GuzzleHttp\Client;
@@ -38,7 +39,7 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
             return new Response(201);
         });
 
-        $adapter = new HttpStreamAdapter($client, 'streamname');
+        $adapter = new HttpStreamAdapter($client, new StreamReference('streamname'));
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
 
         $adapter->applyAppend($command);
@@ -54,7 +55,7 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
             return new Response(201);
         });
 
-        $adapter = new HttpStreamAdapter($client, 'streamname');
+        $adapter = new HttpStreamAdapter($client, new StreamReference('streamname'));
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
         $adapter->applyAppend($command);
@@ -80,7 +81,7 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
         });
 
         $streamName = 'streamname';
-        $adapter = new HttpStreamAdapter($client, $streamName);
+        $adapter = new HttpStreamAdapter($client, new StreamReference($streamName));
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
         $reference = $adapter->applyAppend($command);
@@ -88,7 +89,7 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('DB\\EventStoreClient\\Model\\EventReference', $reference);
 
         $this->assertSame(10, $reference->getStreamVersion());
-        $this->assertSame($streamName, $reference->getStreamName());
+        $this->assertSame($streamName, $reference->getStreamReference()->getStreamName());
     }
 
     /**
@@ -102,7 +103,7 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
             return new Response(201);
         });
 
-        $adapter = new HttpStreamAdapter($client, 'streamname');
+        $adapter = new HttpStreamAdapter($client, new StreamReference('streamname'));
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
         $reference = $adapter->applyAppend($command);
@@ -116,7 +117,7 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
             return new Response(201);
         });
 
-        $adapter = new HttpStreamAdapter($client, 'streamname');
+        $adapter = new HttpStreamAdapter($client, new StreamReference('streamname'));
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar'], 10);
         $adapter->applyAppend($command);
@@ -131,7 +132,7 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
     {
         $client = new Client(['base_url' => 'http://127.0.0.1:2113/']);
 
-        $adapter = new HttpStreamAdapter($client, 'streamname');
+        $adapter = new HttpStreamAdapter($client, new StreamReference('streamname'));
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
         $adapter->applyAppend($command);

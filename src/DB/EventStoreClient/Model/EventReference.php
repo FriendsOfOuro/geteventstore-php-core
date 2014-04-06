@@ -9,9 +9,9 @@ namespace DB\EventStoreClient\Model;
 class EventReference
 {
     /**
-     * @var string
+     * @var StreamReference
      */
-    private $streamName;
+    private $streamReference;
 
     /**
      * @var int
@@ -19,23 +19,26 @@ class EventReference
     private $streamVersion;
 
     /**
-     * Constructor
-     *
-     * @param string $streamName
-     * @param int    $streamVersion
+     * @param StreamReference $streamReference
+     * @param int             $streamVersion
      */
-    public function __construct($streamName, $streamVersion)
+    public function __construct(StreamReference $streamReference, $streamVersion)
     {
-        $this->streamName = $streamName;
+        if ($streamReference instanceof StreamReference) {
+            $this->streamReference = $streamReference;
+        } else {
+            $this->streamReference = new StreamReference($streamReference);
+        }
+
         $this->streamVersion = $streamVersion;
     }
 
     /**
-     * @return string
+     * @return StreamReference
      */
-    public function getStreamName()
+    public function getStreamReference()
     {
-        return $this->streamName;
+        return $this->streamReference;
     }
 
     /**

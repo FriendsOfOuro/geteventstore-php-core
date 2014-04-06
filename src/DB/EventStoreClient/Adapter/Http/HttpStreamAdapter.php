@@ -5,6 +5,7 @@ namespace DB\EventStoreClient\Adapter\Http;
 use DB\EventStoreClient\Adapter\StreamAdapterInterface;
 use DB\EventStoreClient\Command\AppendEventCommand;
 use DB\EventStoreClient\Model\EventReference;
+use DB\EventStoreClient\Model\StreamReference;
 use GuzzleHttp\ClientInterface;
 
 /**
@@ -21,16 +22,16 @@ class HttpStreamAdapter implements StreamAdapterInterface
     /**
      * @var string
      */
-    private $streamName;
+    private $streamReference;
 
     /**
      * @param ClientInterface $client
-     * @param string          $streamName
+     * @param StreamReference $streamReference
      */
-    public function __construct(ClientInterface $client, $streamName)
+    public function __construct(ClientInterface $client, StreamReference $streamReference)
     {
         $this->client = $client;
-        $this->streamName = $streamName;
+        $this->streamReference = $streamReference;
     }
 
     /**
@@ -98,7 +99,7 @@ class HttpStreamAdapter implements StreamAdapterInterface
         $streamName = $locationExploded[4];
         $streamVersion = (int) $locationExploded[5];
 
-        return new EventReference($streamName, $streamVersion);
+        return new EventReference(new StreamReference($streamName), $streamVersion);
     }
 
     /**
@@ -109,7 +110,7 @@ class HttpStreamAdapter implements StreamAdapterInterface
     {
         return $this
             ->client
-            ->post('/streams/' . $this->streamName, [
+            ->post('/streams/' . $this->streamReference->getStreamName(), [
                 'headers' => $this->buildHeaders($command),
                 'body' => $this->buildBody($command)
             ])
