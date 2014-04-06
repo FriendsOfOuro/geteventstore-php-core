@@ -21,8 +21,8 @@ class EventReference
     /**
      * Constructor
      *
-     * @param $streamName
-     * @param $streamVersion
+     * @param string $streamName
+     * @param int    $streamVersion
      */
     public function __construct($streamName, $streamVersion)
     {
