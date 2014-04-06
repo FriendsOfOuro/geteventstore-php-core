@@ -1,8 +1,8 @@
 <?php
 
-namespace DB\EventStoreClient\Tests\Adapter;
+namespace DB\EventStoreClient\Tests\Adapter\Http;
 
-use DB\EventStoreClient\Adapter\HttpStreamAdapter;
+use DB\EventStoreClient\Adapter\Http\HttpStreamAdapter;
 use DB\EventStoreClient\Command\AppendEventCommandFactory;
 use GuzzleHttp\Adapter\MockAdapter;
 use GuzzleHttp\Adapter\TransactionInterface;
@@ -102,7 +102,7 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
             return new Response(201);
         });
 
-        $adapter = new HttpStreamAdapter($client, 'streamname');
+        $adapter = new \DB\EventStoreClient\Adapter\Http\HttpStreamAdapter($client, 'streamname');
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
         $reference = $adapter->applyAppend($command);

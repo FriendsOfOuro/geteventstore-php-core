@@ -1,7 +1,8 @@
 <?php
 
-namespace DB\EventStoreClient\Adapter;
+namespace DB\EventStoreClient\Adapter\Http;
 
+use DB\EventStoreClient\Adapter\StreamAdapterInterface;
 use DB\EventStoreClient\Command\AppendEventCommand;
 use DB\EventStoreClient\Model\EventReference;
 use GuzzleHttp\ClientInterface;
