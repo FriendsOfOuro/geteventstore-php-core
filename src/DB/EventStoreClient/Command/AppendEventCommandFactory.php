@@ -11,9 +11,9 @@ use Rhumsaa\Uuid\Uuid;
 class AppendEventCommandFactory
 {
     /**
-     * @param $eventType
+     * @param  string             $eventType
      * @param  array              $data
-     * @param $expectedVersion
+     * @param  int                $expectedVersion
      * @return AppendEventCommand
      */
     public function create($eventType, array $data, $expectedVersion = -2)
