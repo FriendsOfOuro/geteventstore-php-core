@@ -12,4 +12,4 @@ EOT
     );
 }
 
-$loader->add('DB\\EventStore\\Tests', __DIR__);
+$loader->add('DB\\EventStoreClient\\Tests', __DIR__);
