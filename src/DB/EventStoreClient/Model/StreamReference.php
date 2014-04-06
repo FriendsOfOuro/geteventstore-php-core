@@ -6,7 +6,7 @@ namespace DB\EventStoreClient\Model;
  * Class StreamReference
  * @package DB\EventStoreClient\Model
  */
-class StreamReference
+final class StreamReference
 {
     /**
      * @var string
@@ -18,7 +18,7 @@ class StreamReference
      *
      * @param string $streamName
      */
-    public function __construct($streamName)
+    private function __construct($streamName)
     {
         $this->streamName = $streamName;
     }
@@ -37,5 +37,14 @@ class StreamReference
     public function __toString()
     {
         return $this->getStreamName();
+    }
+
+    /**
+     * @param $streamName
+     * @return StreamReference
+     */
+    public static function fromName($streamName)
+    {
+        return new self($streamName);
     }
 }

@@ -39,7 +39,7 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
             return new Response(201);
         });
 
-        $adapter = new HttpStreamAdapter($client, new StreamReference('streamname'));
+        $adapter = new HttpStreamAdapter($client, StreamReference::fromName('streamname'));
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
 
         $adapter->applyAppend($command);
@@ -55,7 +55,7 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
             return new Response(201);
         });
 
-        $adapter = new HttpStreamAdapter($client, new StreamReference('streamname'));
+        $adapter = new HttpStreamAdapter($client, StreamReference::fromName('streamname'));
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
         $adapter->applyAppend($command);
@@ -81,7 +81,7 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
         });
 
         $streamName = 'streamname';
-        $adapter = new HttpStreamAdapter($client, new StreamReference($streamName));
+        $adapter = new HttpStreamAdapter($client, StreamReference::fromName($streamName));
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
         $reference = $adapter->applyAppend($command);
@@ -103,7 +103,7 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
             return new Response(201);
         });
 
-        $adapter = new HttpStreamAdapter($client, new StreamReference('streamname'));
+        $adapter = new HttpStreamAdapter($client, StreamReference::fromName('streamname'));
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
         $reference = $adapter->applyAppend($command);
@@ -117,7 +117,7 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
             return new Response(201);
         });
 
-        $adapter = new HttpStreamAdapter($client, new StreamReference('streamname'));
+        $adapter = new HttpStreamAdapter($client, StreamReference::fromName('streamname'));
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar'], 10);
         $adapter->applyAppend($command);
@@ -132,7 +132,7 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
     {
         $client = new Client(['base_url' => 'http://127.0.0.1:2113/']);
 
-        $adapter = new HttpStreamAdapter($client, new StreamReference('streamname'));
+        $adapter = new HttpStreamAdapter($client, StreamReference::fromName('streamname'));
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
         $adapter->applyAppend($command);

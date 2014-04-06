@@ -96,10 +96,10 @@ class HttpStreamAdapter implements StreamAdapterInterface
             return null;
         }
 
-        $streamName = $locationExploded[4];
+        $streamReference = $locationExploded[4];
         $streamVersion = (int) $locationExploded[5];
 
-        return new EventReference(new StreamReference($streamName), $streamVersion);
+        return new EventReference(StreamReference::fromName($streamReference), $streamVersion);
     }
 
     /**

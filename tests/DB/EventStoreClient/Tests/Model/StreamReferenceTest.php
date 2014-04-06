@@ -10,7 +10,7 @@ class StreamReferenceTest extends \PHPUnit_Framework_TestCase
     {
         $streamName = 'streamname';
 
-        $reference = new StreamReference($streamName);
+        $reference = StreamReference::fromName($streamName);
 
         $this->assertSame($streamName, $reference->getStreamName());
     }
@@ -19,7 +19,7 @@ class StreamReferenceTest extends \PHPUnit_Framework_TestCase
     {
         $streamName = 'streamname';
 
-        $reference = new StreamReference($streamName);
+        $reference = StreamReference::fromName($streamName);
 
         $this->assertSame($streamName, (string) $reference);
     }

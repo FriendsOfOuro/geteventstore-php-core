@@ -24,12 +24,7 @@ class EventReference
      */
     public function __construct(StreamReference $streamReference, $streamVersion)
     {
-        if ($streamReference instanceof StreamReference) {
-            $this->streamReference = $streamReference;
-        } else {
-            $this->streamReference = new StreamReference($streamReference);
-        }
-
+        $this->streamReference = $streamReference;
         $this->streamVersion = $streamVersion;
     }
 
