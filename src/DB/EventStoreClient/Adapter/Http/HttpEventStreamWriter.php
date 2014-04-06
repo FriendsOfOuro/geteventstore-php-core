@@ -6,34 +6,13 @@ use DB\EventStoreClient\Adapter\EventStreamWriterInterface;
 use DB\EventStoreClient\Command\AppendEventCommand;
 use DB\EventStoreClient\Model\EventReference;
 use DB\EventStoreClient\Model\StreamReference;
-use GuzzleHttp\ClientInterface;
 
 /**
  * Class HttpEventStreamWriter
  * @package DB\EventStoreClient\Adapter
  */
-class HttpEventStreamWriter implements EventStreamWriterInterface
+class HttpEventStreamWriter extends HttpEventStreamAdapter implements EventStreamWriterInterface
 {
-    /**
-     * @var ClientInterface
-     */
-    private $client;
-
-    /**
-     * @var string
-     */
-    private $streamReference;
-
-    /**
-     * @param ClientInterface $client
-     * @param StreamReference $streamReference
-     */
-    public function __construct(ClientInterface $client, StreamReference $streamReference)
-    {
-        $this->client = $client;
-        $this->streamReference = $streamReference;
-    }
-
     /**
      * @param  AppendEventCommand  $command
      * @return EventReference|null
@@ -109,8 +88,8 @@ class HttpEventStreamWriter implements EventStreamWriterInterface
     private function sendAppendRequest(AppendEventCommand $command)
     {
         return $this
-            ->client
-            ->post('/streams/' . $this->streamReference->getStreamName(), [
+            ->getClient()
+            ->post('/streams/' . $this->getStreamReference()->getStreamName(), [
                 'headers' => $this->buildHeaders($command),
                 'body' => $this->buildBody($command)
             ])
