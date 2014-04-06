@@ -9,6 +9,16 @@ namespace DB\EventStoreClient\Command;
 class AppendEventCommand
 {
     /**
+     * Disables optimistic locking
+     */
+    const VERSION_ANY = -2;
+
+    /**
+     * Expecting that streams does not exists (will be automatically created)
+     */
+    const VERSION_NOT_EXISTING = -1;
+
+    /**
      * @var string
      */
     private $eventId;
@@ -34,7 +44,7 @@ class AppendEventCommand
      * @param array  $data
      * @param int    $expectedVersion
      */
-    public function __construct($eventId, $eventType, array $data, $expectedVersion = -2)
+    public function __construct($eventId, $eventType, array $data, $expectedVersion = self::VERSION_ANY)
     {
         $this->eventId = $eventId;
         $this->eventType = $eventType;

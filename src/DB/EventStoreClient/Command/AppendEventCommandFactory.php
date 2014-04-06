@@ -16,7 +16,7 @@ class AppendEventCommandFactory
      * @param  int                $expectedVersion
      * @return AppendEventCommand
      */
-    public function create($eventType, array $data, $expectedVersion = -2)
+    public function create($eventType, array $data, $expectedVersion = AppendEventCommand::VERSION_ANY)
     {
         return new AppendEventCommand(Uuid::uuid4()->toString(), $eventType, $data, $expectedVersion);
     }
