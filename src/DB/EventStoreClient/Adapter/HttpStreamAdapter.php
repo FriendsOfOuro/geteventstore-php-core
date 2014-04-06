@@ -10,7 +10,7 @@ use GuzzleHttp\ClientInterface;
  * Class HttpStreamAdapter
  * @package DB\EventStoreClient\Adapter
  */
-class HttpStreamAdapter
+class HttpStreamAdapter implements StreamAdapterInterface
 {
     /**
      * @var ClientInterface
