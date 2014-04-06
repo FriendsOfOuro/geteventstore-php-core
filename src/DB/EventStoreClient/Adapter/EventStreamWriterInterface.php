@@ -5,10 +5,10 @@ use DB\EventStoreClient\Command\AppendEventCommand;
 use DB\EventStoreClient\Model\EventReference;
 
 /**
- * Class HttpStreamAdapter
+ * Class HttpEventStreamWriter
  * @package DB\EventStoreClient\Adapter
  */
-interface StreamAdapterInterface
+interface EventStreamWriterInterface
 {
     /**
      * @param  AppendEventCommand  $command

@@ -2,7 +2,7 @@
 
 namespace DB\EventStoreClient\Tests\Adapter\Http;
 
-use DB\EventStoreClient\Adapter\Http\HttpStreamAdapter;
+use DB\EventStoreClient\Adapter\Http\HttpEventStreamWriter;
 use DB\EventStoreClient\Command\AppendEventCommandFactory;
 use DB\EventStoreClient\Model\StreamReference;
 use DB\EventStoreClient\Tests\Guzzle\GuzzleTestCase;
@@ -11,7 +11,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Message\Response;
 
-class HttpStreamAdapterTest extends GuzzleTestCase
+class HttpEventStreamWriterTest extends GuzzleTestCase
 {
 
     /**
@@ -35,7 +35,7 @@ class HttpStreamAdapterTest extends GuzzleTestCase
             return new Response(201);
         });
 
-        $adapter = new HttpStreamAdapter($client, StreamReference::fromName('streamname'));
+        $adapter = new HttpEventStreamWriter($client, StreamReference::fromName('streamname'));
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
 
         $adapter->applyAppend($command);
@@ -51,7 +51,7 @@ class HttpStreamAdapterTest extends GuzzleTestCase
             return new Response(201);
         });
 
-        $adapter = new HttpStreamAdapter($client, StreamReference::fromName('streamname'));
+        $adapter = new HttpEventStreamWriter($client, StreamReference::fromName('streamname'));
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
         $adapter->applyAppend($command);
@@ -77,7 +77,7 @@ class HttpStreamAdapterTest extends GuzzleTestCase
         });
 
         $streamName = 'streamname';
-        $adapter = new HttpStreamAdapter($client, StreamReference::fromName($streamName));
+        $adapter = new HttpEventStreamWriter($client, StreamReference::fromName($streamName));
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
         $reference = $adapter->applyAppend($command);
@@ -99,7 +99,7 @@ class HttpStreamAdapterTest extends GuzzleTestCase
             return new Response(201);
         });
 
-        $adapter = new HttpStreamAdapter($client, StreamReference::fromName('streamname'));
+        $adapter = new HttpEventStreamWriter($client, StreamReference::fromName('streamname'));
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
         $reference = $adapter->applyAppend($command);
@@ -113,7 +113,7 @@ class HttpStreamAdapterTest extends GuzzleTestCase
             return new Response(201);
         });
 
-        $adapter = new HttpStreamAdapter($client, StreamReference::fromName('streamname'));
+        $adapter = new HttpEventStreamWriter($client, StreamReference::fromName('streamname'));
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar'], 10);
         $adapter->applyAppend($command);
@@ -128,7 +128,7 @@ class HttpStreamAdapterTest extends GuzzleTestCase
     {
         $client = new Client(['base_url' => 'http://127.0.0.1:2113/']);
 
-        $adapter = new HttpStreamAdapter($client, StreamReference::fromName('streamname'));
+        $adapter = new HttpEventStreamWriter($client, StreamReference::fromName('streamname'));
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
         $adapter->applyAppend($command);

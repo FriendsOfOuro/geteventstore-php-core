@@ -2,17 +2,17 @@
 
 namespace DB\EventStoreClient\Adapter\Http;
 
-use DB\EventStoreClient\Adapter\StreamAdapterInterface;
+use DB\EventStoreClient\Adapter\EventStreamWriterInterface;
 use DB\EventStoreClient\Command\AppendEventCommand;
 use DB\EventStoreClient\Model\EventReference;
 use DB\EventStoreClient\Model\StreamReference;
 use GuzzleHttp\ClientInterface;
 
 /**
- * Class HttpStreamAdapter
+ * Class HttpEventStreamWriter
  * @package DB\EventStoreClient\Adapter
  */
-class HttpStreamAdapter implements StreamAdapterInterface
+class HttpEventStreamWriter implements EventStreamWriterInterface
 {
     /**
      * @var ClientInterface
