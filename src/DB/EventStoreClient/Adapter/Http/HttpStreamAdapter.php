@@ -39,32 +39,9 @@ class HttpStreamAdapter implements StreamAdapterInterface
      */
     public function applyAppend(AppendEventCommand $command)
     {
-        $headers = [
-            'Content-type' => 'application/json'
-        ];
+        $response = $this->sendAppendRequest($command);
 
-        if ($command->getExpectedVersion() !== -2) {
-            $headers['ES-ExpectedVersion'] = $command->getExpectedVersion();
-        }
-
-        $response = $this
-            ->client
-            ->post('/streams/'.$this->streamName,[
-                'headers' => $headers,
-                'body' => json_encode([$this->commandToArray($command)])
-            ])
-        ;
-
-        $locationExploded = explode('/', $response->getHeader('Location'));
-
-        if (count($locationExploded) < 6) {
-            return null;
-        }
-
-        $streamName = $locationExploded[4];
-        $streamVersion = (int) $locationExploded[5];
-
-        return new EventReference($streamName, $streamVersion);
+        return $this->locationToEventReference($response->getHeader('Location'));
     }
 
     /**
@@ -78,5 +55,64 @@ class HttpStreamAdapter implements StreamAdapterInterface
             'eventType' => $command->getEventType(),
             'data' => $command->getData(),
         ];
+    }
+
+    /**
+     * @param  AppendEventCommand $command
+     * @return array
+     */
+    private function buildHeaders(AppendEventCommand $command)
+    {
+        $headers = [
+            'Content-type' => 'application/json'
+        ];
+
+        if ($command->getExpectedVersion() !== -2) {
+            $headers['ES-ExpectedVersion'] = $command->getExpectedVersion();
+        }
+
+        return $headers;
+    }
+
+    /**
+     * @param  AppendEventCommand $command
+     * @return string
+     */
+    private function buildBody(AppendEventCommand $command)
+    {
+        return json_encode([$this->commandToArray($command)]);
+    }
+
+    /**
+     * @param $location
+     * @return EventReference|null
+     */
+    private function locationToEventReference($location)
+    {
+        $locationExploded = explode('/', $location);
+
+        if (count($locationExploded) < 6) {
+            return null;
+        }
+
+        $streamName = $locationExploded[4];
+        $streamVersion = (int) $locationExploded[5];
+
+        return new EventReference($streamName, $streamVersion);
+    }
+
+    /**
+     * @param  AppendEventCommand                    $command
+     * @return \GuzzleHttp\Message\ResponseInterface
+     */
+    private function sendAppendRequest(AppendEventCommand $command)
+    {
+        return $this
+            ->client
+            ->post('/streams/' . $this->streamName, [
+                'headers' => $this->buildHeaders($command),
+                'body' => $this->buildBody($command)
+            ])
+        ;
     }
 }
