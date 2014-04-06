@@ -5,6 +5,10 @@ namespace DB\EventStoreClient\Adapter;
 use DB\EventStoreClient\Command\AppendEventCommand;
 use GuzzleHttp\ClientInterface;
 
+/**
+ * Class HttpStreamAdapter
+ * @package DB\EventStoreClient\Adapter
+ */
 class HttpStreamAdapter
 {
     /**
@@ -17,6 +21,10 @@ class HttpStreamAdapter
      */
     private $streamName;
 
+    /**
+     * @param ClientInterface $client
+     * @param string          $streamName
+     */
     public function __construct(ClientInterface $client, $streamName)
     {
         $this->client = $client;
@@ -25,9 +33,18 @@ class HttpStreamAdapter
 
     public function applyAppend(AppendEventCommand $command)
     {
-        $this
+        $response = $this
             ->client
-            ->post('/streams/'.$this->streamName)
+            ->post('/streams/'.$this->streamName,[
+                'headers' => [
+                    'Content-type' => 'application/json'
+                ],
+                'body' => json_encode([[
+                    'eventId'   => $command->getEventId(),
+                    'eventType' => $command->getEventType(),
+                    'data'      => $command->getData(),
+                ]])
+            ])
         ;
     }
 }
