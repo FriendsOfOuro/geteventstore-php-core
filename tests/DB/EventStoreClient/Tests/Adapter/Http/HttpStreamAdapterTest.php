@@ -102,12 +102,26 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
             return new Response(201);
         });
 
-        $adapter = new \DB\EventStoreClient\Adapter\Http\HttpStreamAdapter($client, 'streamname');
+        $adapter = new HttpStreamAdapter($client, 'streamname');
 
         $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
         $reference = $adapter->applyAppend($command);
 
         $this->assertNull($reference);
+    }
+
+    public function testExpectedVersionHeaderIsSet()
+    {
+        $client = $this->buildMockClient(function (TransactionInterface $trans) {
+            return new Response(201);
+        });
+
+        $adapter = new HttpStreamAdapter($client, 'streamname');
+
+        $command = $this->commandFactory->create('event-type', ['foo' => 'bar'], 10);
+        $adapter->applyAppend($command);
+
+        $this->assertEquals(10, $this->request->getHeader('ES-ExpectedVersion'));
     }
 
     /**

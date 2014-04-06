@@ -39,12 +39,18 @@ class HttpStreamAdapter implements StreamAdapterInterface
      */
     public function applyAppend(AppendEventCommand $command)
     {
+        $headers = [
+            'Content-type' => 'application/json'
+        ];
+
+        if ($command->getExpectedVersion() !== -2) {
+            $headers['ES-ExpectedVersion'] = $command->getExpectedVersion();
+        }
+
         $response = $this
             ->client
             ->post('/streams/'.$this->streamName,[
-                'headers' => [
-                    'Content-type' => 'application/json'
-                ],
+                'headers' => $headers,
                 'body' => json_encode([$this->commandToArray($command)])
             ])
         ;

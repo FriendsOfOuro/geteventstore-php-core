@@ -11,12 +11,13 @@ use Rhumsaa\Uuid\Uuid;
 class AppendEventCommandFactory
 {
     /**
-     * @param  string             $eventType
+     * @param $eventType
      * @param  array              $data
+     * @param $expectedVersion
      * @return AppendEventCommand
      */
-    public function create($eventType, array $data)
+    public function create($eventType, array $data, $expectedVersion = -2)
     {
-        return new AppendEventCommand(Uuid::uuid4()->toString(), $eventType, $data);
+        return new AppendEventCommand(Uuid::uuid4()->toString(), $eventType, $data, $expectedVersion);
     }
 }

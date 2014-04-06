@@ -20,11 +20,13 @@ class AppendEventCommandFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $eventType = 'event-type';
         $data = ['foo' => 'bar'];
+        $expectedVersion = 10;
 
-        $command = $this->factory->create($eventType, $data);
+        $command = $this->factory->create($eventType, $data, $expectedVersion);
 
         $this->assertRegExp('/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i', $command->getEventId());
         $this->assertEquals($eventType, $command->getEventType());
         $this->assertEquals($data, $command->getData());
+        $this->assertSame($expectedVersion, $command->getExpectedVersion());
     }
 }

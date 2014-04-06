@@ -24,15 +24,22 @@ class AppendEventCommand
     private $data;
 
     /**
-     * @param $eventId
-     * @param $eventType
-     * @param array $data
+     * @var int
      */
-    public function __construct($eventId, $eventType, array $data)
+    private $expectedVersion;
+
+    /**
+     * @param string $eventId
+     * @param string $eventType
+     * @param array  $data
+     * @param int    $expectedVersion
+     */
+    public function __construct($eventId, $eventType, array $data, $expectedVersion = -2)
     {
         $this->eventId = $eventId;
         $this->eventType = $eventType;
         $this->data = $data;
+        $this->expectedVersion = $expectedVersion;
     }
 
     /**
@@ -57,5 +64,13 @@ class AppendEventCommand
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * @return int
+     */
+    public function getExpectedVersion()
+    {
+        return $this->expectedVersion;
     }
 }
