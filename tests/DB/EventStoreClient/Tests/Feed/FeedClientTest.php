@@ -23,6 +23,7 @@ class FeedClientTest extends GuzzleTestCase
 
         $response = $feedClient->get('/dummy');
 
+        $this->assertEquals('application/atom+xml', $this->request->getHeader('Accept'));
         $this->assertEquals($statusCode, $response->getStatusCode());
         $this->assertEquals($body, $response->getBody());
     }

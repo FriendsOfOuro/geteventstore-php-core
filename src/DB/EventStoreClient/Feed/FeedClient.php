@@ -6,6 +6,10 @@ use GuzzleHttp\ClientInterface;
 use Zend\Feed\Reader\Http\ClientInterface as FeedClientInterface;
 use Zend\Feed\Reader\Http\ResponseInterface;
 
+/**
+ * Class FeedClient
+ * @package DB\EventStoreClient\Feed
+ */
 class FeedClient implements FeedClientInterface
 {
     /**
@@ -29,6 +33,10 @@ class FeedClient implements FeedClientInterface
      */
     public function get($uri)
     {
-        return FeedResponse::fromGuzzleResponse($this->client->get($uri));
+        return FeedResponse::fromGuzzleResponse($this->client->get($uri, [
+            'headers' => [
+                'Accept' => 'application/atom+xml'
+            ]
+        ]));
     }
 }
