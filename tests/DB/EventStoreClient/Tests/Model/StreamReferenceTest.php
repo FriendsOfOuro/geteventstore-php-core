@@ -14,4 +14,13 @@ class StreamReferenceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($streamName, $reference->getStreamName());
     }
+
+    public function testToStringReturnsStreamName()
+    {
+        $streamName = 'streamname';
+
+        $reference = new StreamReference($streamName);
+
+        $this->assertSame($streamName, (string) $reference);
+    }
 }

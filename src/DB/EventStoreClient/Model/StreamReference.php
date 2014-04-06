@@ -30,4 +30,12 @@ class StreamReference
     {
         return $this->streamName;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getStreamName();
+    }
 }
