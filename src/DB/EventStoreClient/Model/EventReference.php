@@ -6,7 +6,7 @@ namespace DB\EventStoreClient\Model;
  * Class EventReference
  * @package DB\EventStoreClient\Model
  */
-class EventReference
+final class EventReference
 {
     /**
      * @var StreamReference
@@ -22,7 +22,7 @@ class EventReference
      * @param StreamReference $streamReference
      * @param int             $streamVersion
      */
-    public function __construct(StreamReference $streamReference, $streamVersion)
+    private function __construct(StreamReference $streamReference, $streamVersion)
     {
         $this->streamReference = $streamReference;
         $this->streamVersion = $streamVersion;
@@ -42,5 +42,10 @@ class EventReference
     public function getStreamVersion()
     {
         return $this->streamVersion;
+    }
+
+    public static function fromNameAndVersion(StreamReference $streamReference, $streamVersion)
+    {
+        return new self($streamReference, $streamVersion);
     }
 }
