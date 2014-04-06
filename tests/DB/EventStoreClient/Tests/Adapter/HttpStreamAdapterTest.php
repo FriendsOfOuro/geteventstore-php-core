@@ -92,6 +92,25 @@ class HttpStreamAdapterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * this requirement was implicit in other tests not giving a Location
+     * however I thing it's better to make this requirement explicit
+     * @todo decide if it's better to throw an exception instead
+     */
+    public function testApplyWithNoLocationReturnsNull()
+    {
+        $client = $this->buildMockClient(function (TransactionInterface $trans) {
+            return new Response(201);
+        });
+
+        $adapter = new HttpStreamAdapter($client, 'streamname');
+
+        $command = $this->commandFactory->create('event-type', ['foo' => 'bar']);
+        $reference = $adapter->applyAppend($command);
+
+        $this->assertNull($reference);
+    }
+
+    /**
      * @group end2end
      */
     public function testAppendCommandWithRealServer()
