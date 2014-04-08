@@ -19,10 +19,9 @@ interface ClientInterface
     const STREAM_VERSION_ANY = -2;
 
     /**
-     * @param  string $stream
-     * @param  int    $expectedVersion
-     * @param  array  $events
-     * @return int    version of first event
+     * @param string $stream
+     * @param int    $expectedVersion
+     * @param array  $events
      */
     public function appendToStream($stream, $expectedVersion, array $events);
 
