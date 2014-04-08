@@ -1,6 +1,7 @@
 <?php
 
 namespace DB\EventStoreClient;
+use GuzzleHttp\ClientInterface;
 
 /**
  * Class Connection
@@ -8,6 +9,21 @@ namespace DB\EventStoreClient;
  */
 class Connection implements ConnectionInterface
 {
+    /**
+     * @var ClientInterface
+     */
+    private $client;
+
+    /**
+     * Constructor
+     *
+     * @param ClientInterface $client
+     */
+    public function __construct(ClientInterface $client)
+    {
+        $this->client = $client;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -37,6 +53,13 @@ class Connection implements ConnectionInterface
      */
     public function deleteStream($stream, $hardDelete = false)
     {
-        // TODO: Implement deleteStream() method.
+        $this
+            ->client
+            ->delete('/streams/'.$stream, [
+                'headers' => [
+                    'ES-HardDelete' => 'false'
+                ]
+            ])
+        ;
     }
 }
