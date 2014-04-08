@@ -2,6 +2,7 @@
 
 namespace DB\EventStoreClient;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Stream\Stream;
 
 /**
  * Class Connection
@@ -29,7 +30,21 @@ class Connection implements ConnectionInterface
      */
     public function appendToStream($stream, $expectedVersion, array $events)
     {
-        // TODO: Implement appendToStream() method.
+        $eventsArray = [];
+
+        foreach ($events as $event) {
+            $eventsArray[] = $this->eventToArray($event);
+        }
+
+        $this
+           ->client
+           ->post('/streams/'.$stream, [
+                'body' => Stream::factory(json_encode($eventsArray)),
+                'headers' => [
+                    'ES-ExpectedVersion' => $expectedVersion
+                ]
+           ])
+        ;
     }
 
     /**
@@ -61,5 +76,14 @@ class Connection implements ConnectionInterface
                 ]
             ])
         ;
+    }
+
+    private function eventToArray(EventData $event)
+    {
+        return [
+            'eventId' => $event->getEventId(),
+            'eventType' => $event->getType(),
+            'data' => $event->getData()
+        ];
     }
 }
