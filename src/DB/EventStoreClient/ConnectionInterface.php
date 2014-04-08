@@ -3,10 +3,10 @@
 namespace DB\EventStoreClient;
 
 /**
- * Interface ClientInterface
+ * Interface ConnectionInterface
  * @package DB\EventStoreClient
  */
-interface ClientInterface
+interface ConnectionInterface
 {
     /**
      * Client expects that stream does not exist and will be created
