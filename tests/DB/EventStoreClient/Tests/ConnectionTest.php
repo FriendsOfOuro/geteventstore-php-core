@@ -8,18 +8,31 @@ use GuzzleHttp\Message\Response;
 
 class ConnectionTest extends GuzzleTestCase
 {
-    public function testSoftDeleteStreamWorksProperly()
+    /**
+     * @dataProvider deleteDataProvider
+     * @param $softDelete
+     * @param $expectedHeader
+     */
+    public function testSoftDeleteStreamWorksProperly($softDelete, $expectedHeader)
     {
         $guzzle = $this->buildMockClient(function () {
             return new Response(204);
         });
 
         $connection = new Connection($guzzle);
-        $connection->deleteStream('example');
+        $connection->deleteStream('example', $softDelete);
 
         $this->assertInstanceOf('GuzzleHttp\\Message\\RequestInterface', $this->request);
         $this->assertEquals('DELETE', $this->request->getMethod());
         $this->assertEquals('/streams/example', $this->request->getResource());
-        $this->assertEquals('false', $this->request->getHeader('ES-HardDelete'));
+        $this->assertEquals($expectedHeader, $this->request->getHeader('ES-HardDelete'));
+    }
+
+    public static function deleteDataProvider()
+    {
+        return [
+            [false, 'false'],
+            [true, 'true']
+        ];
     }
 }

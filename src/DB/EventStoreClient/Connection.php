@@ -57,7 +57,7 @@ class Connection implements ConnectionInterface
             ->client
             ->delete('/streams/'.$stream, [
                 'headers' => [
-                    'ES-HardDelete' => 'false'
+                    'ES-HardDelete' => $hardDelete ? 'true' : 'false'
                 ]
             ])
         ;
