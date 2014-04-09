@@ -24,9 +24,9 @@ class EventData
     private $data;
 
     /**
-     * @param $eventId
-     * @param $type
-     * @param array $data
+     * @param string $eventId UUID
+     * @param string $type    event type (e.g. CartItemAdded)
+     * @param array  $data    application-specific data
      */
     public function __construct($eventId, $type, array $data)
     {
