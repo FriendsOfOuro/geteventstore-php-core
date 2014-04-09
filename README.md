@@ -10,8 +10,9 @@ PHP client for [EventStore HTTP API](https://github.com/eventstore/eventstore/wi
 Roadmap
 -------
 Development started in april 2014.
+
 Currently API can append events to streams and delete streams
-See [Roadmap](/wiki/Roadmap) for more information.
+See [Roadmap](https://github.com/dbellettini/php-eventstore-client/wiki/Roadmap) for more information.
 
 Contributing
 ------------
