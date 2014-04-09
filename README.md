@@ -11,7 +11,7 @@ Roadmap
 -------
 Development started in april 2014.
 
-Currently API can append events to streams and delete streams
+Currently API can append events to streams and delete streams.
 See [Roadmap](https://github.com/dbellettini/php-eventstore-client/wiki/Roadmap) for more information.
 
 Contributing
