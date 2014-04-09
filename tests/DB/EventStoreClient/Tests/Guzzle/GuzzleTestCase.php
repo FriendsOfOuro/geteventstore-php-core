@@ -24,4 +24,14 @@ abstract class GuzzleTestCase extends \PHPUnit_Framework_TestCase
 
         return new Client(['adapter' => $mockAdapter]);
     }
+
+    protected function tearDown()
+    {
+        $this->request = null;
+    }
+
+    protected function assertRequestPresent()
+    {
+        $this->assertInstanceOf('GuzzleHttp\\Message\\RequestInterface', $this->request);
+    }
 }

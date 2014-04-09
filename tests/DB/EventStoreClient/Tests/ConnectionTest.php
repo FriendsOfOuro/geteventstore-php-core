@@ -24,7 +24,7 @@ class ConnectionTest extends GuzzleTestCase
         $connection = new Connection($guzzle);
         $connection->deleteStream('example', $softDelete);
 
-        $this->assertInstanceOf('GuzzleHttp\\Message\\RequestInterface', $this->request);
+        $this->assertRequestPresent();
         $this->assertEquals('DELETE', $this->request->getMethod());
         $this->assertEquals('/streams/example', $this->request->getResource());
         $this->assertEquals($expectedHeader, $this->request->getHeader('ES-HardDelete'));
@@ -45,7 +45,7 @@ class ConnectionTest extends GuzzleTestCase
         $event = new EventData($eventId, $type, $data);
         $connection->appendToStream('example', ConnectionInterface::STREAM_VERSION_ANY, [$event]);
 
-        $this->assertInstanceOf('GuzzleHttp\\Message\\RequestInterface', $this->request);
+        $this->assertRequestPresent();
 
         $expectedBody = json_encode([[
             'eventId' => $event->getEventId(),
