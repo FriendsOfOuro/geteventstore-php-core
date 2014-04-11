@@ -62,7 +62,7 @@ class ConnectionTest extends GuzzleTestCase
     public static function deleteDataProvider()
     {
         return [
-            [false, 'false'],
+            [false, ''],
             [true, 'true']
         ];
     }
