@@ -1,5 +1,6 @@
 {
     "name": "dbellettini/eventstore-client",
+    "description": "EventStore client for PHP",
     "type": "library",
     "keywords": [
         "eventsourcing",
