@@ -1,6 +1,6 @@
 <?php
 
-namespace DB\EventStoreClient\Tests\Guzzle;
+namespace EventStore\Tests\Guzzle;
 
 use GuzzleHttp\Adapter\MockAdapter;
 use GuzzleHttp\Adapter\TransactionInterface;

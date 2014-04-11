@@ -1,6 +1,7 @@
 <?php
 
-namespace DB\EventStoreClient;
+namespace EventStore;
+
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Stream\Stream;
 

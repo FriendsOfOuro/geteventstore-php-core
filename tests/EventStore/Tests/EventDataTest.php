@@ -1,8 +1,8 @@
 <?php
 
-namespace DB\EventStoreClient\Tests;
+namespace EventStore\Tests;
 
-use DB\EventStoreClient\EventData;
+use EventStore\EventData;
 
 class EventDataTest extends \PHPUnit_Framework_TestCase
 {

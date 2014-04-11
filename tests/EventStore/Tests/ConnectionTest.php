@@ -1,11 +1,11 @@
 <?php
 
-namespace DB\EventStoreClient\Tests;
+namespace EventStore\Tests;
 
-use DB\EventStoreClient\Connection;
-use DB\EventStoreClient\ConnectionInterface;
-use DB\EventStoreClient\EventData;
-use DB\EventStoreClient\Tests\Guzzle\GuzzleTestCase;
+use EventStore\Connection;
+use EventStore\ConnectionInterface;
+use EventStore\EventData;
+use EventStore\Tests\Guzzle\GuzzleTestCase;
 use GuzzleHttp\Message\Response;
 
 class ConnectionTest extends GuzzleTestCase

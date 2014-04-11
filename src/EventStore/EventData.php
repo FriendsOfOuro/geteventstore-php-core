@@ -1,6 +1,6 @@
 <?php
 
-namespace DB\EventStoreClient;
+namespace EventStore;
 
 /**
  * Class EventData
