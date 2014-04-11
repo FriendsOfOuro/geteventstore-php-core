@@ -70,13 +70,18 @@ class Connection implements ConnectionInterface
      */
     public function deleteStream($stream, $hardDelete = false)
     {
+        $headers = [
+            'Content-type' => 'application/json',
+        ];
+
+        if ($hardDelete) {
+            $headers['ES-HardDelete'] = 'true';
+        }
+
         $this
             ->client
             ->delete('/streams/'.$stream, [
-                'headers' => [
-                    'Content-type'  => 'application/json',
-                    'ES-HardDelete' => $hardDelete ? 'true' : ''
-                ]
+                'headers' => $headers
             ])
         ;
     }

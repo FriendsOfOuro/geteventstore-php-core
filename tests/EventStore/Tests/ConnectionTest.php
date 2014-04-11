@@ -10,24 +10,31 @@ use GuzzleHttp\Message\Response;
 
 class ConnectionTest extends GuzzleTestCase
 {
-    /**
-     * @dataProvider deleteDataProvider
-     * @param $softDelete
-     * @param $expectedHeader
-     */
-    public function testSoftDeleteStreamWorksProperly($softDelete, $expectedHeader)
+    public function testHardDeleteStreamWorksProperly()
+    {
+        $this->streamDeleteCommon(true);
+        $this->assertEquals('true', $this->request->getHeader('ES-HardDelete'));
+    }
+
+    public function testSoftDeleteStreamHasNotHardDeleteHeader()
+    {
+        $this->streamDeleteCommon(false);
+        $this->assertFalse($this->request->hasHeader('ES-HardDelete'), 'ES-HardDelete header should not be present');
+    }
+
+    private function streamDeleteCommon($hardDelete)
     {
         $guzzle = $this->buildMockClient(function () {
             return new Response(204);
         });
 
         $connection = new Connection($guzzle);
-        $connection->deleteStream('example', $softDelete);
+        $connection->deleteStream('example', $hardDelete);
 
         $this->assertRequestPresent();
         $this->assertEquals('DELETE', $this->request->getMethod());
         $this->assertEquals('/streams/example', $this->request->getResource());
-        $this->assertEquals($expectedHeader, $this->request->getHeader('ES-HardDelete'));
+
         $this->assertEquals('application/json', $this->request->getHeader('Content-type'));
     }
 
@@ -57,13 +64,5 @@ class ConnectionTest extends GuzzleTestCase
         $this->assertEquals(ConnectionInterface::STREAM_VERSION_ANY, $this->request->getHeader('ES-ExpectedVersion'));
         $this->assertJsonStringEqualsJsonString($expectedBody, (string) $this->request->getBody());
         $this->assertEquals('application/json', $this->request->getHeader('Content-type'));
-    }
-
-    public static function deleteDataProvider()
-    {
-        return [
-            [false, ''],
-            [true, 'true']
-        ];
     }
 }
