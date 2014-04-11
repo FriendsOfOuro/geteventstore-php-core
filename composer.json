@@ -41,7 +41,7 @@
     },
     "autoload": {
         "psr-0": {
-            "": "src/"
+            "EventStore": "src/"
         }
     }
 }
