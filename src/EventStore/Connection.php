@@ -42,6 +42,7 @@ class Connection implements ConnectionInterface
            ->post('/streams/'.$stream, [
                 'body' => Stream::factory(json_encode($eventsArray)),
                 'headers' => [
+                    'Content-type'       => 'application/json',
                     'ES-ExpectedVersion' => $expectedVersion
                 ]
            ])

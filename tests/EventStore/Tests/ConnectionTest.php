@@ -55,6 +55,7 @@ class ConnectionTest extends GuzzleTestCase
 
         $this->assertEquals(ConnectionInterface::STREAM_VERSION_ANY, $this->request->getHeader('ES-ExpectedVersion'));
         $this->assertJsonStringEqualsJsonString($expectedBody, (string) $this->request->getBody());
+        $this->assertEquals('application/json', $this->request->getHeader('Content-type'));
     }
 
     public static function deleteDataProvider()
