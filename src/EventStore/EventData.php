@@ -4,7 +4,7 @@ namespace EventStore;
 
 /**
  * Class EventData
- * @package DB\EventStoreClient
+ * @package EventStore
  */
 class EventData
 {

@@ -7,7 +7,7 @@ use GuzzleHttp\Stream\Stream;
 
 /**
  * Class Connection
- * @package DB\EventStoreClient
+ * @package EventStore
  */
 class Connection implements ConnectionInterface
 {

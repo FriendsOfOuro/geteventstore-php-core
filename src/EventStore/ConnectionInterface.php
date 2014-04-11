@@ -4,7 +4,7 @@ namespace EventStore;
 
 /**
  * Interface ConnectionInterface
- * @package DB\EventStoreClient
+ * @package EventStore
  */
 interface ConnectionInterface
 {
