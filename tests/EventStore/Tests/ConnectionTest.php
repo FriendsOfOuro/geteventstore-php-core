@@ -28,7 +28,7 @@ class ConnectionTest extends GuzzleTestCase
         $this->assertEquals('DELETE', $this->request->getMethod());
         $this->assertEquals('/streams/example', $this->request->getResource());
         $this->assertEquals($expectedHeader, $this->request->getHeader('ES-HardDelete'));
-        $this->assertEquals('text/plain', $this->request->getHeader('Content-type'));
+        $this->assertEquals('application/json', $this->request->getHeader('Content-type'));
     }
 
     public function testAppendEventMakesCorrectHttpRequest()
