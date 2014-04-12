@@ -34,7 +34,7 @@ class Connection implements ConnectionInterface
         $eventsArray = [];
 
         foreach ($events as $event) {
-            $eventsArray[] = $this->eventToArray($event);
+            $eventsArray[] = $event->toArray();
         }
 
         $this
@@ -84,14 +84,5 @@ class Connection implements ConnectionInterface
                 'headers' => $headers
             ])
         ;
-    }
-
-    private function eventToArray(EventData $event)
-    {
-        return [
-            'eventId' => $event->getEventId(),
-            'eventType' => $event->getType(),
-            'data' => $event->getData()
-        ];
     }
 }

@@ -58,4 +58,16 @@ class EventData
     {
         return $this->data;
     }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'eventId' => $this->eventId,
+            'eventType' => $this->type,
+            'data' => $this->data
+        ];
+    }
 }

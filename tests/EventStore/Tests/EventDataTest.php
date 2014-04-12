@@ -30,4 +30,16 @@ class EventDataTest extends \PHPUnit_Framework_TestCase
         $event = new EventData('d776ad80-1471-4b42-a1e7-ae2960b84abc', 'event-type', $data);
         $this->assertEquals($data, $event->getData());
     }
+
+    public function testToArray()
+    {
+        $array = [
+            'eventId'   => 'd776ad80-1471-4b42-a1e7-ae2960b84abc',
+            'eventType' => 'event-type',
+            'data'      => ['foo' => 'bar']
+        ];
+        $event = new EventData('d776ad80-1471-4b42-a1e7-ae2960b84abc', 'event-type', ['foo' => 'bar']);
+
+        $this->assertEquals($array, $event->toArray());
+    }
 }
