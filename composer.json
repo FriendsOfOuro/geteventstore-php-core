@@ -10,11 +10,13 @@
     "authors": [
         {
             "name": "Davide Bellettini",
-            "email": "davide.bellettini@gmail.com"
+            "email": "davide.bellettini@gmail.com",
+            "homepage": "http://bellettini.me/"
         },
         {
             "name": "Nicolò Pignatelli",
-            "email": "pignatelli.nicolo@gmail.com"
+            "email": "pignatelli.nicolo@gmail.com",
+            "homepage": "http://nicolopignatelli.me/"
         },
         {
             "name": "Contributors",
