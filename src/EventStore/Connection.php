@@ -4,7 +4,7 @@ namespace EventStore;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Message\Response;
+use GuzzleHttp\Message\ResponseInterface;
 use GuzzleHttp\Stream\Stream;
 
 /**
@@ -127,10 +127,10 @@ class Connection implements ConnectionInterface
         return new self($options['client']);
     }
 
-    private function transformResponse(Response $response)
+    private function transformResponse(ResponseInterface $response)
     {
         $slice = new StreamEventsSlice(
-
+            'Success'
         );
 
         return $slice;
