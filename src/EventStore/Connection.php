@@ -116,7 +116,12 @@ class Connection implements ConnectionInterface
         $options = array_merge(self::$defaultOptions, $options);
 
         if (!isset($options['client'])) {
-            $options['client'] = new Client(['base_url' => $options['base_url']]);
+            $client = new Client([
+                'base_url' => $options['base_url'],
+                'exceptions' => false,
+            ]);
+
+            $options['client'] = $client;
         }
 
         return new self($options['client']);
