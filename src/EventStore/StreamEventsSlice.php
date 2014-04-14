@@ -11,7 +11,7 @@ class StreamEventsSlice
     private $nextEventNumber;
     private $lastEventNumber;
 
-    function __construct($status, $fromEventNumber, $readDirection, $events, $nextEventNumber, $lastEventNumber)
+    public function __construct($status, $fromEventNumber, $readDirection, $events, $nextEventNumber, $lastEventNumber)
     {
         $this->status = $status;
         $this->events = $events;
