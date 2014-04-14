@@ -3,6 +3,7 @@
 namespace EventStore;
 
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Message\Response;
 use GuzzleHttp\Stream\Stream;
 
 /**
@@ -54,7 +55,19 @@ class Connection implements ConnectionInterface
      */
     public function readStreamEventsForward($stream, $start, $count, $resolveLinkTos)
     {
-        // TODO: Implement readStreamEventsForward() method.
+        $url = \sprintf('/streams/%s/%d/forward/%d', $stream, $start, $count);
+
+        $response = $this->client
+            ->get($url, [
+                'headers' => [
+                    'accept' => 'application/vnd.eventstore.atom+json'
+                ],
+            ])
+        ;
+
+        $slice = $this->transformResponse($response);
+
+        return $slice;
     }
 
     /**
@@ -84,5 +97,14 @@ class Connection implements ConnectionInterface
                 'headers' => $headers
             ])
         ;
+    }
+
+    private function transformResponse(Response $response)
+    {
+        $slice = new StreamEventsSlice(
+
+        );
+
+        return $slice;
     }
 }

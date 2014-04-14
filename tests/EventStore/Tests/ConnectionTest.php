@@ -7,6 +7,7 @@ use EventStore\ConnectionInterface;
 use EventStore\EventData;
 use EventStore\Tests\Guzzle\GuzzleTestCase;
 use GuzzleHttp\Message\Response;
+use GuzzleHttp\Stream\Stream;
 
 class ConnectionTest extends GuzzleTestCase
 {
@@ -64,5 +65,27 @@ class ConnectionTest extends GuzzleTestCase
         $this->assertEquals(ConnectionInterface::STREAM_VERSION_ANY, $this->request->getHeader('ES-ExpectedVersion'));
         $this->assertJsonStringEqualsJsonString($expectedBody, (string) $this->request->getBody());
         $this->assertEquals('application/json', $this->request->getHeader('Content-type'));
+    }
+
+    public function testReadStreamEventsForward()
+    {
+        $guzzle = $this->buildMockClient(function () {
+            $fh = fopen(__DIR__.'/forward.json', 'r');
+
+            $response = new Response(200);
+            $body = Stream::factory($fh);
+            $response->setBody($body);
+            $response->addHeader('Content-type', 'application/vnd.eventstore.atom+json; charset=utf-8');
+
+            return $response;
+        });
+
+        $connection = new Connection($guzzle);
+        $slice = $connection->readStreamEventsForward('money', 0, 2, false);
+
+        $this->assertNotNull($this->request);
+
+        $this->assertInstanceOf('EventStore\StreamEventsSlice', $slice);
+        $this->assertEquals(2, $slice->getNextEvent());
     }
 }
