@@ -1,0 +1,419 @@
+{
+  "title": "Event stream 'money'",
+  "id": "http://127.0.0.1:2113/streams/money",
+  "updated": "2014-04-12T11:55:25.151593Z",
+  "streamId": "money",
+  "author": {
+    "name": "EventStore"
+  },
+  "headOfStream": true,
+  "selfUrl": "http://127.0.0.1:2113/streams/money",
+  "links": [
+    {
+      "uri": "http://127.0.0.1:2113/streams/money",
+      "relation": "self"
+    },
+    {
+      "uri": "http://127.0.0.1:2113/streams/money/head/backward/20",
+      "relation": "first"
+    },
+    {
+      "uri": "http://127.0.0.1:2113/streams/money/0/forward/20",
+      "relation": "last"
+    },
+    {
+      "uri": "http://127.0.0.1:2113/streams/money/1868/backward/20",
+      "relation": "next"
+    },
+    {
+      "uri": "http://127.0.0.1:2113/streams/money/1889/forward/20",
+      "relation": "previous"
+    },
+    {
+      "uri": "http://127.0.0.1:2113/streams/money/metadata",
+      "relation": "metadata"
+    }
+  ],
+  "entries": [
+    {
+      "title": "1888@money",
+      "id": "http://127.0.0.1:2113/streams/money/1888",
+      "updated": "2014-04-12T11:55:25.151593Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1888",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1888",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1887@money",
+      "id": "http://127.0.0.1:2113/streams/money/1887",
+      "updated": "2014-04-12T11:55:25.151589Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1887",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1887",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1886@money",
+      "id": "http://127.0.0.1:2113/streams/money/1886",
+      "updated": "2014-04-12T11:55:25.151585Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1886",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1886",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1885@money",
+      "id": "http://127.0.0.1:2113/streams/money/1885",
+      "updated": "2014-04-12T11:55:25.151581Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1885",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1885",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1884@money",
+      "id": "http://127.0.0.1:2113/streams/money/1884",
+      "updated": "2014-04-12T11:55:25.151577Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1884",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1884",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1883@money",
+      "id": "http://127.0.0.1:2113/streams/money/1883",
+      "updated": "2014-04-12T11:55:25.151574Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1883",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1883",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1882@money",
+      "id": "http://127.0.0.1:2113/streams/money/1882",
+      "updated": "2014-04-12T11:55:25.15157Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1882",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1882",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1881@money",
+      "id": "http://127.0.0.1:2113/streams/money/1881",
+      "updated": "2014-04-12T11:55:25.151566Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1881",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1881",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1880@money",
+      "id": "http://127.0.0.1:2113/streams/money/1880",
+      "updated": "2014-04-12T11:55:25.151563Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1880",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1880",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1879@money",
+      "id": "http://127.0.0.1:2113/streams/money/1879",
+      "updated": "2014-04-12T11:55:25.151559Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1879",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1879",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1878@money",
+      "id": "http://127.0.0.1:2113/streams/money/1878",
+      "updated": "2014-04-12T11:55:25.151556Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "TransferRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1878",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1878",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1877@money",
+      "id": "http://127.0.0.1:2113/streams/money/1877",
+      "updated": "2014-04-12T11:55:25.151552Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1877",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1877",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1876@money",
+      "id": "http://127.0.0.1:2113/streams/money/1876",
+      "updated": "2014-04-12T11:55:25.151549Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1876",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1876",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1875@money",
+      "id": "http://127.0.0.1:2113/streams/money/1875",
+      "updated": "2014-04-12T11:55:25.151545Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1875",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1875",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1874@money",
+      "id": "http://127.0.0.1:2113/streams/money/1874",
+      "updated": "2014-04-12T11:55:25.151542Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1874",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1874",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1873@money",
+      "id": "http://127.0.0.1:2113/streams/money/1873",
+      "updated": "2014-04-12T11:55:25.151537Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1873",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1873",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1872@money",
+      "id": "http://127.0.0.1:2113/streams/money/1872",
+      "updated": "2014-04-12T11:55:25.151533Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1872",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1872",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1871@money",
+      "id": "http://127.0.0.1:2113/streams/money/1871",
+      "updated": "2014-04-12T11:55:25.151529Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1871",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1871",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1870@money",
+      "id": "http://127.0.0.1:2113/streams/money/1870",
+      "updated": "2014-04-12T11:55:25.151525Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1870",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1870",
+          "relation": "alternate"
+        }
+      ]
+    },
+    {
+      "title": "1869@money",
+      "id": "http://127.0.0.1:2113/streams/money/1869",
+      "updated": "2014-04-12T11:55:25.151521Z",
+      "author": {
+        "name": "EventStore"
+      },
+      "summary": "ExpenseRecorded",
+      "links": [
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1869",
+          "relation": "edit"
+        },
+        {
+          "uri": "http://127.0.0.1:2113/streams/money/1869",
+          "relation": "alternate"
+        }
+      ]
+    }
+  ]
+}
