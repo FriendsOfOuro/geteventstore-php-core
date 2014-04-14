@@ -73,7 +73,7 @@ class Connection implements ConnectionInterface
             ])
         ;
 
-        $slice = $this->transformResponse($response, $start);
+        $slice = $this->transformResponse($response, 'forward', $start);
 
         return $slice;
     }
@@ -127,12 +127,16 @@ class Connection implements ConnectionInterface
         return new self($options['client']);
     }
 
-    private function transformResponse(ResponseInterface $response, $start)
+    private function transformResponse(ResponseInterface $response, $start, $readDirection)
     {
         $data = $response->json();
 
         $slice = new StreamEventsSlice(
-            'Success'
+            'Success',
+            0,
+            $readDirection,
+            [],
+            2
         );
 
         return $slice;

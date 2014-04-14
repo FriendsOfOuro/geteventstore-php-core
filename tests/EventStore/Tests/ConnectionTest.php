@@ -88,6 +88,6 @@ class ConnectionTest extends GuzzleTestCase
         $this->assertEquals('application/vnd.eventstore.atom+json', $this->request->getHeader('accept'));
 
         $this->assertInstanceOf('EventStore\StreamEventsSlice', $slice);
-        $this->assertSame(2, $slice->getNextEvent());
+        $this->assertSame(2, $slice->getNextEventNumber());
     }
 }
