@@ -29,7 +29,7 @@ class ConnectionTest extends GuzzleTestCase
             return new Response(204);
         });
 
-        $connection = new Connection($guzzle);
+        $connection = Connection::create(['client' => $guzzle]);
         $connection->deleteStream('example', $hardDelete);
 
         $this->assertRequestPresent();
@@ -45,7 +45,7 @@ class ConnectionTest extends GuzzleTestCase
             return new Response(201);
         });
 
-        $connection = new Connection($guzzle);
+        $connection = Connection::create(['client' => $guzzle]);
 
         $eventId = 'df0582d9-b0c5-4898-93d7-f027b71424b6';
         $type = 'TestEvent';

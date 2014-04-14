@@ -2,6 +2,7 @@
 
 namespace EventStore;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Stream\Stream;
@@ -18,11 +19,18 @@ class Connection implements ConnectionInterface
     private $client;
 
     /**
+     * @var array
+     */
+    private static $defaultOptions = [
+        'base_url' => 'http://127.0.0.1:2113/'
+    ];
+
+    /**
      * Constructor
      *
      * @param ClientInterface $client
      */
-    public function __construct(ClientInterface $client)
+    protected function __construct(ClientInterface $client)
     {
         $this->client = $client;
     }
@@ -97,6 +105,21 @@ class Connection implements ConnectionInterface
                 'headers' => $headers
             ])
         ;
+    }
+
+    /**
+     * @param  array      $options
+     * @return Connection
+     */
+    public static function create(array $options = [])
+    {
+        $options = array_merge(self::$defaultOptions, $options);
+
+        if (!isset($options['client'])) {
+            $options['client'] = new Client(['base_url' => $options['base_url']]);
+        }
+
+        return new self($options['client']);
     }
 
     private function transformResponse(Response $response)
