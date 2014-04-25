@@ -84,7 +84,7 @@ class ConnectionTest extends GuzzleTestCase
         $slice = $connection->readStreamEventsForward('test', 0, 2, false);
 
         $this->assertNotNull($this->request);
-        $this->assertEquals('/streams/test/0/forward/2', $this->request->getResource());
+        $this->assertEquals('/streams/test/0/forward/2?embed=body', $this->request->getResource());
         $this->assertEquals('application/vnd.eventstore.atom+json', $this->request->getHeader('accept'));
 
         $this->assertInstanceOf('EventStore\StreamEventsSlice', $slice);

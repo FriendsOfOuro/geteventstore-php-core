@@ -68,8 +68,11 @@ class Connection implements ConnectionInterface
         $response = $this->client
             ->get($url, [
                 'headers' => [
-                    'accept' => 'application/vnd.eventstore.atom+json'
+                    'accept' => 'application/vnd.eventstore.atom+json',
                 ],
+                'query' => [
+                    'embed' => 'body'
+                ]
             ])
         ;
 
