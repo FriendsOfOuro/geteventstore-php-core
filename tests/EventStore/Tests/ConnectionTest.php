@@ -70,14 +70,7 @@ class ConnectionTest extends GuzzleTestCase
     public function testReadStreamEventsForward()
     {
         $guzzle = $this->buildMockClient(function () {
-            $fh = fopen(__DIR__.'/forward.json', 'r');
-
-            $response = new Response(200);
-            $body = Stream::factory($fh);
-            $response->setBody($body);
-            $response->addHeader('Content-type', 'application/vnd.eventstore.atom+json; charset=utf-8');
-
-            return $response;
+            return $this->createJsonFeedResponse(__DIR__ . '/forward.json');
         });
 
         $connection = Connection::create(['client' => $guzzle]);
@@ -89,5 +82,21 @@ class ConnectionTest extends GuzzleTestCase
 
         $this->assertInstanceOf('EventStore\StreamEventsSlice', $slice);
         $this->assertSame(2, $slice->getNextEventNumber());
+    }
+
+    /**
+     * @param $jsonFile
+     * @return Response
+     */
+    private function createJsonFeedResponse($jsonFile)
+    {
+        $fh = fopen($jsonFile, 'r');
+
+        $response = new Response(200);
+        $body = Stream::factory($fh);
+        $response->setBody($body);
+        $response->addHeader('Content-type', 'application/vnd.eventstore.atom+json; charset=utf-8');
+
+        return $response;
     }
 }
