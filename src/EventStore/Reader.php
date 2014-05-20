@@ -67,6 +67,15 @@ abstract class Reader
             );
         }
 
+        if ($response->getStatusCode() == 410) {
+            return $this->createStreamEventsSlice(
+                'StreamDeleted',
+                $start,
+                [],
+                0
+            );
+        }
+
         $data = $response->json();
 
         return $this->createStreamEventsSlice(
