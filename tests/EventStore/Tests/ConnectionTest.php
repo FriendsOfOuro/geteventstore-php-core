@@ -95,6 +95,22 @@ class ConnectionTest extends GuzzleTestCase
         $this->assertEquals($expected, $events);
     }
 
+    public function testReadBackwardIsDecodedProperly()
+    {
+        $jsonFile = sprintf('%s/%d_%s_%d.json', __DIR__, 1, 'backward', 2);
+        $connection = $this->mockConnectionToJson($jsonFile);
+
+        $slice = $connection->readStreamEventsBackward('test', 0, 2, false);
+        $events = $slice->getEvents();
+
+        $expected = [
+            new ReadEvent('SomethingElseHappened', ['bar' => 'buzz'], 1),
+            new ReadEvent('SomethingHappened', ['foo' => 'fizz'], 0),
+        ];
+
+        $this->assertEquals($expected, $events);
+    }
+
     /**
      * @param $jsonFile
      * @return Response
