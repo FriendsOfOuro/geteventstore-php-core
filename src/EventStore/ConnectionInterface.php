@@ -26,20 +26,20 @@ interface ConnectionInterface
     public function appendToStream($stream, $expectedVersion, array $events);
 
     /**
-     * @param  string $stream
-     * @param  int    $start
-     * @param  int    $count
-     * @param  bool   $resolveLinkTos
-     * @return mixed
+     * @param  string            $stream
+     * @param  int               $start
+     * @param  int               $count
+     * @param  bool              $resolveLinkTos
+     * @return StreamEventsSlice
      */
     public function readStreamEventsForward($stream, $start, $count, $resolveLinkTos);
 
     /**
-     * @param  string $stream
-     * @param  int    $start
-     * @param  int    $count
-     * @param  bool   $resolveLinkTos
-     * @return mixed
+     * @param  string            $stream
+     * @param  int               $start
+     * @param  int               $count
+     * @param  bool              $resolveLinkTos
+     * @return StreamEventsSlice
      */
     public function readStreamEventsBackward($stream, $start, $count, $resolveLinkTos);
 
