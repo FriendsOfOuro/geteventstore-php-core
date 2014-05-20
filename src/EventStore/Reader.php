@@ -1,6 +1,8 @@
 <?php
 namespace EventStore;
+use EventStore\Exception\TransportException;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Message\Response;
 use GuzzleHttp\Message\ResponseInterface;
 
 /**
@@ -58,32 +60,42 @@ abstract class Reader
 
     public function transformResponse(ResponseInterface $response, $start)
     {
-        if ($response->getStatusCode() == 404) {
-            return $this->createStreamEventsSlice(
-                'StreamNotFound',
-                $start,
-                [],
-                0
-            );
+        $handlers = [
+            '200' => function () use ($response, $start) {
+                    $data = $response->json();
+
+                    return $this->createStreamEventsSlice(
+                        'Success',
+                        $start,
+                        $this->decodeEvents($data['entries']),
+                        $this->getNextEventNumber($data['links'])
+                    );
+                },
+            '404' => function () use ($start) {
+                    return $this->createStreamEventsSlice(
+                        'StreamNotFound',
+                        $start,
+                        [],
+                        0
+                    );
+                },
+            '410' => function () use ($start) {
+                    return $this->createStreamEventsSlice(
+                        'StreamDeleted',
+                        $start,
+                        [],
+                        0
+                    );
+                },
+        ];
+
+        $statusCode = $response->getStatusCode();
+
+        if (array_key_exists($statusCode, $handlers)) {
+            return $handlers[$statusCode]();
         }
 
-        if ($response->getStatusCode() == 410) {
-            return $this->createStreamEventsSlice(
-                'StreamDeleted',
-                $start,
-                [],
-                0
-            );
-        }
-
-        $data = $response->json();
-
-        return $this->createStreamEventsSlice(
-            'Success',
-            $start,
-            $this->decodeEvents($data['entries']),
-            $this->getNextEventNumber($data['links'])
-        );
+        throw new TransportException($response->getReasonPhrase(), $statusCode);
     }
 
     /**

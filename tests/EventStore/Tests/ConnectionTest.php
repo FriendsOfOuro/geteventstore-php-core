@@ -171,6 +171,19 @@ class ConnectionTest extends GuzzleTestCase
     }
 
     /**
+     * @expectedException EventStore\Exception\TransportException
+     */
+    public function testRead500ThrowsTransportException()
+    {
+        $guzzle = $this->buildMockClient(function () {
+            return new Response(500);
+        });
+
+        $connection = Connection::create(['client' => $guzzle]);
+        $connection->readStreamEventsForward('test', 0, 2, false);
+    }
+
+    /**
      * @param $jsonFile
      * @return Response
      */
