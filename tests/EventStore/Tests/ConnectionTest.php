@@ -69,6 +69,39 @@ class ConnectionTest extends GuzzleTestCase
         $this->assertEquals('application/vnd.eventstore.events+json', $this->request->getHeader('Content-type'));
     }
 
+    /**
+     * @expectedException EventStore\Exception\ConcurrencyException
+     */
+    public function testAppendWithWrongExpectedNumberThrowsConcurrencyException()
+    {
+        $guzzle = $this->buildMockClient(function () {
+            $response = new Response(400);
+            $response->setBody(Stream::factory('Wrong expected EventNumber'));
+
+            return $response;
+        });
+
+        $connection = Connection::create(['client' => $guzzle]);
+
+        $event = new EventData('df0582d9-b0c5-4898-93d7-f027b71424b6', 'TestEvent', ['foo' => 'bar']);
+        $connection->appendToStream('example', 10, [$event]);
+    }
+
+    /**
+     * @expectedException EventStore\Exception\TransportException
+     */
+    public function testAppendWith500ThrowsTransportException()
+    {
+        $guzzle = $this->buildMockClient(function () {
+            return new Response(500);
+        });
+
+        $connection = Connection::create(['client' => $guzzle]);
+
+        $event = new EventData('df0582d9-b0c5-4898-93d7-f027b71424b6', 'TestEvent', ['foo' => 'bar']);
+        $connection->appendToStream('example', 10, [$event]);
+    }
+
     public function testReadStreamEventsForward()
     {
         $this->readStreamCommonAssertions('forward', 0, 2, 2);

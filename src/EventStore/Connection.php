@@ -2,8 +2,11 @@
 
 namespace EventStore;
 
+use EventStore\Exception\ConcurrencyException;
+use EventStore\Exception\TransportException;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Message\Response;
 use GuzzleHttp\Stream\Stream;
 
 /**
@@ -54,16 +57,25 @@ class Connection implements ConnectionInterface
             $eventsArray[] = $event->toArray();
         }
 
-        $this
+        $response = $this
            ->client
            ->post('/streams/'.$stream, [
                 'body' => Stream::factory(json_encode($eventsArray)),
                 'headers' => [
                     'Content-type'       => 'application/vnd.eventstore.events+json',
                     'ES-ExpectedVersion' => $expectedVersion
-                ]
+                ],
+                'exceptions' => false
            ])
         ;
+
+        if ($response->getStatusCode() == 400) {
+            throw new ConcurrencyException($response->getReasonPhrase());
+        }
+
+        if ($response->getStatusCode() != 201) {
+            throw new TransportException($response->getReasonPhrase());
+        }
     }
 
     /**
