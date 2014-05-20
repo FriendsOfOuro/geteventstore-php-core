@@ -133,7 +133,7 @@ class Connection implements ConnectionInterface
             'Success',
             $start,
             $readDirection,
-            [],
+            $this->decodeEvents($data),
             $this->getNextEventNumber($data['links'], $index)
         );
     }
@@ -165,5 +165,14 @@ class Connection implements ConnectionInterface
                 return (int) array_pop($parts);
             }
         }
+    }
+
+    /**
+     * @param  array $data
+     * @return array
+     */
+    private function decodeEvents(array $data)
+    {
+        return [];
     }
 }
