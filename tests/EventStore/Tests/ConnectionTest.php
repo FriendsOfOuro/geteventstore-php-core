@@ -69,19 +69,11 @@ class ConnectionTest extends GuzzleTestCase
 
     public function testReadStreamEventsForward()
     {
-        $guzzle = $this->buildMockClient(function () {
-            return $this->createJsonFeedResponse(__DIR__ . '/forward.json');
-        });
+        $direction = 'forward';
+        $start = 0;
+        $count = 2;
 
-        $connection = Connection::create(['client' => $guzzle]);
-        $slice = $connection->readStreamEventsForward('test', 0, 2, false);
-
-        $this->assertNotNull($this->request);
-        $this->assertEquals('/streams/test/0/forward/2?embed=body', $this->request->getResource());
-        $this->assertEquals('application/vnd.eventstore.atom+json', $this->request->getHeader('accept'));
-
-        $this->assertInstanceOf('EventStore\StreamEventsSlice', $slice);
-        $this->assertSame(2, $slice->getNextEventNumber());
+        $this->readStreamCommonAssertions($direction, $start, $count);
     }
 
     /**
@@ -98,5 +90,43 @@ class ConnectionTest extends GuzzleTestCase
         $response->addHeader('Content-type', 'application/vnd.eventstore.atom+json; charset=utf-8');
 
         return $response;
+    }
+
+    /**
+     * @param $jsonFile
+     * @return Connection
+     */
+    private function mockConnectionToJson($jsonFile)
+    {
+        $guzzle = $this->buildMockClient(function () use ($jsonFile) {
+            return $this->createJsonFeedResponse($jsonFile);
+        });
+        $connection = Connection::create(['client' => $guzzle]);
+
+        return $connection;
+    }
+
+    /**
+     * @param string $direction
+     * @param int    $start
+     * @param int    $count
+     */
+    private function readStreamCommonAssertions($direction, $start, $count)
+    {
+        $jsonFile = sprintf('%s/%s.json', __DIR__, $direction);
+        $connection = $this->mockConnectionToJson($jsonFile);
+
+        $slice = $connection->readStreamEventsForward('test', $start, $count, false);
+
+        $this->assertNotNull($this->request);
+
+        $resource = sprintf('/streams/test/%d/%s/%d?embed=body', $start, $direction, $count);
+        $this->assertEquals($resource, $this->request->getResource());
+        $this->assertEquals('application/vnd.eventstore.atom+json', $this->request->getHeader('accept'));
+
+        $this->assertInstanceOf('EventStore\StreamEventsSlice', $slice);
+        $nextEvent = $start + ($direction === 'forward' ? $count : -$count);
+
+        $this->assertSame($nextEvent, $slice->getNextEventNumber());
     }
 }
