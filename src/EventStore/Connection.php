@@ -156,6 +156,11 @@ class Connection implements ConnectionInterface
         ;
     }
 
+    /**
+     * @param  array  $links
+     * @param  string $index
+     * @return int
+     */
     private function getNextEventNumber(array $links, $index)
     {
         foreach ($links as $link) {
