@@ -22,6 +22,7 @@ interface ConnectionInterface
      * @param string $stream
      * @param int    $expectedVersion
      * @param array  $events
+     * @return void
      */
     public function appendToStream($stream, $expectedVersion, array $events);
 

@@ -6,7 +6,6 @@ use EventStore\Exception\ConcurrencyException;
 use EventStore\Exception\TransportException;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Message\Response;
 use GuzzleHttp\Stream\Stream;
 
 /**
