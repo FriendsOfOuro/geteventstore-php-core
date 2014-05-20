@@ -4,7 +4,6 @@ namespace EventStore;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Message\ResponseInterface;
 use GuzzleHttp\Stream\Stream;
 
 /**
@@ -122,10 +121,5 @@ class Connection implements ConnectionInterface
         }
 
         return new self($options['client']);
-    }
-
-    private function transformResponse(ResponseInterface $response, $start, $readDirection)
-    {
-        return $this->readers[$readDirection]->transformResponse($response, $start);
     }
 }
