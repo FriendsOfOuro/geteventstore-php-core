@@ -1,7 +1,7 @@
 {
   "title": "Event stream 'test'",
   "id": "http://127.0.0.1:2113/streams/test",
-  "updated": "2014-04-25T15:22:50.468054Z",
+  "updated": "2014-05-20T08:34:06.249951Z",
   "streamId": "test",
   "author": {
     "name": "EventStore"
@@ -38,7 +38,7 @@
       "positionStreamId": "test",
       "title": "1@test",
       "id": "http://127.0.0.1:2113/streams/test/1",
-      "updated": "2014-04-25T15:22:50.468121Z",
+      "updated": "2014-05-20T08:34:06.249991Z",
       "author": {
         "name": "EventStore"
       },
@@ -66,7 +66,7 @@
       "positionStreamId": "test",
       "title": "0@test",
       "id": "http://127.0.0.1:2113/streams/test/0",
-      "updated": "2014-04-25T15:22:50.468054Z",
+      "updated": "2014-05-20T08:34:06.249951Z",
       "author": {
         "name": "EventStore"
       },

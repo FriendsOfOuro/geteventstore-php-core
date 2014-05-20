@@ -28,6 +28,15 @@
   ],
   "entries": [
     {
+      "eventType": "SomethingElseHappened",
+      "eventNumber": 1,
+      "data": "{\n  \"bar\": \"buzz\"\n}",
+      "streamId": "test",
+      "isJson": true,
+      "isMetaData": false,
+      "isLinkMetaData": false,
+      "positionEventNumber": 1,
+      "positionStreamId": "test",
       "title": "1@test",
       "id": "http://127.0.0.1:2113/streams/test/1",
       "updated": "2014-05-20T08:34:06.249991Z",
@@ -47,6 +56,15 @@
       ]
     },
     {
+      "eventType": "SomethingHappened",
+      "eventNumber": 0,
+      "data": "{\n  \"foo\": \"fizz\"\n}",
+      "streamId": "test",
+      "isJson": true,
+      "isMetaData": false,
+      "isLinkMetaData": false,
+      "positionEventNumber": 0,
+      "positionStreamId": "test",
       "title": "0@test",
       "id": "http://127.0.0.1:2113/streams/test/0",
       "updated": "2014-05-20T08:34:06.249951Z",
