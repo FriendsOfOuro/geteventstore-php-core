@@ -58,7 +58,10 @@ abstract class Reader
     }
 
     /**
-     * @param integer $start
+     * @param  ResponseInterface            $response
+     * @param  int                          $start
+     * @return StreamEventsSlice
+     * @throws Exception\TransportException
      */
     public function transformResponse(ResponseInterface $response, $start)
     {
@@ -150,7 +153,7 @@ abstract class Reader
     }
 
     /**
-     * @param string $url
+     * @param  string            $url
      * @return ResponseInterface
      */
     private function sendReadStreamEventsRequest($url)

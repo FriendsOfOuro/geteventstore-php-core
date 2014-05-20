@@ -19,9 +19,9 @@ interface ConnectionInterface
     const STREAM_VERSION_ANY = -2;
 
     /**
-     * @param string $stream
-     * @param int    $expectedVersion
-     * @param array  $events
+     * @param  string $stream
+     * @param  int    $expectedVersion
+     * @param  array  $events
      * @return void
      */
     public function appendToStream($stream, $expectedVersion, array $events);
