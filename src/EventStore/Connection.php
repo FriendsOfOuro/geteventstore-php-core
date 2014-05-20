@@ -134,17 +134,7 @@ class Connection implements ConnectionInterface
 
     private function transformResponse(ResponseInterface $response, $start, $readDirection)
     {
-        $data = $response->json();
-
-        $index = $readDirection === 'forward' ? 'previous' : 'next';
-
-        return new StreamEventsSlice(
-            'Success',
-            $start,
-            $readDirection,
-            $this->decodeEvents($data['entries'], $readDirection),
-            $this->getNextEventNumber($data['links'], $index)
-        );
+        return $this->readers[$readDirection]->transformResponse($response, $start);
     }
 
     /**
@@ -163,35 +153,5 @@ class Connection implements ConnectionInterface
                 ]
             ])
         ;
-    }
-
-    /**
-     * @param  array  $links
-     * @param  string $index
-     * @return int
-     */
-    private function getNextEventNumber(array $links, $index)
-    {
-        foreach ($links as $link) {
-            if ($index === $link['relation']) {
-                return $this->getVersion($link);
-            }
-        }
-    }
-
-    private function decodeEvents(array $entries, $readDirection)
-    {
-        return $this->readers[$readDirection]->decodeEvents($entries, $readDirection);
-    }
-
-    /**
-     * @param  string $link
-     * @return int
-     */
-    private function getVersion($link)
-    {
-        $parts = explode('/', $link['uri']);
-
-        return (int) array_pop($parts);
     }
 }

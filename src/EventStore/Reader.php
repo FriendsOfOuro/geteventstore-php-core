@@ -1,5 +1,6 @@
 <?php
 namespace EventStore;
+use GuzzleHttp\Message\ResponseInterface;
 
 /**
  * Class Reader
@@ -7,7 +8,14 @@ namespace EventStore;
  */
 abstract class Reader
 {
-    public function decodeEvents(array $entries, $readDirection)
+    const FORWARD = 'forward';
+    const BACKWARD = 'backward';
+
+    /**
+     * @param  array $entries
+     * @return array
+     */
+    public function decodeEvents(array $entries)
     {
         $decoded = [];
 
@@ -16,6 +24,19 @@ abstract class Reader
         }
 
         return $decoded;
+    }
+
+    public function transformResponse(ResponseInterface $response, $start)
+    {
+        $data = $response->json();
+
+        return new StreamEventsSlice(
+            'Success',
+            $start,
+            $this->getReadDirection(),
+            $this->decodeEvents($data['entries']),
+            $this->getNextEventNumber($data['links'])
+        );
     }
 
     /**
@@ -34,10 +55,21 @@ abstract class Reader
     abstract protected function append(array &$events, ReadEvent $event);
 
     /**
+     * @return string
+     */
+    abstract protected function getReadDirection();
+
+    /**
+     * @param  array $links
+     * @return int
+     */
+    abstract protected function getNextEventNumber(array $links);
+
+    /**
      * @param  string $link
      * @return int
      */
-    private function getVersion($link)
+    protected function getVersion($link)
     {
         $parts = explode('/', $link['uri']);
 
