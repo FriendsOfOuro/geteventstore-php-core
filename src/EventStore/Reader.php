@@ -58,6 +58,15 @@ abstract class Reader
 
     public function transformResponse(ResponseInterface $response, $start)
     {
+        if ($response->getStatusCode() == 404) {
+            return $this->createStreamEventsSlice(
+                'StreamNotFound',
+                $start,
+                [],
+                0
+            );
+        }
+
         $data = $response->json();
 
         return $this->createStreamEventsSlice(
@@ -130,7 +139,8 @@ abstract class Reader
                 ],
                 'query' => [
                     'embed' => 'body'
-                ]
+                ],
+                'exceptions' => false
             ])
         ;
     }

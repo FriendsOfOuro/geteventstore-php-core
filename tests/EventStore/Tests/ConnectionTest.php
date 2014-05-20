@@ -144,6 +144,19 @@ class ConnectionTest extends GuzzleTestCase
         $this->assertEquals($expected, $events);
     }
 
+    public function testRead404()
+    {
+        $guzzle = $this->buildMockClient(function () {
+            return new Response(404);
+        });
+
+        $connection = Connection::create(['client' => $guzzle]);
+
+        $slice = $connection->readStreamEventsForward('test', 0, 2, false);
+
+        $this->assertEquals('StreamNotFound', $slice->getStatus());
+    }
+
     /**
      * @param $jsonFile
      * @return Response
