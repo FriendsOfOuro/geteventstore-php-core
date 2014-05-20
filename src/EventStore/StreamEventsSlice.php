@@ -24,7 +24,7 @@ class StreamEventsSlice
     private $readDirection;
 
     /**
-     * @var array
+     * @var EventData[]
      */
     private $events;
 
@@ -34,11 +34,11 @@ class StreamEventsSlice
     private $nextEventNumber;
 
     /**
-     * @param string $status
-     * @param int    $fromEventNumber
-     * @param string $readDirection
-     * @param array  $events
-     * @param int    $nextEventNumber
+     * @param string      $status
+     * @param int         $fromEventNumber
+     * @param string      $readDirection
+     * @param EventData[] $events
+     * @param int         $nextEventNumber
      */
     public function __construct($status, $fromEventNumber, $readDirection, array $events, $nextEventNumber)
     {
@@ -50,7 +50,7 @@ class StreamEventsSlice
     }
 
     /**
-     * @return array
+     * @return EventData[]
      */
     public function getEvents()
     {
