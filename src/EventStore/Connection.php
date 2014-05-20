@@ -127,15 +127,15 @@ class Connection implements ConnectionInterface
     {
         $data = $response->json();
 
-        $slice = new StreamEventsSlice(
+        $index = $readDirection === 'forward' ? 'previous' : 'next';
+
+        return new StreamEventsSlice(
             'Success',
             $start,
             $readDirection,
             [],
-            null
+            $this->getNextEventNumber($data['links'], $index)
         );
-
-        return $slice;
     }
 
     /**
@@ -154,5 +154,16 @@ class Connection implements ConnectionInterface
                 ]
             ])
         ;
+    }
+
+    private function getNextEventNumber(array $links, $index)
+    {
+        foreach ($links as $link) {
+            if ($index === $link['relation']) {
+                $parts = explode('/', $link['uri']);
+
+                return (int) array_pop($parts);
+            }
+        }
     }
 }

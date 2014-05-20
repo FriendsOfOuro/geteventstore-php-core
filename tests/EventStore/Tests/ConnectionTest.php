@@ -70,7 +70,7 @@ class ConnectionTest extends GuzzleTestCase
 
     public function testReadStreamEventsForward()
     {
-        $this->readStreamCommonAssertions('forward', 0, 2);
+        $this->readStreamCommonAssertions('forward', 0, 2, 2);
     }
 
     public function testReadStreamEventsBackward()
@@ -130,7 +130,6 @@ class ConnectionTest extends GuzzleTestCase
         $this->assertEquals('application/vnd.eventstore.atom+json', $this->request->getHeader('accept'));
 
         $this->assertInstanceOf('EventStore\StreamEventsSlice', $slice);
-
         $this->assertSame($direction, $slice->getReadDirection(), 'Read direction should match');
         $this->assertSame($start, $slice->getFromEventNumber(), 'FromEventNumber should match');
         $this->assertSame($nextEvent, $slice->getNextEventNumber(), 'NextEventNumber should match');
