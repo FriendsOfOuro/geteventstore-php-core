@@ -39,8 +39,8 @@ class Connection implements ConnectionInterface
     {
         $this->client = $client;
         $this->readers = [
-            'forward' => new ForwardReader(),
-            'backward' => new BackwardReader(),
+            'forward' => new ForwardReader($client),
+            'backward' => new BackwardReader($client),
         ];
     }
 
@@ -72,11 +72,7 @@ class Connection implements ConnectionInterface
      */
     public function readStreamEventsForward($stream, $start, $count, $resolveLinkTos)
     {
-        $url = \sprintf('/streams/%s/%d/forward/%d', $stream, $start, $count);
-
-        $response = $this->readStreamEvents($url);
-
-        return $this->transformResponse($response, $start, 'forward');
+        return $this->readers['forward']->readStreamEvents($stream, $start, $count, $resolveLinkTos);
     }
 
     /**
@@ -84,11 +80,7 @@ class Connection implements ConnectionInterface
      */
     public function readStreamEventsBackward($stream, $start, $count, $resolveLinkTos)
     {
-        $url = \sprintf('/streams/%s/%d/backward/%d', $stream, $start, $count);
-
-        $response = $this->readStreamEvents($url);
-
-        return $this->transformResponse($response, $start, 'backward');
+        return $this->readers['backward']->readStreamEvents($stream, $start, $count, $resolveLinkTos);
     }
 
     /**
@@ -135,23 +127,5 @@ class Connection implements ConnectionInterface
     private function transformResponse(ResponseInterface $response, $start, $readDirection)
     {
         return $this->readers[$readDirection]->transformResponse($response, $start);
-    }
-
-    /**
-     * @param $url
-     * @return ResponseInterface
-     */
-    private function readStreamEvents($url)
-    {
-        return $this->client
-            ->get($url, [
-                'headers' => [
-                    'accept' => 'application/vnd.eventstore.atom+json',
-                ],
-                'query' => [
-                    'embed' => 'body'
-                ]
-            ])
-        ;
     }
 }
