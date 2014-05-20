@@ -34,19 +34,33 @@ class StreamEventsSlice
     private $nextEventNumber;
 
     /**
-     * @param string      $status
-     * @param int         $fromEventNumber
-     * @param string      $readDirection
-     * @param EventData[] $events
-     * @param int         $nextEventNumber
+     * @var bool
      */
-    public function __construct($status, $fromEventNumber, $readDirection, array $events, $nextEventNumber)
+    private $headOfStream;
+
+    /**
+     * @param string $status
+     * @param int    $fromEventNumber
+     * @param string $readDirection
+     * @param array  $events
+     * @param int    $nextEventNumber
+     * @param bool   $headOfStream
+     */
+    public function __construct(
+        $status,
+        $fromEventNumber,
+        $readDirection,
+        array $events,
+        $nextEventNumber,
+        $headOfStream = false
+    )
     {
         $this->status = $status;
         $this->events = $events;
         $this->fromEventNumber = $fromEventNumber;
         $this->nextEventNumber = $nextEventNumber;
         $this->readDirection = $readDirection;
+        $this->headOfStream = $headOfStream;
     }
 
     /**
@@ -87,5 +101,13 @@ class StreamEventsSlice
     public function getStatus()
     {
         return $this->status;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHeadOfStream()
+    {
+        return $this->headOfStream;
     }
 }
