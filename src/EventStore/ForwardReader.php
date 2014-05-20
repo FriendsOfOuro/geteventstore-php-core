@@ -17,14 +17,6 @@ class ForwardReader extends Reader
     }
 
     /**
-     * @return string
-     */
-    protected function getReadDirection()
-    {
-        return self::FORWARD;
-    }
-
-    /**
      * @param  array $links
      * @return int
      */
@@ -35,5 +27,34 @@ class ForwardReader extends Reader
                 return $this->getVersion($link);
             }
         }
+    }
+
+    /**
+     * @param  string            $status
+     * @param  int               $start
+     * @param  array             $events
+     * @param  int               $nextEventNumber
+     * @return StreamEventsSlice
+     */
+    protected function createStreamEventsSlice($status, $start, array $events, $nextEventNumber)
+    {
+        return new StreamEventsSlice(
+            $status,
+            $start,
+            'forward',
+            $events,
+            $nextEventNumber
+        );
+    }
+
+    /**
+     * @param  string $stream
+     * @param  int    $start
+     * @param  int    $count
+     * @return string
+     */
+    protected function getUri($stream, $start, $count)
+    {
+        return sprintf('/streams/%s/%d/%s/%d', $stream, $start, 'forward', $count);
     }
 }

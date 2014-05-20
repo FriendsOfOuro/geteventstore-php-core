@@ -34,11 +34,11 @@ abstract class Reader
      */
     public function readStreamEvents($stream, $start, $count, $resolveLinkTos)
     {
-        $url = \sprintf('/streams/%s/%d/%s/%d', $stream, $start, $this->getReadDirection(), $count);
+        $url = $this->getUri($stream, $start, $count);
 
         $response = $this->sendReadStreamEventsRequest($url);
 
-        return $this->transformResponse($response, $start, $this->getReadDirection());
+        return $this->transformResponse($response, $start);
     }
 
     /**
@@ -60,10 +60,9 @@ abstract class Reader
     {
         $data = $response->json();
 
-        return new StreamEventsSlice(
+        return $this->createStreamEventsSlice(
             'Success',
             $start,
-            $this->getReadDirection(),
             $this->decodeEvents($data['entries']),
             $this->getNextEventNumber($data['links'])
         );
@@ -85,15 +84,19 @@ abstract class Reader
     abstract protected function append(array &$events, ReadEvent $event);
 
     /**
-     * @return string
-     */
-    abstract protected function getReadDirection();
-
-    /**
      * @param  array $links
      * @return int
      */
     abstract protected function getNextEventNumber(array $links);
+
+    /**
+     * @param  string            $status
+     * @param  int               $start
+     * @param  array             $events
+     * @param  int               $nextEventNumber
+     * @return StreamEventsSlice
+     */
+    abstract protected function createStreamEventsSlice($status, $start, array $events, $nextEventNumber);
 
     /**
      * @param  string $link
@@ -123,4 +126,12 @@ abstract class Reader
             ])
         ;
     }
+
+    /**
+     * @param  string $stream
+     * @param  int    $start
+     * @param  int    $count
+     * @return string
+     */
+    abstract protected function getUri($stream, $start, $count);
 }

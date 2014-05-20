@@ -17,14 +17,6 @@ class BackwardReader extends Reader
     }
 
     /**
-     * @return string
-     */
-    protected function getReadDirection()
-    {
-        return self::BACKWARD;
-    }
-
-    /**
      * @param  array $links
      * @return int
      */
@@ -35,5 +27,34 @@ class BackwardReader extends Reader
                 return $this->getVersion($link);
             }
         }
+    }
+
+    /**
+     * @param  string            $status
+     * @param  int               $start
+     * @param  array             $events
+     * @param  int               $nextEventNumber
+     * @return StreamEventsSlice
+     */
+    protected function createStreamEventsSlice($status, $start, array $events, $nextEventNumber)
+    {
+        return new StreamEventsSlice(
+            $status,
+            $start,
+            'backward',
+            $events,
+            $nextEventNumber
+        );
+    }
+
+    /**
+     * @param  string $stream
+     * @param  int    $start
+     * @param  int    $count
+     * @return string
+     */
+    protected function getUri($stream, $start, $count)
+    {
+        return sprintf('/streams/%s/%d/%s/%d', $stream, $start, 'backward', $count);
     }
 }
