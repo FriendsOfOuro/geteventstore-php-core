@@ -5,6 +5,7 @@ namespace EventStore\Tests;
 use EventStore\Connection;
 use EventStore\ConnectionInterface;
 use EventStore\EventData;
+use EventStore\StreamEventsSlice;
 use EventStore\Tests\Guzzle\GuzzleTestCase;
 use GuzzleHttp\Message\Response;
 use GuzzleHttp\Stream\Stream;
@@ -69,11 +70,12 @@ class ConnectionTest extends GuzzleTestCase
 
     public function testReadStreamEventsForward()
     {
-        $direction = 'forward';
-        $start = 0;
-        $count = 2;
+        $this->readStreamCommonAssertions('forward', 0, 2);
+    }
 
-        $this->readStreamCommonAssertions($direction, $start, $count);
+    public function testReadStreamEventsBackward()
+    {
+        $this->readStreamCommonAssertions('backward', 1, 2);
     }
 
     /**
@@ -106,16 +108,20 @@ class ConnectionTest extends GuzzleTestCase
     }
 
     /**
-     * @param string $direction
-     * @param int    $start
-     * @param int    $count
+     * @param string   $direction
+     * @param int      $start
+     * @param int      $count
+     * @param int|null $nextEvent
      */
-    private function readStreamCommonAssertions($direction, $start, $count)
+    private function readStreamCommonAssertions($direction, $start, $count, $nextEvent = null)
     {
-        $jsonFile = sprintf('%s/%s.json', __DIR__, $direction);
+        $jsonFile = sprintf('%s/%d_%s_%d.json', __DIR__, $start, $direction, $count);
         $connection = $this->mockConnectionToJson($jsonFile);
 
-        $slice = $connection->readStreamEventsForward('test', $start, $count, false);
+        $method = 'readStreamEvents'.ucfirst($direction);
+
+        /** @var StreamEventsSlice $slice */
+        $slice = $connection->$method('test', $start, $count, false);
 
         $this->assertNotNull($this->request);
 
@@ -124,8 +130,9 @@ class ConnectionTest extends GuzzleTestCase
         $this->assertEquals('application/vnd.eventstore.atom+json', $this->request->getHeader('accept'));
 
         $this->assertInstanceOf('EventStore\StreamEventsSlice', $slice);
-        $nextEvent = $start + ($direction === 'forward' ? $count : -$count);
 
-        $this->assertSame($nextEvent, $slice->getNextEventNumber());
+        $this->assertSame($direction, $slice->getReadDirection(), 'Read direction should match');
+        $this->assertSame($start, $slice->getFromEventNumber(), 'FromEventNumber should match');
+        $this->assertSame($nextEvent, $slice->getNextEventNumber(), 'NextEventNumber should match');
     }
 }

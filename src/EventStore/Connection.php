@@ -65,20 +65,9 @@ class Connection implements ConnectionInterface
     {
         $url = \sprintf('/streams/%s/%d/forward/%d', $stream, $start, $count);
 
-        $response = $this->client
-            ->get($url, [
-                'headers' => [
-                    'accept' => 'application/vnd.eventstore.atom+json',
-                ],
-                'query' => [
-                    'embed' => 'body'
-                ]
-            ])
-        ;
+        $response = $this->readStreamEvents($url);
 
-        $slice = $this->transformResponse($response, 'forward', $start);
-
-        return $slice;
+        return $this->transformResponse($response, $start, 'forward');
     }
 
     /**
@@ -86,7 +75,11 @@ class Connection implements ConnectionInterface
      */
     public function readStreamEventsBackward($stream, $start, $count, $resolveLinkTos)
     {
-        // TODO: Implement readStreamEventsBackward() method.
+        $url = \sprintf('/streams/%s/%d/backward/%d', $stream, $start, $count);
+
+        $response = $this->readStreamEvents($url);
+
+        return $this->transformResponse($response, $start, 'backward');
     }
 
     /**
@@ -136,12 +129,30 @@ class Connection implements ConnectionInterface
 
         $slice = new StreamEventsSlice(
             'Success',
-            0,
+            $start,
             $readDirection,
             [],
-            2
+            null
         );
 
         return $slice;
+    }
+
+    /**
+     * @param $url
+     * @return ResponseInterface
+     */
+    private function readStreamEvents($url)
+    {
+        return $this->client
+            ->get($url, [
+                'headers' => [
+                    'accept' => 'application/vnd.eventstore.atom+json',
+                ],
+                'query' => [
+                    'embed' => 'body'
+                ]
+            ])
+        ;
     }
 }
