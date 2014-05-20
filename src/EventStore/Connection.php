@@ -59,7 +59,7 @@ class Connection implements ConnectionInterface
            ->post('/streams/'.$stream, [
                 'body' => Stream::factory(json_encode($eventsArray)),
                 'headers' => [
-                    'Content-type'       => 'application/json',
+                    'Content-type'       => 'application/vnd.eventstore.events+json',
                     'ES-ExpectedVersion' => $expectedVersion
                 ]
            ])
