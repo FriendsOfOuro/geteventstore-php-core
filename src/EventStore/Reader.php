@@ -57,6 +57,9 @@ abstract class Reader
         return $decoded;
     }
 
+    /**
+     * @param integer $start
+     */
     public function transformResponse(ResponseInterface $response, $start)
     {
         $handlers = [
@@ -147,7 +150,7 @@ abstract class Reader
     }
 
     /**
-     * @param $url
+     * @param string $url
      * @return ResponseInterface
      */
     private function sendReadStreamEventsRequest($url)
