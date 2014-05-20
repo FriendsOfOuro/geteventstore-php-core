@@ -99,6 +99,14 @@ abstract class Reader
     abstract protected function createStreamEventsSlice($status, $start, array $events, $nextEventNumber);
 
     /**
+     * @param  string $stream
+     * @param  int    $start
+     * @param  int    $count
+     * @return string
+     */
+    abstract protected function getUri($stream, $start, $count);
+
+    /**
      * @param  string $link
      * @return int
      */
@@ -126,12 +134,4 @@ abstract class Reader
             ])
         ;
     }
-
-    /**
-     * @param  string $stream
-     * @param  int    $start
-     * @param  int    $count
-     * @return string
-     */
-    abstract protected function getUri($stream, $start, $count);
 }
