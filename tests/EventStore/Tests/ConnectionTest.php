@@ -101,9 +101,8 @@ class ConnectionTest extends GuzzleTestCase
         $guzzle = $this->buildMockClient(function () use ($jsonFile) {
             return $this->createJsonFeedResponse($jsonFile);
         });
-        $connection = Connection::create(['client' => $guzzle]);
 
-        return $connection;
+        return Connection::create(['client' => $guzzle]);
     }
 
     /**
