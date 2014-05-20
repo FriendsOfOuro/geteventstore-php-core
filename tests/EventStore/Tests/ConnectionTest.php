@@ -5,6 +5,7 @@ namespace EventStore\Tests;
 use EventStore\Connection;
 use EventStore\ConnectionInterface;
 use EventStore\EventData;
+use EventStore\ReadEvent;
 use EventStore\StreamEventsSlice;
 use EventStore\Tests\Guzzle\GuzzleTestCase;
 use GuzzleHttp\Message\Response;
@@ -76,6 +77,22 @@ class ConnectionTest extends GuzzleTestCase
     public function testReadStreamEventsBackward()
     {
         $this->readStreamCommonAssertions('backward', 1, 2);
+    }
+
+    public function testReadForwardIsDecodedProperly()
+    {
+        $jsonFile = sprintf('%s/%d_%s_%d.json', __DIR__, 0, 'forward', 2);
+        $connection = $this->mockConnectionToJson($jsonFile);
+
+        $slice = $connection->readStreamEventsForward('test', 0, 2, false);
+        $events = $slice->getEvents();
+
+        $expected = [
+            new ReadEvent('SomethingHappened', ['foo' => 'fizz'], 0),
+            new ReadEvent('SomethingElseHappened', ['bar' => 'buzz'], 1),
+        ];
+
+        $this->assertEquals($expected, $events);
     }
 
     /**

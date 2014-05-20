@@ -133,7 +133,7 @@ class Connection implements ConnectionInterface
             'Success',
             $start,
             $readDirection,
-            $this->decodeEvents($data),
+            $this->decodeEvents($data['entries'], $readDirection),
             $this->getNextEventNumber($data['links'], $index)
         );
     }
@@ -165,19 +165,40 @@ class Connection implements ConnectionInterface
     {
         foreach ($links as $link) {
             if ($index === $link['relation']) {
-                $parts = explode('/', $link['uri']);
-
-                return (int) array_pop($parts);
+                return $this->getVersion($link);
             }
         }
     }
 
-    /**
-     * @param  array $data
-     * @return array
-     */
-    private function decodeEvents(array $data)
+    private function decodeEvents(array $entries, $readDirection)
     {
-        return [];
+        $function = $readDirection === 'forward' ? 'array_unshift' : 'array_push';
+        $decoded = [];
+
+        foreach ($entries as $entry) {
+            $function($decoded, $this->decodeEvent($entry));
+        }
+
+        return $decoded;
+    }
+
+    /**
+     * @param  array     $entry
+     * @return ReadEvent
+     */
+    private function decodeEvent(array $entry)
+    {
+        return new ReadEvent($entry['eventType'], json_decode($entry['data'], true), $this->getVersion($entry['links'][0]));
+    }
+
+    /**
+     * @param  string $link
+     * @return int
+     */
+    private function getVersion($link)
+    {
+        $parts = explode('/', $link['uri']);
+
+        return (int) array_pop($parts);
     }
 }
