@@ -19,6 +19,11 @@ class Connection implements ConnectionInterface
     private $client;
 
     /**
+     * @var Reader[]
+     */
+    private $readers;
+
+    /**
      * @var array
      */
     private static $defaultOptions = [
@@ -33,6 +38,10 @@ class Connection implements ConnectionInterface
     protected function __construct(ClientInterface $client)
     {
         $this->client = $client;
+        $this->readers = [
+            'forward' => new ForwardReader(),
+            'backward' => new BackwardReader(),
+        ];
     }
 
     /**
@@ -172,23 +181,7 @@ class Connection implements ConnectionInterface
 
     private function decodeEvents(array $entries, $readDirection)
     {
-        $function = $readDirection === 'forward' ? 'array_unshift' : 'array_push';
-        $decoded = [];
-
-        foreach ($entries as $entry) {
-            $function($decoded, $this->decodeEvent($entry));
-        }
-
-        return $decoded;
-    }
-
-    /**
-     * @param  array     $entry
-     * @return ReadEvent
-     */
-    private function decodeEvent(array $entry)
-    {
-        return new ReadEvent($entry['eventType'], json_decode($entry['data'], true), $this->getVersion($entry['links'][0]));
+        return $this->readers[$readDirection]->decodeEvents($entries, $readDirection);
     }
 
     /**
