@@ -4,6 +4,7 @@ namespace EventStore;
 
 use EventStore\Exception\ConnectionFailedException;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Message\Request;
 
@@ -19,6 +20,20 @@ final class EventStore {
         $this->checkConnection();
     }
 
+    public function deleteStream($stream_name, StreamDeletion $mode) {
+        $request = $this->httpClient->createRequest('DELETE', $this->getStreamUrl($stream_name));
+
+        if($mode == StreamDeletion::HARD) {
+            $request->addHeader('ES-HardDelete', 'true');
+        }
+
+        $this->sendRequest($request);
+    }
+
+    public function getLastResponse() {
+        return $this->lastResponse;
+    }
+
     public function writeToStream($stream_name, WritableToStream $events) {
         if($events instanceof Event) {
             $events = new EventCollection([$events]);
@@ -28,16 +43,16 @@ final class EventStore {
         $this->sendRequest($request);
     }
 
-    public function getLastResponse() {
-        return $this->lastResponse;
-    }
-
     private function getStreamUrl($stream_name) {
         return sprintf('%s/streams/%s', $this->url, $stream_name);
     }
 
     private function sendRequest(Request $request) {
-        $this->lastResponse = $this->httpClient->send($request);
+        try {
+            $this->lastResponse = $this->httpClient->send($request);
+        } catch(ClientException $e) {
+            $this->lastResponse = $e->getResponse();
+        }
     }
 
     private function checkConnection() {
