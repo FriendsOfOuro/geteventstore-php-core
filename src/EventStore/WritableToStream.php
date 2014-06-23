@@ -2,6 +2,7 @@
 
 namespace EventStore;
 
-interface WritableToStream {
+interface WritableToStream
+{
     public function toStreamData();
 }

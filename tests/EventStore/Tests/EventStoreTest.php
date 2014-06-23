@@ -22,7 +22,6 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function event_is_writed_to_stream()
     {
-        $this->es   = new EventStore('http://127.0.0.1:2113');
         $streamName = uniqid();
         $event      = Event::newInstance('Foo', 'bar');
 
@@ -34,7 +33,6 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function stream_is_soft_deleted()
     {
-        $this->es   = new EventStore('http://127.0.0.1:2113');
         $streamName = uniqid();
         $event      = Event::newInstance('Foo', 'bar');
 
@@ -53,7 +51,6 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function stream_is_hard_deleted()
     {
-        $this->es   = new EventStore('http://127.0.0.1:2113');
         $streamName = uniqid();
         $event      = Event::newInstance('Foo', 'bar');
 
