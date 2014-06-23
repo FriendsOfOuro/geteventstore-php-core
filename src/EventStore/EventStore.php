@@ -38,6 +38,18 @@ final class EventStore
         return $this->lastResponse;
     }
 
+    public function readStream($stream_name)
+    {
+        $request = $this->httpClient->createRequest('GET', $this->getStreamUrl($stream_name));
+        $request->addHeader('Accept', 'application/json');
+        $this->sendRequest($request);
+
+        $jsonResponse = $this->lastResponse->json();
+        $stream       = Stream::fromDecodedJson($jsonResponse);
+
+        return $stream;
+    }
+
     public function writeToStream($stream_name, WritableToStream $events)
     {
         if ($events instanceof Event) {
@@ -58,6 +70,7 @@ final class EventStore
         try {
             $this->lastResponse = $this->httpClient->send($request);
         } catch (ClientException $e) {
+
             $this->lastResponse = $e->getResponse();
         }
     }

@@ -22,10 +22,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function event_is_writed_to_stream()
     {
-        $streamName = uniqid();
-        $event      = Event::newInstance('Foo', 'bar');
-
-        $this->es->writeToStream($streamName, $event);
+        $this->prepareTestStream();
 
         $this->assertEquals('201', $this->es->getLastResponse()->getStatusCode());
     }
@@ -33,16 +30,13 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function stream_is_soft_deleted()
     {
-        $streamName = uniqid();
-        $event      = Event::newInstance('Foo', 'bar');
-
-        $this->es->writeToStream($streamName, $event);
+        $streamName = $this->prepareTestStream();
         $this->es->deleteStream($streamName, StreamDeletion::SOFT());
 
         $this->assertEquals('204', $this->es->getLastResponse()->getStatusCode());
 
         // we try to write to a soft deleted stream...
-        $this->es->writeToStream($streamName, $event);
+        $this->es->writeToStream($streamName, Event::newInstance('Foo', 'bar'));
 
         // ..and we should expect a "201 Created" response
         $this->assertEquals('201', $this->es->getLastResponse()->getStatusCode());
@@ -51,19 +45,35 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function stream_is_hard_deleted()
     {
-        $streamName = uniqid();
-        $event      = Event::newInstance('Foo', 'bar');
-
-        $this->es->writeToStream($streamName, $event);
+        $streamName = $this->prepareTestStream();
         $this->es->deleteStream($streamName, StreamDeletion::HARD());
 
         $this->assertEquals('204', $this->es->getLastResponse()->getStatusCode());
 
         // we try to write to a hard deleted stream...
-        $this->es->writeToStream($streamName, $event);
+        $this->es->writeToStream($streamName, Event::newInstance('Foo', 'bar'));
 
         // ..and we should expect a "410 Stream deleted" response
         $this->assertEquals('410', $this->es->getLastResponse()->getStatusCode());
+    }
+
+    /** @test */
+    public function stream_is_successfully_read()
+    {
+        $streamName = $this->prepareTestStream();
+        $stream = $this->es->readStream($streamName);
+
+        $this->assertEquals($streamName, $stream->getName());
+    }
+
+    private function prepareTestStream()
+    {
+        $streamName = uniqid();
+        $event      = Event::newInstance('Foo', 'bar');
+
+        $this->es->writeToStream($streamName, $event);
+
+        return $streamName;
     }
 
 }
