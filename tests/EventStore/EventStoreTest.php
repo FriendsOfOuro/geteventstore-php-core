@@ -7,13 +7,15 @@ use EventStore\EventStore;
 
 class EventStoreTest extends \PHPUnit_Framework_TestCase {
 
-    public function test_client_successfully_connects_to_event_store() {
+    /** @test */
+    public function client_successfully_connects_to_event_store() {
         $es = new EventStore('http://127.0.0.1:2113');
 
         $this->assertEquals('200', $es->getLastResponse()->getStatusCode());
     }
 
-    public function test_event_is_writed_to_stream() {
+    /** @test */
+    public function event_is_writed_to_stream() {
         $es         = new EventStore('http://127.0.0.1:2113');
         $streamName = uniqid();
         $event      = Event::newInstance('Foo', 'bar');

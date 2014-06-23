@@ -8,7 +8,8 @@ use ValueObjects\Identity\UUID;
 
 class EventCollectionTest extends \PHPUnit_Framework_TestCase {
 
-    public function test_event_collection_is_converted_to_stream_data() {
+    /** @test */
+    public function event_collection_is_converted_to_stream_data() {
         $uuid1  = new UUID();
         $event1 = new Event($uuid1, 'Foo', 'bar');
 
