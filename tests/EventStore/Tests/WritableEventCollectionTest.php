@@ -2,22 +2,22 @@
 
 namespace EventStore\Tests;
 
-use EventStore\Event;
-use EventStore\EventCollection;
+use EventStore\WritableEvent;
+use EventStore\WritableEventCollection;
 use ValueObjects\Identity\UUID;
 
-class EventCollectionTest extends \PHPUnit_Framework_TestCase
+class WritableEventCollectionTest extends \PHPUnit_Framework_TestCase
 {
     /** @test */
     public function event_collection_is_converted_to_stream_data()
     {
         $uuid1  = new UUID();
-        $event1 = new Event($uuid1, 'Foo', 'bar');
+        $event1 = new WritableEvent($uuid1, 'Foo', 'bar');
 
         $uuid2  = new UUID();
-        $event2 = new Event($uuid2, 'Baz', 'foo');
+        $event2 = new WritableEvent($uuid2, 'Baz', 'foo');
 
-        $eventCollection = new EventCollection([$event1, $event2]);
+        $eventCollection = new WritableEventCollection([$event1, $event2]);
 
         $streamData = [
             [

@@ -2,7 +2,7 @@
 
 namespace EventStore;
 
-final class EventCollection implements WritableToStream
+final class WritableEventCollection implements WritableToStream
 {
     private $events = [];
 
@@ -22,8 +22,8 @@ final class EventCollection implements WritableToStream
     private function validateEvents($events)
     {
         foreach ($events as $event) {
-            if (!$event instanceof Event) {
-                throw new InvalidEventObjectException();
+            if (!$event instanceof WritableEvent) {
+                throw new InvalidWritableEventObjectException();
             }
         }
     }

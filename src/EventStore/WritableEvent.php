@@ -4,8 +4,9 @@ namespace EventStore;
 
 use ValueObjects\Identity\UUID;
 
-final class Event implements WritableToStream
+final class WritableEvent implements WritableToStream
 {
+    private $uuid;
     private $type;
     private $data;
 

@@ -2,7 +2,7 @@
 
 namespace EventStore\Tests;
 
-use EventStore\Event;
+use EventStore\WritableEvent;
 use EventStore\EventStore;
 use EventStore\StreamDeletion;
 
@@ -20,7 +20,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function event_is_writed_to_stream()
+    public function event_is_written_to_stream()
     {
         $this->prepareTestStream();
 
@@ -36,7 +36,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('204', $this->es->getLastResponse()->getStatusCode());
 
         // we try to write to a soft deleted stream...
-        $this->es->writeToStream($streamName, Event::newInstance('Foo', 'bar'));
+        $this->es->writeToStream($streamName, WritableEvent::newInstance('Foo', 'bar'));
 
         // ..and we should expect a "201 Created" response
         $this->assertEquals('201', $this->es->getLastResponse()->getStatusCode());
@@ -51,7 +51,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('204', $this->es->getLastResponse()->getStatusCode());
 
         // we try to write to a hard deleted stream...
-        $this->es->writeToStream($streamName, Event::newInstance('Foo', 'bar'));
+        $this->es->writeToStream($streamName, WritableEvent::newInstance('Foo', 'bar'));
 
         // ..and we should expect a "410 Stream deleted" response
         $this->assertEquals('410', $this->es->getLastResponse()->getStatusCode());
@@ -69,7 +69,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     private function prepareTestStream()
     {
         $streamName = uniqid();
-        $event      = Event::newInstance('Foo', 'bar');
+        $event      = WritableEvent::newInstance('Foo', 'bar');
 
         $this->es->writeToStream($streamName, $event);
 

@@ -38,10 +38,15 @@ final class EventStore
         return $this->lastResponse;
     }
 
-    public function readStream($stream_name)
+    public function readStream($stream_name, EventEmbedMode $embed_mode = null)
     {
         $request = $this->httpClient->createRequest('GET', $this->getStreamUrl($stream_name));
         $request->addHeader('Accept', 'application/json');
+
+        if ($embed_mode != null && $embed_mode != EventEmbedMode::None()) {
+            $request->getQuery()->add('embed', $embed_mode->toNative());
+        }
+
         $this->sendRequest($request);
 
         $jsonResponse = $this->lastResponse->json();
@@ -52,8 +57,8 @@ final class EventStore
 
     public function writeToStream($stream_name, WritableToStream $events)
     {
-        if ($events instanceof Event) {
-            $events = new EventCollection([$events]);
+        if ($events instanceof WritableEvent) {
+            $events = new WritableEventCollection([$events]);
         }
 
         $request = $this->httpClient->createRequest('POST', $this->getStreamUrl($stream_name), ['json' => $events->toStreamData()]);
