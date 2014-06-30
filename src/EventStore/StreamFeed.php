@@ -7,7 +7,8 @@ final class StreamFeed
     private $json;
     private $eventEmbedMode;
 
-    public function __construct(array $json_feed, EventEmbedMode $embed_mode = null) {
+    public function __construct(array $json_feed, EventEmbedMode $embed_mode = null)
+    {
         if ($embed_mode === null) {
             $embed_mode = EventEmbedMode::NONE();
         }
@@ -21,15 +22,17 @@ final class StreamFeed
         return $this->eventEmbedMode;
     }
 
-    public function getJson() {
+    public function getJson()
+    {
         return $this->json;
     }
 
-    public function getLinkUrl(StreamFeedLinkRelation $relation) {
+    public function getLinkUrl(StreamFeedLinkRelation $relation)
+    {
         $links = $this->json['links'];
 
-        foreach($links as $link) {
-            if($link['relation'] == $relation->toNative()) {
+        foreach ($links as $link) {
+            if ($link['relation'] == $relation->toNative()) {
                 return $link['uri'];
             }
         }
