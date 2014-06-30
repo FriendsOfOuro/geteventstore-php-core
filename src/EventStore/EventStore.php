@@ -38,21 +38,20 @@ final class EventStore
         return $this->lastResponse;
     }
 
-    public function readStream($stream_name, EventEmbedMode $embed_mode = null)
+    public function navigateStreamFeed(StreamFeed $stream_feed, StreamFeedLinkRelation $relation)
     {
-        $request = $this->httpClient->createRequest('GET', $this->getStreamUrl($stream_name));
-        $request->addHeader('Accept', 'application/json');
+        $url        = $stream_feed->getLinkUrl($relation);
+        $streamFeed = $this->readStreamFeed($url, $stream_feed->getEventEmbedMode());
 
-        if ($embed_mode != null && $embed_mode != EventEmbedMode::None()) {
-            $request->getQuery()->add('embed', $embed_mode->toNative());
-        }
+        return $streamFeed;
+    }
 
-        $this->sendRequest($request);
+    public function openStreamFeed($stream_name, EventEmbedMode $embed_mode = null)
+    {
+        $url        = $this->getStreamUrl($stream_name);
+        $streamFeed = $this->readStreamFeed($url, $embed_mode);
 
-        $jsonResponse = $this->lastResponse->json();
-        $stream       = Stream::fromDecodedJson($jsonResponse);
-
-        return $stream;
+        return $streamFeed;
     }
 
     public function writeToStream($stream_name, WritableToStream $events)
@@ -88,6 +87,23 @@ final class EventStore
         } catch (RequestException $e) {
             throw new ConnectionFailedException($e->getMessage());
         }
+    }
+
+    private function readStreamFeed($stream_url, EventEmbedMode $embed_mode = null)
+    {
+        $request = $this->httpClient->createRequest('GET', $stream_url);
+        $request->addHeader('Accept', 'application/json');
+
+        if ($embed_mode != null && $embed_mode != EventEmbedMode::NONE()) {
+            $request->getQuery()->add('embed', $embed_mode->toNative());
+        }
+
+        $this->sendRequest($request);
+
+        $jsonResponse = $this->lastResponse->json();
+        $streamFeed = new StreamFeed($jsonResponse, $embed_mode);
+
+        return $streamFeed;
     }
 
 }

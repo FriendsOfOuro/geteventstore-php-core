@@ -58,12 +58,14 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function stream_is_successfully_read()
+    public function stream_feed_is_successfully_opened()
     {
         $streamName = $this->prepareTestStream();
-        $stream = $this->es->readStream($streamName);
+        $streamFeed = $this->es->openStreamFeed($streamName);
 
-        $this->assertEquals($streamName, $stream->getName());
+        $json = $streamFeed->getJson();
+
+        $this->assertEquals($streamName, $json['streamId']);
     }
 
     private function prepareTestStream()
