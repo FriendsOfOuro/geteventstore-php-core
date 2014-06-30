@@ -6,7 +6,7 @@ use EventStore\Exception\ConnectionFailedException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Message\Request;
+use GuzzleHttp\Message\RequestInterface;
 
 final class EventStore
 {
@@ -69,7 +69,7 @@ final class EventStore
         return sprintf('%s/streams/%s', $this->url, $stream_name);
     }
 
-    private function sendRequest(Request $request)
+    private function sendRequest(RequestInterface $request)
     {
         try {
             $this->lastResponse = $this->httpClient->send($request);
