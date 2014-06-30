@@ -68,6 +68,15 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($streamName, $json['streamId']);
     }
 
+    /**
+     * @test
+     * @expectedException EventStore\Exception\ConnectionFailedException
+     */
+    public function unreacheable_es_throws_exception()
+    {
+        new EventStore('http://127.0.0.1:12345/');
+    }
+
     private function prepareTestStream()
     {
         $streamName = uniqid();
