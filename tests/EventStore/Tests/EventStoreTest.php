@@ -19,7 +19,10 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('200', $this->es->getLastResponse()->getStatusCode());
     }
 
-    /** @test */
+    /**
+     * @test
+     * @depends client_successfully_connects_to_event_store
+     */
     public function event_is_written_to_stream()
     {
         $this->prepareTestStream();
@@ -27,7 +30,10 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('201', $this->es->getLastResponse()->getStatusCode());
     }
 
-    /** @test */
+    /**
+     * @test
+     * @depends client_successfully_connects_to_event_store
+     */
     public function stream_is_soft_deleted()
     {
         $streamName = $this->prepareTestStream();
@@ -42,7 +48,10 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('201', $this->es->getLastResponse()->getStatusCode());
     }
 
-    /** @test */
+    /**
+     * @test
+     * @depends client_successfully_connects_to_event_store
+     */
     public function stream_is_hard_deleted()
     {
         $streamName = $this->prepareTestStream();
@@ -57,7 +66,10 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('410', $this->es->getLastResponse()->getStatusCode());
     }
 
-    /** @test */
+    /**
+     * @test
+     * @depends client_successfully_connects_to_event_store
+     */
     public function stream_feed_is_successfully_opened()
     {
         $streamName = $this->prepareTestStream();
@@ -70,13 +82,17 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException EventStore\Exception\ConnectionFailedException
+     * @depends client_successfully_connects_to_event_store
+     * @expectedException \EventStore\Exception\ConnectionFailedException
      */
     public function unreacheable_event_store_throws_exception()
     {
         new EventStore('http://127.0.0.1:12345/');
     }
 
+    /**
+     * @return string
+     */
     private function prepareTestStream()
     {
         $streamName = uniqid();
@@ -86,5 +102,4 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
         return $streamName;
     }
-
 }
