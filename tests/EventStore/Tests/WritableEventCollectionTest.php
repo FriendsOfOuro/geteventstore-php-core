@@ -34,4 +34,12 @@ class WritableEventCollectionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($streamData, $eventCollection->toStreamData());
     }
 
+    /**
+     * @test
+     * @expectedException EventStore\Exception\InvalidWritableEventObjectException
+     */
+    public function invalid_collection_throws_exception()
+    {
+        new WritableEventCollection(['foobar']);
+    }
 }

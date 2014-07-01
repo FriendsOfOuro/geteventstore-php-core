@@ -2,6 +2,8 @@
 
 namespace EventStore;
 
+use EventStore\Exception\InvalidWritableEventObjectException;
+
 final class WritableEventCollection implements WritableToStream
 {
     private $events = [];
