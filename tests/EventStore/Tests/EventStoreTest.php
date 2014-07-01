@@ -3,6 +3,7 @@
 namespace EventStore\Tests;
 
 use EventStore\EventEmbedMode;
+use EventStore\StreamFeedLinkRelation;
 use EventStore\WritableEvent;
 use EventStore\EventStore;
 use EventStore\StreamDeletion;
@@ -10,6 +11,11 @@ use EventStore\WritableEventCollection;
 
 class EventStoreTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var EventStore
+     */
+    private $es;
+
     public function setup()
     {
         $this->es = new EventStore('http://127.0.0.1:2113');
@@ -98,6 +104,18 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['foo' => 'bar'], json_decode($json['entries'][0]['data'], true));
     }
 
+    /** @test */
+    public function event_stream_is_navigated_correctly()
+    {
+        $streamName = $this->prepareTestStream(40);
+
+        $feed1 = $this->es->openStreamFeed($streamName);
+        $feed2 = $this->es->navigateStreamFeed($feed1, StreamFeedLinkRelation::NEXT());
+
+        $this->assertInstanceOf('EventStore\StreamFeed', $feed2);
+        $this->assertCount(20, $feed2->getJson()['entries']);
+    }
+
     /**
      * @param  int    $length
      * @return string
@@ -107,7 +125,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $streamName = uniqid();
         $events     = [];
 
-        for ($i = 0; $i<$length; ++$i) {
+        for ($i = 0; $i < $length; ++$i) {
             $events[] = WritableEvent::newInstance('Foo', ['foo' => 'bar']);
         }
 
