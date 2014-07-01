@@ -7,13 +7,32 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Message\RequestInterface;
+use GuzzleHttp\Message\ResponseInterface;
 
+/**
+ * Class EventStore
+ * @package EventStore
+ */
 final class EventStore
 {
+    /**
+     * @var string
+     */
     private $url;
+
+    /**
+     * @var Client
+     */
     private $httpClient;
+
+    /**
+     * @var ResponseInterface
+     */
     private $lastResponse;
 
+    /**
+     * @param string $url
+     */
     public function __construct($url)
     {
         $this->url = $url;
@@ -22,6 +41,10 @@ final class EventStore
         $this->checkConnection();
     }
 
+    /**
+     * @param string         $stream_name
+     * @param StreamDeletion $mode
+     */
     public function deleteStream($stream_name, StreamDeletion $mode)
     {
         $request = $this->httpClient->createRequest('DELETE', $this->getStreamUrl($stream_name));
@@ -33,11 +56,19 @@ final class EventStore
         $this->sendRequest($request);
     }
 
+    /**
+     * @return ResponseInterface
+     */
     public function getLastResponse()
     {
         return $this->lastResponse;
     }
 
+    /**
+     * @param  StreamFeed             $stream_feed
+     * @param  StreamFeedLinkRelation $relation
+     * @return StreamFeed
+     */
     public function navigateStreamFeed(StreamFeed $stream_feed, StreamFeedLinkRelation $relation)
     {
         $url        = $stream_feed->getLinkUrl($relation);
@@ -46,6 +77,11 @@ final class EventStore
         return $streamFeed;
     }
 
+    /**
+     * @param  string         $stream_name
+     * @param  EventEmbedMode $embed_mode
+     * @return StreamFeed
+     */
     public function openStreamFeed($stream_name, EventEmbedMode $embed_mode = null)
     {
         $url        = $this->getStreamUrl($stream_name);
@@ -54,6 +90,10 @@ final class EventStore
         return $streamFeed;
     }
 
+    /**
+     * @param string           $stream_name
+     * @param WritableToStream $events
+     */
     public function writeToStream($stream_name, WritableToStream $events)
     {
         if ($events instanceof WritableEvent) {
@@ -64,21 +104,30 @@ final class EventStore
         $this->sendRequest($request);
     }
 
+    /**
+     * @param  string $stream_name
+     * @return string
+     */
     private function getStreamUrl($stream_name)
     {
         return sprintf('%s/streams/%s', $this->url, $stream_name);
     }
 
+    /**
+     * @param RequestInterface $request
+     */
     private function sendRequest(RequestInterface $request)
     {
         try {
             $this->lastResponse = $this->httpClient->send($request);
         } catch (ClientException $e) {
-
             $this->lastResponse = $e->getResponse();
         }
     }
 
+    /**
+     * @throws Exception\ConnectionFailedException
+     */
     private function checkConnection()
     {
         try {
@@ -89,6 +138,11 @@ final class EventStore
         }
     }
 
+    /**
+     * @param  string         $stream_url
+     * @param  EventEmbedMode $embed_mode
+     * @return StreamFeed
+     */
     private function readStreamFeed($stream_url, EventEmbedMode $embed_mode = null)
     {
         $request = $this->httpClient->createRequest('GET', $stream_url);
@@ -105,5 +159,4 @@ final class EventStore
 
         return $streamFeed;
     }
-
 }
