@@ -96,7 +96,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     private function prepareTestStream()
     {
         $streamName = uniqid();
-        $event      = WritableEvent::newInstance('Foo', 'bar');
+        $event      = WritableEvent::newInstance('Foo', ['foo' => 'bar']);
 
         $this->es->writeToStream($streamName, $event);
 
