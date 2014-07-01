@@ -21,7 +21,6 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @depends client_successfully_connects_to_event_store
      */
     public function event_is_written_to_stream()
     {
@@ -32,7 +31,6 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @depends client_successfully_connects_to_event_store
      */
     public function stream_is_soft_deleted()
     {
@@ -50,7 +48,6 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @depends client_successfully_connects_to_event_store
      */
     public function stream_is_hard_deleted()
     {
@@ -68,7 +65,6 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @depends client_successfully_connects_to_event_store
      */
     public function stream_feed_is_successfully_opened()
     {
@@ -82,7 +78,6 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @depends client_successfully_connects_to_event_store
      * @expectedException \EventStore\Exception\ConnectionFailedException
      */
     public function unreacheable_event_store_throws_exception()
