@@ -2,6 +2,7 @@
 
 namespace EventStore\Tests;
 
+use EventStore\EventEmbedMode;
 use EventStore\WritableEvent;
 use EventStore\EventStore;
 use EventStore\StreamDeletion;
@@ -83,6 +84,17 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     public function unreacheable_event_store_throws_exception()
     {
         new EventStore('http://127.0.0.1:12345/');
+    }
+
+    /** @test */
+    public function event_data_is_embedded_correctly()
+    {
+        $streamName = $this->prepareTestStream();
+        $streamFeed = $this->es->openStreamFeed($streamName, EventEmbedMode::BODY());
+
+        $json = $streamFeed->getJson();
+
+        $this->assertEquals(['foo' => 'bar'], json_decode($json['entries'][0]['data'], true));
     }
 
     /**
