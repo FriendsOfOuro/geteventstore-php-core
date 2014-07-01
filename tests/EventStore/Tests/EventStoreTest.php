@@ -6,6 +6,7 @@ use EventStore\EventEmbedMode;
 use EventStore\WritableEvent;
 use EventStore\EventStore;
 use EventStore\StreamDeletion;
+use EventStore\WritableEventCollection;
 
 class EventStoreTest extends \PHPUnit_Framework_TestCase
 {
@@ -98,14 +99,20 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param  int    $length
      * @return string
      */
-    private function prepareTestStream()
+    private function prepareTestStream($length = 1)
     {
         $streamName = uniqid();
-        $event      = WritableEvent::newInstance('Foo', ['foo' => 'bar']);
+        $events     = [];
 
-        $this->es->writeToStream($streamName, $event);
+        for ($i = 0; $i<$length; ++$i) {
+            $events[] = WritableEvent::newInstance('Foo', ['foo' => 'bar']);
+        }
+
+        $collection = new WritableEventCollection($events);
+        $this->es->writeToStream($streamName, $collection);
 
         return $streamName;
     }
