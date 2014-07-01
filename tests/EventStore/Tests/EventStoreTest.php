@@ -72,7 +72,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException EventStore\Exception\ConnectionFailedException
      */
-    public function unreacheable_es_throws_exception()
+    public function unreacheable_event_store_throws_exception()
     {
         new EventStore('http://127.0.0.1:12345/');
     }
