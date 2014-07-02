@@ -1,9 +1,9 @@
 <?php
-namespace EventStore\Tests;
+namespace EventStore\Tests\StreamFeed;
 
-use EventStore\EventEmbedMode;
-use EventStore\StreamFeed;
-use EventStore\StreamFeedLinkRelation;
+use EventStore\StreamFeed\EntryEmbedMode;
+use EventStore\StreamFeed\StreamFeed;
+use EventStore\StreamFeed\LinkRelation;
 
 class StreamFeedTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,11 +11,11 @@ class StreamFeedTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider modeProvider
      */
-    public function event_embed_mode_is_returned_properly(EventEmbedMode $mode = null, EventEmbedMode $expected)
+    public function event_embed_mode_is_returned_properly(EntryEmbedMode $mode = null, EntryEmbedMode $expected)
     {
         $feed = new StreamFeed([], $mode);
 
-        $this->assertEquals($expected, $feed->getEventEmbedMode());
+        $this->assertEquals($expected, $feed->getEntryEmbedMode());
     }
 
     /**
@@ -24,10 +24,10 @@ class StreamFeedTest extends \PHPUnit_Framework_TestCase
     public static function modeProvider()
     {
         return [
-            [null, EventEmbedMode::NONE()],
-            [$eem = EventEmbedMode::NONE(), $eem],
-            [$eem = EventEmbedMode::RICH(), $eem],
-            [$eem = EventEmbedMode::BODY(), $eem],
+            [null, EntryEmbedMode::NONE()],
+            [$eem = EntryEmbedMode::NONE(), $eem],
+            [$eem = EntryEmbedMode::RICH(), $eem],
+            [$eem = EntryEmbedMode::BODY(), $eem],
         ];
     }
 
@@ -35,7 +35,7 @@ class StreamFeedTest extends \PHPUnit_Framework_TestCase
      * @dataProvider relationProvider
      * @test
      */
-    public function get_link_url_returns_proper_url(StreamFeedLinkRelation $relation)
+    public function get_link_url_returns_proper_url(LinkRelation $relation)
     {
         $uri = 'http://sample.uri:12345/stream';
 
@@ -65,14 +65,14 @@ class StreamFeedTest extends \PHPUnit_Framework_TestCase
             ]
         ]);
 
-        $this->assertNull($feed->getLinkUrl(StreamFeedLinkRelation::LAST()));
+        $this->assertNull($feed->getLinkUrl(LinkRelation::LAST()));
     }
 
     public static function relationProvider()
     {
         return [
-            [StreamFeedLinkRelation::FIRST()],
-            [StreamFeedLinkRelation::LAST()]
+            [LinkRelation::FIRST()],
+            [LinkRelation::LAST()]
         ];
     }
 }

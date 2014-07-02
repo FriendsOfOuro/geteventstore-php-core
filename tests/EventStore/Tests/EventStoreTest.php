@@ -2,8 +2,8 @@
 
 namespace EventStore\Tests;
 
-use EventStore\EventEmbedMode;
-use EventStore\StreamFeedLinkRelation;
+use EventStore\StreamFeed\EntryEmbedMode;
+use EventStore\StreamFeed\LinkRelation;
 use EventStore\WritableEvent;
 use EventStore\EventStore;
 use EventStore\StreamDeletion;
@@ -97,7 +97,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     public function event_data_is_embedded_with_body_mode()
     {
         $streamName = $this->prepareTestStream();
-        $streamFeed = $this->es->openStreamFeed($streamName, EventEmbedMode::BODY());
+        $streamFeed = $this->es->openStreamFeed($streamName, EntryEmbedMode::BODY());
 
         $json = $streamFeed->getJson();
 
@@ -110,10 +110,21 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $streamName = $this->prepareTestStream(40);
 
         $head = $this->es->openStreamFeed($streamName);
-        $next = $this->es->navigateStreamFeed($head, StreamFeedLinkRelation::NEXT());
+        $next = $this->es->navigateStreamFeed($head, LinkRelation::NEXT());
 
-        $this->assertInstanceOf('EventStore\StreamFeed', $next);
+        $this->assertInstanceOf('EventStore\StreamFeed\StreamFeed', $next);
         $this->assertCount(20, $next->getJson()['entries']);
+    }
+
+    /** @test */
+    public function event_stream_feed_returns_entries()
+    {
+        $streamName = $this->prepareTestStream(40);
+        $feed       = $this->es->openStreamFeed($streamName);
+        $entries    = $feed->getEntries();
+
+        $this->assertCount(20, $entries);
+        $this->assertContainsOnlyInstancesOf('EventStore\StreamFeed\Entry', $entries);
     }
 
     /**

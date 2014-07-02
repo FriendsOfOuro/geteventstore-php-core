@@ -3,6 +3,9 @@
 namespace EventStore;
 
 use EventStore\Exception\ConnectionFailedException;
+use EventStore\StreamFeed\EntryEmbedMode;
+use EventStore\StreamFeed\LinkRelation;
+use EventStore\StreamFeed\StreamFeed;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
@@ -69,10 +72,10 @@ final class EventStore
      * @param  StreamFeedLinkRelation $relation
      * @return StreamFeed
      */
-    public function navigateStreamFeed(StreamFeed $stream_feed, StreamFeedLinkRelation $relation)
+    public function navigateStreamFeed(StreamFeed $stream_feed, LinkRelation $relation)
     {
         $url        = $stream_feed->getLinkUrl($relation);
-        $streamFeed = $this->readStreamFeed($url, $stream_feed->getEventEmbedMode());
+        $streamFeed = $this->readStreamFeed($url, $stream_feed->getEntryEmbedMode());
 
         return $streamFeed;
     }
@@ -82,7 +85,7 @@ final class EventStore
      * @param  EventEmbedMode $embed_mode
      * @return StreamFeed
      */
-    public function openStreamFeed($stream_name, EventEmbedMode $embed_mode = null)
+    public function openStreamFeed($stream_name, EntryEmbedMode $embed_mode = null)
     {
         $url        = $this->getStreamUrl($stream_name);
         $streamFeed = $this->readStreamFeed($url, $embed_mode);
@@ -143,12 +146,12 @@ final class EventStore
      * @param  EventEmbedMode $embed_mode
      * @return StreamFeed
      */
-    private function readStreamFeed($stream_url, EventEmbedMode $embed_mode = null)
+    private function readStreamFeed($stream_url, EntryEmbedMode $embed_mode = null)
     {
         $request = $this->httpClient->createRequest('GET', $stream_url);
         $request->addHeader('Accept', 'application/json');
 
-        if ($embed_mode != null && $embed_mode != EventEmbedMode::NONE()) {
+        if ($embed_mode != null && $embed_mode != EntryEmbedMode::NONE()) {
             $request->getQuery()->add('embed', $embed_mode->toNative());
         }
 
