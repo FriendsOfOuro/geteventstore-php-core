@@ -94,7 +94,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function event_data_is_embedded_correctly()
+    public function event_data_is_embedded_with_body_mode()
     {
         $streamName = $this->prepareTestStream();
         $streamFeed = $this->es->openStreamFeed($streamName, EventEmbedMode::BODY());
@@ -105,15 +105,15 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function event_stream_is_navigated_correctly()
+    public function event_stream_feed_head_returns_next_link()
     {
         $streamName = $this->prepareTestStream(40);
 
-        $feed1 = $this->es->openStreamFeed($streamName);
-        $feed2 = $this->es->navigateStreamFeed($feed1, StreamFeedLinkRelation::NEXT());
+        $head = $this->es->openStreamFeed($streamName);
+        $next = $this->es->navigateStreamFeed($head, StreamFeedLinkRelation::NEXT());
 
-        $this->assertInstanceOf('EventStore\StreamFeed', $feed2);
-        $this->assertCount(20, $feed2->getJson()['entries']);
+        $this->assertInstanceOf('EventStore\StreamFeed', $next);
+        $this->assertCount(20, $next->getJson()['entries']);
     }
 
     /**
