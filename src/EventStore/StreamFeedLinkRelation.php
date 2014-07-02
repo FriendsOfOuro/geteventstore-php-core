@@ -8,11 +8,11 @@ use ValueObjects\Enum\Enum;
  * Class StreamFeedLinkRelation
  * @package EventStore
  *
- * @method string FIRST()
- * @method string LAST()
- * @method string PREVIOUS()
- * @method string NEXT()
- * @method string METADATA()
+ * @static @method string FIRST()
+ * @static @method string LAST()
+ * @static @method string PREVIOUS()
+ * @static @method string NEXT()
+ * @static @method string METADATA()
  */
 final class StreamFeedLinkRelation extends Enum
 {
