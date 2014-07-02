@@ -7,8 +7,8 @@ use ValueObjects\Enum\Enum;
 /**
  * Class StreamDeletion
  * @package EventStore
- * @method SOFT()
- * @method HARD()
+ * @static @method SOFT()
+ * @static @method HARD()
  */
 final class StreamDeletion extends Enum
 {
