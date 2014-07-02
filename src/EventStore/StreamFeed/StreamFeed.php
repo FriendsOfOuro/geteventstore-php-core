@@ -40,4 +40,9 @@ final class StreamFeed
     {
         return $this->json;
     }
+
+    protected function getLinks()
+    {
+        return $this->json['links'];
+    }
 }

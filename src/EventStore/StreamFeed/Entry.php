@@ -13,9 +13,15 @@ final class Entry
        $this->json = $json;
     }
 
-    public function getJson()
+    public function getEventUrl()
     {
-        return $this->json;
+        $alternate = $this->getLinkUrl(LinkRelation::ALTERNATE());
+
+        return $alternate;
     }
 
+    protected function getLinks()
+    {
+        return $this->json['links'];
+    }
 }

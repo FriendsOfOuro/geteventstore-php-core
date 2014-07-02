@@ -4,6 +4,7 @@ namespace EventStore;
 
 use EventStore\Exception\ConnectionFailedException;
 use EventStore\StreamFeed\EntryEmbedMode;
+use EventStore\StreamFeed\Event;
 use EventStore\StreamFeed\LinkRelation;
 use EventStore\StreamFeed\StreamFeed;
 use GuzzleHttp\Client;
@@ -91,6 +92,23 @@ final class EventStore
         $streamFeed = $this->readStreamFeed($url, $embed_mode);
 
         return $streamFeed;
+    }
+
+    /**
+     * @param $event_url
+     * @return Event
+     */
+    public function readEvent($event_url)
+    {
+        $request = $this->httpClient->createRequest('GET', $event_url);
+        $request->addHeader('Accept', 'application/json');
+
+        $this->sendRequest($request);
+
+        $jsonResponse = $this->lastResponse->json();
+        $event        = new Event($jsonResponse);
+
+        return $event;
     }
 
     /**

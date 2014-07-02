@@ -4,12 +4,11 @@ namespace EventStore\StreamFeed;
 
 trait HasLinks
 {
-    abstract public function getJson();
+    abstract protected function getLinks();
 
     public function getLinkUrl(LinkRelation $relation)
     {
-        $json  = $this->getJson();
-        $links = $json['links'];
+        $links = $this->getLinks();
 
         foreach ($links as $link) {
             if ($link['relation'] == $relation->toNative()) {
