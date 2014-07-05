@@ -3,6 +3,7 @@
 namespace EventStore;
 
 use EventStore\Exception\ConnectionFailedException;
+use EventStore\Exception\WrongExpectedVersionException;
 use EventStore\StreamFeed\EntryEmbedMode;
 use EventStore\StreamFeed\Event;
 use EventStore\StreamFeed\LinkRelation;
@@ -112,17 +113,27 @@ final class EventStore
     }
 
     /**
-     * @param string           $stream_name
-     * @param WritableToStream $events
+     * @param  string                                  $stream_name
+     * @param  WritableToStream                        $events
+     * @param  int                                     $expectedVersion
+     * @throws Exception\WrongExpectedVersionException
      */
-    public function writeToStream($stream_name, WritableToStream $events)
+    public function writeToStream($stream_name, WritableToStream $events, $expectedVersion = ExpectedVersion::ANY)
     {
         if ($events instanceof WritableEvent) {
             $events = new WritableEventCollection([$events]);
         }
 
         $request = $this->httpClient->createRequest('POST', $this->getStreamUrl($stream_name), ['json' => $events->toStreamData()]);
+        $request->addHeader('ES-ExpectedVersion', intval($expectedVersion));
+
         $this->sendRequest($request);
+
+        $responseStatusCode = $this->getLastResponse()->getStatusCode();
+
+        if (400 == $responseStatusCode) {
+            throw new WrongExpectedVersionException();
+        }
     }
 
     /**

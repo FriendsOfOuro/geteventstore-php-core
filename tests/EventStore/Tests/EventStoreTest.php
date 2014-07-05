@@ -39,6 +39,18 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @expectedException EventStore\Exception\WrongExpectedVersionException
+     */
+    public function wrong_expected_version_should_throw_exception()
+    {
+        $streamName = $this->prepareTestStream();
+        $event      = WritableEvent::newInstance('Foo', ['foo' => 'bar']);
+
+        $this->es->writeToStream($streamName, $event, 3);
+    }
+
+    /**
+     * @test
      */
     public function stream_is_soft_deleted()
     {
