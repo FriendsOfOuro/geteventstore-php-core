@@ -36,7 +36,7 @@ final class EventStore
     private $lastResponse;
 
     /**
-     * @param string $url
+     * @param string $url Endpoint of the EventStore HTTP API
      */
     public function __construct($url)
     {
@@ -47,8 +47,10 @@ final class EventStore
     }
 
     /**
-     * @param string         $stream_name
-     * @param StreamDeletion $mode
+     * Delete a stream
+     *
+     * @param string         $stream_name Name of the stream
+     * @param StreamDeletion $mode        Deletion mode (soft or hard)
      */
     public function deleteStream($stream_name, StreamDeletion $mode)
     {
@@ -62,6 +64,8 @@ final class EventStore
     }
 
     /**
+     * Get the response from the last HTTP call to the EventStore API
+     *
      * @return ResponseInterface
      */
     public function getLastResponse()
@@ -70,8 +74,10 @@ final class EventStore
     }
 
     /**
-     * @param  StreamFeed             $stream_feed
-     * @param  StreamFeedLinkRelation $relation
+     * Navigate stream feed through link relations
+     *
+     * @param  StreamFeed   $stream_feed The stream feed to navigate through
+     * @param  LinkRelation $relation    The "direction" expressed as link relation
      * @return StreamFeed
      */
     public function navigateStreamFeed(StreamFeed $stream_feed, LinkRelation $relation)
@@ -83,8 +89,10 @@ final class EventStore
     }
 
     /**
-     * @param  string         $stream_name
-     * @param  EventEmbedMode $embed_mode
+     * Open a stream feed for read and navigation
+     *
+     * @param  string         $stream_name The stream name
+     * @param  EntryEmbedMode $embed_mode  The event entries embed mode (none, rich or body)
      * @return StreamFeed
      */
     public function openStreamFeed($stream_name, EntryEmbedMode $embed_mode = null)
@@ -96,7 +104,9 @@ final class EventStore
     }
 
     /**
-     * @param $event_url
+     * Read a single event
+     *
+     * @param $event_url The url of the event
      * @return Event
      */
     public function readEvent($event_url)
@@ -113,9 +123,11 @@ final class EventStore
     }
 
     /**
-     * @param  string                                  $stream_name
-     * @param  WritableToStream                        $events
-     * @param  int                                     $expectedVersion
+     * Write one or more events to a stream
+     *
+     * @param  string                                  $stream_name     The stream name
+     * @param  WritableToStream                        $events          Single event or a collection of events
+     * @param  int                                     $expectedVersion The expected version of the stream
      * @throws Exception\WrongExpectedVersionException
      */
     public function writeToStream($stream_name, WritableToStream $events, $expectedVersion = ExpectedVersion::ANY)
@@ -137,27 +149,6 @@ final class EventStore
     }
 
     /**
-     * @param  string $stream_name
-     * @return string
-     */
-    private function getStreamUrl($stream_name)
-    {
-        return sprintf('%s/streams/%s', $this->url, $stream_name);
-    }
-
-    /**
-     * @param RequestInterface $request
-     */
-    private function sendRequest(RequestInterface $request)
-    {
-        try {
-            $this->lastResponse = $this->httpClient->send($request);
-        } catch (ClientException $e) {
-            $this->lastResponse = $e->getResponse();
-        }
-    }
-
-    /**
      * @throws Exception\ConnectionFailedException
      */
     private function checkConnection()
@@ -168,6 +159,15 @@ final class EventStore
         } catch (RequestException $e) {
             throw new ConnectionFailedException($e->getMessage());
         }
+    }
+
+    /**
+     * @param  string $stream_name
+     * @return string
+     */
+    private function getStreamUrl($stream_name)
+    {
+        return sprintf('%s/streams/%s', $this->url, $stream_name);
     }
 
     /**
@@ -190,5 +190,17 @@ final class EventStore
         $streamFeed = new StreamFeed($jsonResponse, $embed_mode);
 
         return $streamFeed;
+    }
+
+    /**
+     * @param RequestInterface $request
+     */
+    private function sendRequest(RequestInterface $request)
+    {
+        try {
+            $this->lastResponse = $this->httpClient->send($request);
+        } catch (ClientException $e) {
+            $this->lastResponse = $e->getResponse();
+        }
     }
 }
