@@ -16,7 +16,9 @@ API can currently:
 - Write to streams
 - Delete streams
 
-Examples and documentation will be added as soon as possible.
+Documentation
+-------------
+See our [wiki](https://github.com/dbellettini/php-eventstore-client/wiki)
 
 Contributing
 ------------
