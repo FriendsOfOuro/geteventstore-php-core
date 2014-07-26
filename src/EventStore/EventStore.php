@@ -136,7 +136,17 @@ final class EventStore
             $events = new WritableEventCollection([$events]);
         }
 
-        $request = $this->httpClient->createRequest('POST', $this->getStreamUrl($stream_name), ['json' => $events->toStreamData()]);
+        $request = $this
+            ->httpClient
+            ->createRequest(
+                'POST',
+                $this->getStreamUrl($stream_name),
+                [
+                    'json' => $events->toStreamData()
+                ]
+            )
+        ;
+
         $request->addHeader('ES-ExpectedVersion', intval($expectedVersion));
 
         $this->sendRequest($request);
@@ -172,7 +182,7 @@ final class EventStore
 
     /**
      * @param  string         $stream_url
-     * @param  EventEmbedMode $embed_mode
+     * @param  EntryEmbedMode $embed_mode
      * @return StreamFeed
      */
     private function readStreamFeed($stream_url, EntryEmbedMode $embed_mode = null)
