@@ -2,10 +2,21 @@
 
 namespace EventStore\StreamFeed;
 
+/**
+ * Class HasLinks
+ * @package EventStore\StreamFeed
+ */
 trait HasLinks
 {
+    /**
+     * @return array
+     */
     abstract protected function getLinks();
 
+    /**
+     * @param  LinkRelation $relation
+     * @return null|string
+     */
     public function getLinkUrl(LinkRelation $relation)
     {
         $links = $this->getLinks();

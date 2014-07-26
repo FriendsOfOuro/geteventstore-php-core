@@ -22,6 +22,5 @@ final class LinkRelation extends Enum
     const PREVIOUS  = 'previous';
     const NEXT      = 'next';
     const METADATA  = 'metadata';
-
     const ALTERNATE = 'alternate';
 }

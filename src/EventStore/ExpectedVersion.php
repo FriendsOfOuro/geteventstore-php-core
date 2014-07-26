@@ -2,6 +2,10 @@
 
 namespace EventStore;
 
+/**
+ * Class ExpectedVersion
+ * @package EventStore
+ */
 class ExpectedVersion
 {
     const ANY          = -2;
