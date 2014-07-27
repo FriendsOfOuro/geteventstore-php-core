@@ -29,4 +29,13 @@ trait HasLinks
 
         return null;
     }
+
+    /**
+     * @param  LinkRelation $relation
+     * @return boolean
+     */
+    public function hasLink(LinkRelation $relation)
+    {
+        return $this->getLinkUrl($relation) !== null;
+    }
 }

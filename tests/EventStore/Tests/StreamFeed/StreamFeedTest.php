@@ -54,6 +54,40 @@ class StreamFeedTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function has_link_returns_true_on_matching_url()
+    {
+        $feed = new StreamFeed([
+            'links' => [
+                [
+                    'relation' => 'last',
+                    'uri' => 'http://sample.uri:12345/stream'
+                ]
+            ]
+        ]);
+
+        $this->assertTrue($feed->hasLink(LinkRelation::LAST()));
+    }
+
+    /**
+     * @test
+     */
+    public function has_link_returns_false_on_missing_url()
+    {
+        $feed = new StreamFeed([
+            'links' => [
+                [
+                    'relation' => 'first',
+                    'uri' => 'http://sample.uri:12345/stream'
+                ]
+            ]
+        ]);
+
+        $this->assertFalse($feed->hasLink(LinkRelation::LAST()));
+    }
+
+    /**
+     * @test
+     */
     public function get_link_url_returns_null_on_missing_url()
     {
         $feed = new StreamFeed([
