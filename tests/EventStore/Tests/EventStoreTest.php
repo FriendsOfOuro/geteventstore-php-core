@@ -153,6 +153,17 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['foo' => 'bar'], $event->getData());
     }
 
+    /** @test */
+    public function navigate_stream_using_unexistent_link_returns_null()
+    {
+        $streamName = $this->prepareTestStream(1);
+
+        $head = $this->es->openStreamFeed($streamName);
+        $next = $this->es->navigateStreamFeed($head, LinkRelation::NEXT());
+
+        $this->assertNull($next);
+    }
+
     /**
      * @param  int    $length
      * @return string

@@ -76,16 +76,19 @@ final class EventStore
     /**
      * Navigate stream feed through link relations
      *
-     * @param  StreamFeed   $stream_feed The stream feed to navigate through
-     * @param  LinkRelation $relation    The "direction" expressed as link relation
-     * @return StreamFeed
+     * @param  StreamFeed      $stream_feed The stream feed to navigate through
+     * @param  LinkRelation    $relation    The "direction" expressed as link relation
+     * @return null|StreamFeed
      */
     public function navigateStreamFeed(StreamFeed $stream_feed, LinkRelation $relation)
     {
-        $url        = $stream_feed->getLinkUrl($relation);
-        $streamFeed = $this->readStreamFeed($url, $stream_feed->getEntryEmbedMode());
+        $url = $stream_feed->getLinkUrl($relation);
 
-        return $streamFeed;
+        if (empty($url)) {
+            return null;
+        }
+
+        return $this->readStreamFeed($url, $stream_feed->getEntryEmbedMode());
     }
 
     /**
