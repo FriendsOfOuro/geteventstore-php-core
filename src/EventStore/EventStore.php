@@ -106,7 +106,7 @@ final class EventStore
     /**
      * Read a single event
      *
-     * @param $event_url The url of the event
+     * @param  string $event_url The url of the event
      * @return Event
      */
     public function readEvent($event_url)
