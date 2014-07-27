@@ -33,6 +33,11 @@ final class Entry
         return $alternate;
     }
 
+    public function getType()
+    {
+        return $this->json['summary'];
+    }
+
     /**
      * @return array
      */
