@@ -154,7 +154,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function navigate_stream_using_unexistent_link_returns_null()
+    public function navigate_stream_using_missing_link_returns_null()
     {
         $streamName = $this->prepareTestStream(1);
 
