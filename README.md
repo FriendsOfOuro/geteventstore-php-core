@@ -3,6 +3,8 @@ EventStore PHP client
 
 PHP client for [EventStore HTTP API](https://github.com/eventstore/eventstore/wiki/Getting-Started-HTTP)
 
+[![Latest Stable Version](https://poser.pugx.org/dbellettini/eventstore-client/v/stable.svg)](https://packagist.org/packages/dbellettini/eventstore-client) [![Total Downloads](https://poser.pugx.org/dbellettini/eventstore-client/downloads.svg)](https://packagist.org/packages/dbellettini/eventstore-client) [![Latest Unstable Version](https://poser.pugx.org/dbellettini/eventstore-client/v/unstable.svg)](https://packagist.org/packages/dbellettini/eventstore-client) [![License](https://poser.pugx.org/dbellettini/eventstore-client/license.svg)](https://packagist.org/packages/dbellettini/eventstore-client)
+
 Roadmap
 -------
 
