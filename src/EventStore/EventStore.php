@@ -100,10 +100,9 @@ final class EventStore
      */
     public function openStreamFeed($stream_name, EntryEmbedMode $embed_mode = null)
     {
-        $url        = $this->getStreamUrl($stream_name);
-        $streamFeed = $this->readStreamFeed($url, $embed_mode);
+        $url = $this->getStreamUrl($stream_name);
 
-        return $streamFeed;
+        return $this->readStreamFeed($url, $embed_mode);
     }
 
     /**
@@ -120,9 +119,8 @@ final class EventStore
         $this->sendRequest($request);
 
         $jsonResponse = $this->lastResponse->json();
-        $event        = new Event($jsonResponse);
 
-        return $event;
+        return new Event($jsonResponse);
     }
 
     /**
@@ -202,9 +200,8 @@ final class EventStore
         $this->sendRequest($request);
 
         $jsonResponse = $this->lastResponse->json();
-        $streamFeed = new StreamFeed($jsonResponse, $embed_mode);
 
-        return $streamFeed;
+        return new StreamFeed($jsonResponse, $embed_mode);
     }
 
     /**
