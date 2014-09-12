@@ -7,9 +7,9 @@ use ValueObjects\Enum\Enum;
 /**
  * Class EntryEmbedMode
  * @package EventStore\StreamFeed
- * @static @method string NONE()
- * @static @method string RICH()
- * @static @method string BODY()
+ * @static @method EntryEmbedMode NONE()
+ * @static @method EntryEmbedMode RICH()
+ * @static @method EntryEmbedMode BODY()
  */
 final class EntryEmbedMode extends Enum
 {
