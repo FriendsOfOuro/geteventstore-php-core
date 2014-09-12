@@ -145,12 +145,14 @@ final class EventStore
                 'POST',
                 $this->getStreamUrl($stream_name),
                 [
-                    'json' => $events->toStreamData()
+                    'json' => $events->toStreamData(),
+                    'headers' => [
+                        'Content-Type'       => 'application/vnd.eventstore.events+json',
+                        'ES-ExpectedVersion' => intval($expectedVersion),
+                    ]
                 ]
             )
         ;
-
-        $request->addHeader('ES-ExpectedVersion', intval($expectedVersion));
 
         $this->sendRequest($request);
 
