@@ -32,10 +32,7 @@ final class WritableEvent implements WritableToStream
      */
     public static function newInstance($type, $data)
     {
-        $uuid  = new UUID();
-        $event = new self($uuid, $type, $data);
-
-        return $event;
+        return new self(new UUID(), $type, $data);
     }
 
     /**
