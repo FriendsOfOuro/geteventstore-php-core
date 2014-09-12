@@ -113,9 +113,7 @@ final class EventStore
      */
     public function readEvent($event_url)
     {
-        $request = $this->httpClient->createRequest('GET', $event_url);
-        $request->addHeader('Accept', 'application/json');
-
+        $request = $this->getJsonRequest($event_url);
         $this->sendRequest($request);
 
         $jsonResponse = $this->lastResponse->json();
@@ -190,8 +188,7 @@ final class EventStore
      */
     private function readStreamFeed($stream_url, EntryEmbedMode $embed_mode = null)
     {
-        $request = $this->httpClient->createRequest('GET', $stream_url);
-        $request->addHeader('Accept', 'application/json');
+        $request = $this->getJsonRequest($stream_url);
 
         if ($embed_mode != null && $embed_mode != EntryEmbedMode::NONE()) {
             $request->getQuery()->add('embed', $embed_mode->toNative());
@@ -202,6 +199,22 @@ final class EventStore
         $jsonResponse = $this->lastResponse->json();
 
         return new StreamFeed($jsonResponse, $embed_mode);
+    }
+
+    private function getJsonRequest($uri)
+    {
+        return $this
+            ->httpClient
+            ->createRequest(
+                'GET',
+                $uri,
+                [
+                    'headers' => [
+                        'Accept' => 'application/json'
+                    ]
+                ]
+            )
+        ;
     }
 
     /**
