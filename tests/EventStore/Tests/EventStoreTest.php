@@ -165,6 +165,27 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     * @expectedException EventStore\Exception\StreamNotFoundException
+     */
+    public function unexistent_stream_should_throw_not_found_exception()
+    {
+        $this->es->openStreamFeed('this-stream-does-not-exists');
+    }
+
+    /**
+     * @test
+     * @expectedException EventStore\Exception\StreamDeletedException
+     */
+    public function deleted_stream_should_throw_an_exception()
+    {
+        $streamName = $this->prepareTestStream();
+        $this->es->deleteStream($streamName, StreamDeletion::HARD());
+
+        $this->es->openStreamFeed($streamName);
+    }
+
+    /**
      * @param  int    $length
      * @return string
      */

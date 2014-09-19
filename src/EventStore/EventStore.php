@@ -3,7 +3,10 @@
 namespace EventStore;
 
 use EventStore\Exception\ConnectionFailedException;
+use EventStore\Exception\StreamDeletedException;
+use EventStore\Exception\StreamNotFoundException;
 use EventStore\Exception\WrongExpectedVersionException;
+use EventStore\Http\ResponseCode;
 use EventStore\StreamFeed\EntryEmbedMode;
 use EventStore\StreamFeed\Event;
 use EventStore\StreamFeed\LinkRelation;
@@ -182,9 +185,11 @@ final class EventStore
     }
 
     /**
-     * @param  string         $stream_url
-     * @param  EntryEmbedMode $embed_mode
+     * @param  string                            $stream_url
+     * @param  EntryEmbedMode                    $embed_mode
      * @return StreamFeed
+     * @throws Exception\StreamDeletedException
+     * @throws Exception\StreamNotFoundException
      */
     private function readStreamFeed($stream_url, EntryEmbedMode $embed_mode = null)
     {
@@ -195,6 +200,32 @@ final class EventStore
         }
 
         $this->sendRequest($request);
+
+        $exceptions = [
+            ResponseCode::HTTP_NOT_FOUND => function () use ($stream_url) {
+                    throw new StreamNotFoundException(
+                        sprintf(
+                            'No stream found at %s',
+                            $stream_url
+                        )
+                    );
+                },
+
+            ResponseCode::HTTP_GONE => function () use ($stream_url) {
+                    throw new StreamDeletedException(
+                        sprintf(
+                            'Stream at %s has been permanently deleted',
+                            $stream_url
+                        )
+                    );
+                }
+        ];
+
+        $code = $this->lastResponse->getStatusCode();
+
+        if (array_key_exists($code, $exceptions)) {
+            $exceptions[$code]();
+        }
 
         $jsonResponse = $this->lastResponse->json();
 
