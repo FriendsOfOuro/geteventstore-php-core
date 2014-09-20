@@ -201,31 +201,7 @@ final class EventStore
 
         $this->sendRequest($request);
 
-        $exceptions = [
-            ResponseCode::HTTP_NOT_FOUND => function () use ($stream_url) {
-                    throw new StreamNotFoundException(
-                        sprintf(
-                            'No stream found at %s',
-                            $stream_url
-                        )
-                    );
-                },
-
-            ResponseCode::HTTP_GONE => function () use ($stream_url) {
-                    throw new StreamDeletedException(
-                        sprintf(
-                            'Stream at %s has been permanently deleted',
-                            $stream_url
-                        )
-                    );
-                }
-        ];
-
-        $code = $this->lastResponse->getStatusCode();
-
-        if (array_key_exists($code, $exceptions)) {
-            $exceptions[$code]();
-        }
+        $this->ensureStatusCodeIsGood($stream_url);
 
         $jsonResponse = $this->lastResponse->json();
 
@@ -257,6 +233,40 @@ final class EventStore
             $this->lastResponse = $this->httpClient->send($request);
         } catch (ClientException $e) {
             $this->lastResponse = $e->getResponse();
+        }
+    }
+
+    /**
+     * @param $stream_url
+     * @throws Exception\StreamDeletedException
+     * @throws Exception\StreamNotFoundException
+     */
+    private function ensureStatusCodeIsGood($stream_url)
+    {
+        $badCodeHandlers = [
+            ResponseCode::HTTP_NOT_FOUND => function () use ($stream_url) {
+                    throw new StreamNotFoundException(
+                        sprintf(
+                            'No stream found at %s',
+                            $stream_url
+                        )
+                    );
+                },
+
+            ResponseCode::HTTP_GONE => function () use ($stream_url) {
+                    throw new StreamDeletedException(
+                        sprintf(
+                            'Stream at %s has been permanently deleted',
+                            $stream_url
+                        )
+                    );
+                }
+        ];
+
+        $code = $this->lastResponse->getStatusCode();
+
+        if (array_key_exists($code, $badCodeHandlers)) {
+            $badCodeHandlers[$code]();
         }
     }
 }
