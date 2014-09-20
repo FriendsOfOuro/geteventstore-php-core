@@ -157,7 +157,7 @@ final class EventStore
 
         $responseStatusCode = $this->getLastResponse()->getStatusCode();
 
-        if (400 == $responseStatusCode) {
+        if (ResponseCode::HTTP_BAD_REQUEST == $responseStatusCode) {
             throw new WrongExpectedVersionException();
         }
     }
