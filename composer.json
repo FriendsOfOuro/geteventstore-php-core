@@ -29,7 +29,11 @@
         "nicolopignatelli/valueobjects": "@dev"
     },
     "require-dev": {
-        "phpunit/phpunit": ">=3.7.0"
+        "phpunit/phpunit": ">=3.7.0",
+        "broadway/broadway": "~0.1"
+    },
+    "suggest": {
+        "broadway/broadway": "Build CQRS and Event Sourced applications"
     },
     "config": {
         "bin-dir": "bin"
