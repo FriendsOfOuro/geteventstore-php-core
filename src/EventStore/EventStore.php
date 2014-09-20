@@ -21,7 +21,7 @@ use GuzzleHttp\Message\ResponseInterface;
  * Class EventStore
  * @package EventStore
  */
-final class EventStore
+final class EventStore implements EventStoreInterface
 {
     /**
      * @var string
