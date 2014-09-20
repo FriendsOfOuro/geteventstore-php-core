@@ -146,11 +146,11 @@ final class EventStore
                 [
                     'json' => $events->toStreamData(),
                     'headers' => [
-                        'Content-Type'       => 'application/vnd.eventstore.events+json',
                         'ES-ExpectedVersion' => intval($expectedVersion),
                     ]
                 ]
             )
+            ->setHeader('Content-Type', 'application/vnd.eventstore.events+json')
         ;
 
         $this->sendRequest($request);
