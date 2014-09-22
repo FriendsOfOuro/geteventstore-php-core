@@ -12,14 +12,15 @@ matrix:
 
 before_install:
     - wget http://download.geteventstore.com/binaries/EventStore-OSS-Linux-v3.0.0.tar.gz
-    - tar vxf EventStore-OSS-Linux-v3.0.0.tar.gz
-    - cd EventStore* && ./clusternode --mem-db &
-
+    - tar xf EventStore*.tar.gz
+    - cd EventStore* && ./clusternode --mem-db 2>&1> eventstore.log &
 install:
     - composer install --dev --prefer-source --no-interaction
 
 script: bin/phpunit --coverage-clover=coverage.clover --coverage-text --testdox
 
-after_script:
+after_success:
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - killall -SIGINT clusternode
+  - cat EventStore*/eventstore.log
