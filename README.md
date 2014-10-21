@@ -34,7 +34,7 @@ See [CONTRIBUTING](/CONTRIBUTING.md) file.
 License
 -------
 
-EventStore PHP Client is released under the MIT License. See the bundled 
+EventStore PHP Client is released under the MIT License. See the bundled
 [LICENSE](/LICENSE) file for details.
 
 Disclaimer
