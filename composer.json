@@ -23,12 +23,6 @@
             "homepage": "https://github.com/dbellettini/php-eventstore-client/graphs/contributors"
         }
     ],
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packages.zendframework.com/"
-        }
-    ],
     "require": {
         "php": ">5.4.0",
         "guzzlehttp/guzzle": "~4.0",
