@@ -6,12 +6,14 @@ php:
     - 5.6
     - hhvm
 
+env:
+    - EVENTSTORE_VERSION='v3.0.0'
 matrix:
     allow_failures:
         - php: hhvm
 
 before_install:
-    - wget http://download.geteventstore.com/binaries/EventStore-OSS-Linux-v3.0.0.tar.gz
+    - wget http://download.geteventstore.com/binaries/EventStore-OSS-Linux-${EVENTSTORE_VERSION}.tar.gz
     - tar xf EventStore*.tar.gz
     - cd EventStore* && ./clusternode --mem-db 2>&1> eventstore.log &
 install:
