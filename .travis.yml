@@ -8,6 +8,7 @@ php:
 
 env:
     - EVENT_STORE_VERSION='v3.0.0'
+    - EVENT_STORE_VERSION='v3.0.1'
 matrix:
     allow_failures:
         - php: hhvm
