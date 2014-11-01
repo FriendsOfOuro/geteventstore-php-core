@@ -25,6 +25,10 @@ Symfony 2 integration
 ---------------------
 [EventStore Client Bundle](https://github.com/dbellettini/eventstore-client-bundle) integrates this project in Symfony 2
 
+Broadway integration
+--------------------
+https://github.com/dbellettini/php-eventstore-client/tree/master/src/EventStore/Broadway
+
 Documentation
 -------------
 See our [wiki](https://github.com/dbellettini/php-eventstore-client/wiki)
