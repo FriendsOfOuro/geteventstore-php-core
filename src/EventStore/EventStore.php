@@ -147,9 +147,10 @@ final class EventStore implements EventStoreInterface
                     'json' => $events->toStreamData(),
                 ]
             )
-            ->setHeader('ES-ExpectedVersion', intval($expectedVersion))
-            ->setHeader('Content-Type', 'application/vnd.eventstore.events+json')
         ;
+
+        $request->setHeader('ES-ExpectedVersion', intval($expectedVersion));
+        $request->setHeader('Content-Type', 'application/vnd.eventstore.events+json');
 
         $this->sendRequest($request);
 
