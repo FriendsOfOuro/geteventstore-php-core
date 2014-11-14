@@ -16,7 +16,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
      */
     private $es;
 
-    public function setup()
+    protected function setUp()
     {
         $this->es = new EventStore('http://127.0.0.1:2113');
     }
