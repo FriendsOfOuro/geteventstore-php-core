@@ -14,6 +14,7 @@ use EventStore\StreamFeed\StreamFeed;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Message\ResponseInterface;
 
@@ -23,6 +24,17 @@ use GuzzleHttp\Message\ResponseInterface;
  */
 final class EventStore implements EventStoreInterface
 {
+
+    /**
+     * @const REQUEST_TIMEOUT Default timeout for requests
+     */
+    const REQUEST_TIMEOUT = 5;
+
+    /**
+     * @const CONNECT_TIMEOUT Default timeout for connecting to EventStore
+     */
+    const CONNECT_TIMEOUT = 2;
+
     /**
      * @var string
      */
@@ -39,14 +51,34 @@ final class EventStore implements EventStoreInterface
     private $lastResponse;
 
     /**
-     * @param string $url Endpoint of the EventStore HTTP API
+     * @var string[] An array of configuration settings
      */
-    public function __construct($url)
+    private $configuration;
+
+    /**
+     * @param string $url Endpoint of the EventStore HTTP API
+     * @param string[] $configuration An array of configuration settings
+     */
+    public function __construct($url, $configuration = [])
     {
         $this->url = $url;
-
+        $this->configuration = $configuration;
         $this->httpClient = new Client();
-        $this->checkConnection();
+    }
+
+    public function getConfigurationValue($key)
+    {
+        return (isset($this->configuration[$key])) ? $this->configuration[$key] : false;
+    }
+
+    public function getRequestTimeout()
+    {
+        return (float) ($this->getConfigurationValue('request_timeout')) ?: self::REQUEST_TIMEOUT;
+    }
+
+    public function getConnectionTimeout()
+    {
+        return (float) ($this->getConfigurationValue('connect_timeout')) ?: self::CONNECT_TIMEOUT;
     }
 
     /**
@@ -57,7 +89,13 @@ final class EventStore implements EventStoreInterface
      */
     public function deleteStream($stream_name, StreamDeletion $mode)
     {
-        $request = $this->httpClient->createRequest('DELETE', $this->getStreamUrl($stream_name));
+        $request = $this->httpClient->createRequest('DELETE',
+                                                    $this->getStreamUrl($stream_name),
+                                                    [
+                                                        'timeout' => $this->getRequestTimeout(),
+                                                        'connect_timeout' => $this->getConnectionTimeout()
+                                                    ]
+                                                    );
 
         if ($mode == StreamDeletion::HARD) {
             $request->addHeader('ES-HardDelete', 'true');
@@ -145,6 +183,8 @@ final class EventStore implements EventStoreInterface
                 $this->getStreamUrl($stream_name),
                 [
                     'json' => $events->toStreamData(),
+                    'timeout' => $this->getRequestTimeout(),
+                    'connect_timeout' => $this->getConnectionTimeout()
                 ]
             )
         ;
@@ -164,7 +204,7 @@ final class EventStore implements EventStoreInterface
     /**
      * @throws Exception\ConnectionFailedException
      */
-    private function checkConnection()
+    public function checkConnection()
     {
         try {
             $request = $this->httpClient->createRequest('GET', $this->url);
@@ -217,7 +257,9 @@ final class EventStore implements EventStoreInterface
                 [
                     'headers' => [
                         'Accept' => 'application/json'
-                    ]
+                    ],
+                    'timeout' => $this->getRequestTimeout(),
+                    'connect_timeout' => $this->getConnectionTimeout()
                 ]
             )
         ;
@@ -230,6 +272,8 @@ final class EventStore implements EventStoreInterface
     {
         try {
             $this->lastResponse = $this->httpClient->send($request);
+        } catch (ConnectException $e) {
+            throw new ConnectionFailedException($e->getMessage());
         } catch (ClientException $e) {
             $this->lastResponse = $e->getResponse();
         }
