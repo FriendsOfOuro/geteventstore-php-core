@@ -5,13 +5,17 @@ php:
     - 5.5
     - 5.6
     - hhvm
+    - nightly
 
 env:
     - EVENT_STORE_VERSION='v3.0.0'
     - EVENT_STORE_VERSION='v3.0.1'
+    - EVENT_STORE_VERSION='v3.0.2'
+    - EVENT_STORE_VERSION='v3.0.3'
 matrix:
     allow_failures:
         - php: hhvm
+        - php: nightly
 
 before_install:
     - wget http://download.geteventstore.com/binaries/EventStore-OSS-Linux-${EVENT_STORE_VERSION}.tar.gz
