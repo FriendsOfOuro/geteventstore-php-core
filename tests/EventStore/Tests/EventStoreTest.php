@@ -186,6 +186,15 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     * @expectedException EventStore\Exception\UnauthorizedException
+     */
+    public function unauthorized_streams_throw_unauthorized_exception()
+    {
+        $this->es->openStreamFeed('$et-Baz');
+    }
+
+    /**
      * @param  int    $length
      * @return string
      */

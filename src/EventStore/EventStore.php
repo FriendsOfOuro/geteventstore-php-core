@@ -5,6 +5,7 @@ namespace EventStore;
 use EventStore\Exception\ConnectionFailedException;
 use EventStore\Exception\StreamDeletedException;
 use EventStore\Exception\StreamNotFoundException;
+use EventStore\Exception\UnauthorizedException;
 use EventStore\Exception\WrongExpectedVersionException;
 use EventStore\Http\ResponseCode;
 use EventStore\StreamFeed\EntryEmbedMode;
@@ -254,6 +255,15 @@ final class EventStore implements EventStoreInterface
 
             ResponseCode::HTTP_GONE => function () use ($stream_url) {
                     throw new StreamDeletedException(
+                        sprintf(
+                            'Stream at %s has been permanently deleted',
+                            $stream_url
+                        )
+                    );
+                },
+
+            ResponseCode::HTTP_UNAUTHORIZED => function () use ($stream_url) {
+                    throw new UnauthorizedException(
                         sprintf(
                             'Stream at %s has been permanently deleted',
                             $stream_url
