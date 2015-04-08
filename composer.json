@@ -30,11 +30,10 @@
         "nicolopignatelli/valueobjects": "~2.0"
     },
     "require-dev": {
-        "phpunit/phpunit": ">=3.7.0",
-        "broadway/broadway": "~0.1"
+        "phpunit/phpunit": ">=3.7.0"
     },
     "suggest": {
-        "broadway/broadway": "Build CQRS and Event Sourced applications",
+        "dbellettini/broadway-eventstore": "Integrate Event Store with Broadway",
         "dbellettini/eventstore-client-bundle": "Integrate Event Store with Symfony 2"
     },
     "config": {

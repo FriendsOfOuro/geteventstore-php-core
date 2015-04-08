@@ -27,7 +27,7 @@ Symfony 2 integration
 
 Broadway integration
 --------------------
-https://github.com/dbellettini/php-eventstore-client/tree/master/src/EventStore/Broadway
+http://github.com/dbellettini/broadway-eventstore
 
 Documentation
 -------------
