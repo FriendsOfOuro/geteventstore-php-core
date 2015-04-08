@@ -35,7 +35,7 @@ final class Entry
 
     public function getType()
     {
-        return $this->json['summary'];
+        return (isset($this->json['eventType'])) ? $this->json['eventType'] : $this->json['summary'];
     }
 
     /**
