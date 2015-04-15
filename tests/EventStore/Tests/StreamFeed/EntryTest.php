@@ -18,7 +18,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
     public function theEventTypeForEntriesOfAnProjectionStreamFeedIsCorrect()
     {
         $json = file_get_contents(__DIR__ . '/Fixtures/RichEventStoreCeEntryResponse.json');
-        $entryData = json_decode($json, TRUE);
+        $entryData = json_decode($json, true);
 
         $entry = new Entry($entryData);
 
