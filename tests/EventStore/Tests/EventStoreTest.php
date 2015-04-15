@@ -196,6 +196,22 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     * @expectedException EventStore\Exception\StreamDeletedException
+     */
+    public function fetching_event_of_a_deleted_stream_throws_an_exception()
+    {
+        $streamName = $this->prepareTestStream(1);
+        $feed       = $this->es->openStreamFeed($streamName);
+        $entries    = $feed->getEntries();
+        $eventUrl   = $entries[0]->getEventUrl();
+
+        $this->es->deleteStream($streamName, StreamDeletion::HARD());
+
+        $event      = $this->es->readEvent($eventUrl);
+    }
+
+    /**
      * @param  int    $length
      * @return string
      */

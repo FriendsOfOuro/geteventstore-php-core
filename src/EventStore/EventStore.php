@@ -126,6 +126,8 @@ final class EventStore implements EventStoreInterface
         $request = $this->getJsonRequest($event_url);
         $this->sendRequest($request);
 
+        $this->ensureStatusCodeIsGood($event_url);
+
         $jsonResponse = $this->lastResponse->json();
 
         return new Event($jsonResponse);
