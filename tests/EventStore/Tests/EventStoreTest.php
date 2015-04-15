@@ -188,6 +188,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      * @expectedException EventStore\Exception\UnauthorizedException
+     * @expectedExceptionMessage Tried to open stream http://127.0.0.1:2113/streams/$et-Baz got 401
      */
     public function unauthorized_streams_throw_unauthorized_exception()
     {

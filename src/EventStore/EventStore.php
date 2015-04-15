@@ -240,6 +240,7 @@ final class EventStore implements EventStoreInterface
      * @param $stream_url
      * @throws Exception\StreamDeletedException
      * @throws Exception\StreamNotFoundException
+     * @throws Exception\UnauthorizedException
      */
     private function ensureStatusCodeIsGood($stream_url)
     {
@@ -265,7 +266,7 @@ final class EventStore implements EventStoreInterface
             ResponseCode::HTTP_UNAUTHORIZED => function () use ($stream_url) {
                     throw new UnauthorizedException(
                         sprintf(
-                            'Stream at %s has been permanently deleted',
+                            'Tried to open stream %s got 401',
                             $stream_url
                         )
                     );
