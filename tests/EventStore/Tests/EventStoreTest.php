@@ -24,7 +24,36 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function client_successfully_connects_to_event_store()
     {
+        $this->es->checkConnection();
         $this->assertEquals('200', $this->es->getLastResponse()->getStatusCode());
+    }
+
+    /** @test */
+    public function connection_timeout_is_set_by_default()
+    {
+        $es = new EventStore('http://127.0.0.1:2113');
+        $this->assertEquals(2, $es->getConnectionTimeout());
+    }
+
+    /** @test */
+    public function request_timeout_is_set_by_default()
+    {
+        $es = new EventStore('http://127.0.0.1:2113');
+        $this->assertEquals(5, $es->getRequestTimeout());
+    }
+
+    /** @test */
+    public function connection_timeout_can_be_set()
+    {
+        $es = new EventStore('http://127.0.0.1:2113', ['connect_timeout' => 20]);
+        $this->assertEquals(20, $es->getConnectionTimeout());
+    }
+
+    /** @test */
+    public function request_timeout_can_be_set()
+    {
+        $es = new EventStore('http://127.0.0.1:2113', ['request_timeout' => 10]);
+        $this->assertEquals(10, $es->getRequestTimeout());
     }
 
     /**
@@ -102,7 +131,8 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
      */
     public function unreacheable_event_store_throws_exception()
     {
-        new EventStore('http://127.0.0.1:12345/');
+        $unreachable = new EventStore('http://127.0.0.1:12345/');
+        $unreachable->checkConnection();
     }
 
     /** @test */
