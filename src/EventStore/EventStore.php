@@ -40,6 +40,11 @@ final class EventStore implements EventStoreInterface
     private $lastResponse;
 
     /**
+     * @var array
+     */
+    private $badCodeHandlers = [];
+
+    /**
      * @param string $url Endpoint of the EventStore HTTP API
      */
     public function __construct($url)
@@ -48,6 +53,7 @@ final class EventStore implements EventStoreInterface
 
         $this->httpClient = new Client();
         $this->checkConnection();
+        $this->initBadCodeHandlers();
     }
 
     /**
@@ -244,8 +250,17 @@ final class EventStore implements EventStoreInterface
      */
     private function ensureStatusCodeIsGood($stream_url)
     {
-        $badCodeHandlers = [
-            ResponseCode::HTTP_NOT_FOUND => function () use ($stream_url) {
+        $code = $this->lastResponse->getStatusCode();
+
+        if (array_key_exists($code, $this->badCodeHandlers)) {
+            $this->badCodeHandlers[$code]($stream_url);
+        }
+    }
+
+    private function initBadCodeHandlers()
+    {
+        $this->badCodeHandlers = [
+            ResponseCode::HTTP_NOT_FOUND => function ($stream_url) {
                     throw new StreamNotFoundException(
                         sprintf(
                             'No stream found at %s',
@@ -254,7 +269,7 @@ final class EventStore implements EventStoreInterface
                     );
                 },
 
-            ResponseCode::HTTP_GONE => function () use ($stream_url) {
+            ResponseCode::HTTP_GONE => function ($stream_url) {
                     throw new StreamDeletedException(
                         sprintf(
                             'Stream at %s has been permanently deleted',
@@ -263,7 +278,7 @@ final class EventStore implements EventStoreInterface
                     );
                 },
 
-            ResponseCode::HTTP_UNAUTHORIZED => function () use ($stream_url) {
+            ResponseCode::HTTP_UNAUTHORIZED => function ($stream_url) {
                     throw new UnauthorizedException(
                         sprintf(
                             'Tried to open stream %s got 401',
@@ -272,11 +287,5 @@ final class EventStore implements EventStoreInterface
                     );
                 }
         ];
-
-        $code = $this->lastResponse->getStatusCode();
-
-        if (array_key_exists($code, $badCodeHandlers)) {
-            $badCodeHandlers[$code]();
-        }
     }
 }
