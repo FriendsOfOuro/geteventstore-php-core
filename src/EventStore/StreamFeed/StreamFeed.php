@@ -39,14 +39,12 @@ final class StreamFeed
      */
     public function getEntries()
     {
-        $entries     = [];
-        $jsonEntries = $this->json['entries'];
-
-        foreach ($jsonEntries as $jsonEntry) {
-            $entries[] = new Entry($jsonEntry);
-        }
-
-        return $entries;
+        return array_map(
+            function (array $jsonEntry) {
+                return new Entry($jsonEntry);
+            },
+            $this->json['entries']
+        );
     }
 
     /**
