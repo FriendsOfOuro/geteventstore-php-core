@@ -142,16 +142,17 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     /** @test */
     public function get_single_event_from_event_stream()
     {
-        $streamName = $this->prepareTestStream(1);
-        $feed       = $this->es->openStreamFeed($streamName);
-        $entries    = $feed->getEntries();
-        $eventUrl   = $entries[0]->getEventUrl();
+        $streamName  = $this->prepareTestStream(1);
+        $feed        = $this->es->openStreamFeed($streamName);
+        list($entry) = $feed->getEntries();
+        $eventUrl    = $entry->getEventUrl();
 
-        $event      = $this->es->readEvent($eventUrl);
+        $this->assertSame(0, $entry->getVersion());
+
+        $event       = $this->es->readEvent($eventUrl);
 
         $this->assertInstanceOf('EventStore\StreamFeed\Event', $event);
         $this->assertEquals(['foo' => 'bar'], $event->getData());
-        $this->assertSame(0, $event->getVersion());
     }
 
     /** @test */
