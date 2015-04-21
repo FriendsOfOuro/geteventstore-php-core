@@ -14,11 +14,18 @@ class Event
     private $data;
 
     /**
-     * @param array $data
+     * @var int
      */
-    public function __construct(array $data)
+    private $version;
+
+    /**
+     * @param array $data
+     * @param int   $version
+     */
+    public function __construct(array $data, $version)
     {
         $this->data = $data;
+        $this->version = $version;
     }
 
     /**
@@ -27,5 +34,13 @@ class Event
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVersion()
+    {
+        return $this->version;
     }
 }

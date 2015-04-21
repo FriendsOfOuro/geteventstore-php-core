@@ -130,7 +130,7 @@ final class EventStore implements EventStoreInterface
 
         $jsonResponse = $this->lastResponse->json();
 
-        return new Event($jsonResponse);
+        return new Event($jsonResponse, $this->extractVersion($event_url));
     }
 
     /**
@@ -289,5 +289,15 @@ final class EventStore implements EventStoreInterface
                     );
                 }
         ];
+    }
+
+    /**
+     * @return int
+     */
+    private function extractVersion($event_url)
+    {
+        $parts = explode('/', $event_url);
+
+        return (int) array_pop($parts);
     }
 }

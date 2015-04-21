@@ -151,6 +151,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('EventStore\StreamFeed\Event', $event);
         $this->assertEquals(['foo' => 'bar'], $event->getData());
+        $this->assertSame(0, $event->getVersion());
     }
 
     /** @test */
