@@ -26,7 +26,6 @@
     "require": {
         "php": ">5.4.0",
         "guzzlehttp/guzzle": ">=4.0,<6",
-        "guzzlehttp/cache-subscriber": "~0.1",
         "nicolopignatelli/valueobjects": "~2.0"
     },
     "require-dev": {
