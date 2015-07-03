@@ -26,25 +26,33 @@ final class WritableEvent implements WritableToStream
     private $data;
 
     /**
+     * @var array
+     */
+    private $metadata;
+
+    /**
      * @param  string        $type
      * @param  array         $data
+     * @param  array         $metadata
      * @return WritableEvent
      */
-    public static function newInstance($type, $data)
+    public static function newInstance($type, array $data, array $metadata = [])
     {
-        return new self(new UUID(), $type, $data);
+        return new self(new UUID(), $type, $data, $metadata);
     }
 
     /**
-     * @param UUID $uuid
-     * @param $type
-     * @param $data
+     * @param UUID   $uuid
+     * @param string $type
+     * @param array  $data
+     * @param array  $metadata
      */
-    public function __construct(UUID $uuid, $type, $data)
+    public function __construct(UUID $uuid, $type, array $data, array $metadata = [])
     {
         $this->uuid = $uuid;
         $this->type = $type;
         $this->data = $data;
+        $this->metadata = $metadata;
     }
 
     /**
@@ -55,7 +63,8 @@ final class WritableEvent implements WritableToStream
         return [
             'eventId'   => $this->uuid->toNative(),
             'eventType' => $this->type,
-            'data'      => $this->data
+            'data'      => $this->data,
+            'metadata'  => $this->metadata
         ];
     }
 }

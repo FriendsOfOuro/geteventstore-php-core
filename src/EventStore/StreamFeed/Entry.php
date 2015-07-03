@@ -33,18 +33,6 @@ final class Entry
         return $alternate;
     }
 
-    public function getType()
-    {
-        return (isset($this->json['eventType'])) ? $this->json['eventType'] : $this->json['summary'];
-    }
-
-    public function getVersion()
-    {
-        $parts = explode('/', $this->getEventUrl());
-
-        return (int) array_pop($parts);
-    }
-
     /**
      * @return array
      */

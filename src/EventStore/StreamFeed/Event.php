@@ -9,17 +9,53 @@ namespace EventStore\StreamFeed;
 class Event
 {
     /**
+     * @var string
+     */
+    private $type;
+
+    /**
+     * @var integer
+     */
+    private $version;
+
+    /**
      * @var array
      */
     private $data;
 
     /**
-     * @param array $data
-     * @param int   $version
+     * @var array
      */
-    public function __construct(array $data)
+    private $metadata;
+
+    /**
+     * @param string  $type
+     * @param integer $version
+     * @param array   $data
+     * @param array   $metadata
+     */
+    public function __construct($type, $version, array $data, array $metadata = null)
     {
+        $this->type = $type;
+        $this->version = (integer) $version;
         $this->data = $data;
+        $this->metadata = $metadata;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getVersion()
+    {
+        return $this->version;
     }
 
     /**
@@ -28,5 +64,13 @@ class Event
     public function getData()
     {
         return $this->data;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMetadata()
+    {
+        return $this->metadata;
     }
 }
