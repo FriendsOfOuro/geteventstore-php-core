@@ -1,15 +1,22 @@
 <?php
+
 namespace EventStore\Tests\StreamFeed;
 
 use EventStore\StreamFeed\EntryEmbedMode;
 use EventStore\StreamFeed\StreamFeed;
 use EventStore\StreamFeed\LinkRelation;
 
+/**
+ * Class StreamFeedTest
+ * @package EventStore\Tests\StreamFeed
+ */
 class StreamFeedTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
      * @dataProvider modeProvider
+     * @param EntryEmbedMode $mode
+     * @param EntryEmbedMode $expected
      */
     public function event_embed_mode_is_returned_properly(EntryEmbedMode $mode = null, EntryEmbedMode $expected)
     {
@@ -34,6 +41,7 @@ class StreamFeedTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider relationProvider
      * @test
+     * @param LinkRelation $relation
      */
     public function get_link_url_returns_proper_url(LinkRelation $relation)
     {

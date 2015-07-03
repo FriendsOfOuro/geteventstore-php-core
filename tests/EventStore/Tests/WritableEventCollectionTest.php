@@ -36,7 +36,7 @@ class WritableEventCollectionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException EventStore\Exception\InvalidWritableEventObjectException
+     * @expectedException \EventStore\Exception\InvalidWritableEventObjectException
      */
     public function invalid_collection_throws_exception()
     {

@@ -15,7 +15,6 @@ class Event
 
     /**
      * @param array $data
-     * @param int   $version
      */
     public function __construct(array $data)
     {

@@ -5,9 +5,15 @@ namespace EventStore\Tests;
 use EventStore\WritableEvent;
 use ValueObjects\Identity\UUID;
 
+/**
+ * Class WritableEventTest
+ * @package EventStore\Tests
+ */
 class WritableEventTest extends \PHPUnit_Framework_TestCase
 {
-    /** @test */
+    /**
+     * @test
+     */
     public function event_is_converted_to_stream_data()
     {
         $uuid  = new UUID();
@@ -20,5 +26,4 @@ class WritableEventTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($streamData, $event->toStreamData());
     }
-
 }
