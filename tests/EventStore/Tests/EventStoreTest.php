@@ -2,6 +2,7 @@
 
 namespace EventStore\Tests;
 
+use EventStore\StreamFeed\Entry;
 use EventStore\StreamFeed\EntryEmbedMode;
 use EventStore\StreamFeed\LinkRelation;
 use EventStore\WritableEvent;
@@ -21,7 +22,9 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $this->es = new EventStore('http://127.0.0.1:2113');
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function client_successfully_connects_to_event_store()
     {
         $this->assertEquals('200', $this->es->getLastResponse()->getStatusCode());
@@ -39,7 +42,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException EventStore\Exception\WrongExpectedVersionException
+     * @expectedException \EventStore\Exception\WrongExpectedVersionException
      */
     public function wrong_expected_version_should_throw_exception()
     {
@@ -60,7 +63,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('204', $this->es->getLastResponse()->getStatusCode());
 
         // we try to write to a soft deleted stream...
-        $this->es->writeToStream($streamName, WritableEvent::newInstance('Foo', 'bar'));
+        $this->es->writeToStream($streamName, WritableEvent::newInstance('Foo', ['bar']));
 
         // ..and we should expect a "201 Created" response
         $this->assertEquals('201', $this->es->getLastResponse()->getStatusCode());
@@ -77,7 +80,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('204', $this->es->getLastResponse()->getStatusCode());
 
         // we try to write to a hard deleted stream...
-        $this->es->writeToStream($streamName, WritableEvent::newInstance('Foo', 'bar'));
+        $this->es->writeToStream($streamName, WritableEvent::newInstance('Foo', ['bar']));
 
         // ..and we should expect a "410 Stream deleted" response
         $this->assertEquals('410', $this->es->getLastResponse()->getStatusCode());
@@ -105,7 +108,9 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         new EventStore('http://127.0.0.1:12345/');
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function event_data_is_embedded_with_body_mode()
     {
         $streamName = $this->prepareTestStream();
@@ -116,7 +121,9 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(['foo' => 'bar'], json_decode($json['entries'][0]['data'], true));
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function event_stream_feed_head_returns_next_link()
     {
         $streamName = $this->prepareTestStream(40);
@@ -128,7 +135,9 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(20, $next->getJson()['entries']);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function event_stream_feed_returns_entries()
     {
         $streamName = $this->prepareTestStream(40);
@@ -139,23 +148,53 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $this->assertContainsOnlyInstancesOf('EventStore\StreamFeed\Entry', $entries);
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function get_single_event_from_event_stream()
     {
         $streamName  = $this->prepareTestStream(1);
         $feed        = $this->es->openStreamFeed($streamName);
+
+        /** @var Entry $entry */
         list($entry) = $feed->getEntries();
         $eventUrl    = $entry->getEventUrl();
 
-        $this->assertSame(0, $entry->getVersion());
+        $event       = $this->es->readEvent($eventUrl);
+
+        $this->assertSame(0, $event->getVersion());
+        $this->assertInstanceOf('EventStore\StreamFeed\Event', $event);
+        $this->assertEquals(['foo' => 'bar'], $event->getData());
+        $this->assertSame(NULL, $event->getMetadata());
+    }
+
+    /**
+     * @test
+     */
+    public function get_single_event_with_metadata_from_event_stream()
+    {
+        $metadata = array(
+            'user' => 'akii'
+        );
+
+        $streamName  = $this->prepareTestStream(1, $metadata);
+        $feed        = $this->es->openStreamFeed($streamName);
+
+        /** @var Entry $entry */
+        list($entry) = $feed->getEntries();
+        $eventUrl    = $entry->getEventUrl();
 
         $event       = $this->es->readEvent($eventUrl);
 
+        $this->assertSame(0, $event->getVersion());
         $this->assertInstanceOf('EventStore\StreamFeed\Event', $event);
         $this->assertEquals(['foo' => 'bar'], $event->getData());
+        $this->assertEquals($metadata, $event->getMetadata());
     }
 
-    /** @test */
+    /**
+     * @test
+     */
     public function navigate_stream_using_missing_link_returns_null()
     {
         $streamName = $this->prepareTestStream(1);
@@ -168,7 +207,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException EventStore\Exception\StreamNotFoundException
+     * @expectedException \EventStore\Exception\StreamNotFoundException
      */
     public function unexistent_stream_should_throw_not_found_exception()
     {
@@ -177,7 +216,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException EventStore\Exception\StreamDeletedException
+     * @expectedException \EventStore\Exception\StreamDeletedException
      */
     public function deleted_stream_should_throw_an_exception()
     {
@@ -189,7 +228,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException EventStore\Exception\UnauthorizedException
+     * @expectedException \EventStore\Exception\UnauthorizedException
      * @expectedExceptionMessage Tried to open stream http://127.0.0.1:2113/streams/$et-Baz got 401
      */
     public function unauthorized_streams_throw_unauthorized_exception()
@@ -199,7 +238,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException EventStore\Exception\StreamDeletedException
+     * @expectedException \EventStore\Exception\StreamDeletedException
      */
     public function fetching_event_of_a_deleted_stream_throws_an_exception()
     {
@@ -215,15 +254,16 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param  int    $length
+     * @param  array  $metadata
      * @return string
      */
-    private function prepareTestStream($length = 1)
+    private function prepareTestStream($length = 1, $metadata = [])
     {
         $streamName = uniqid();
         $events     = [];
 
         for ($i = 0; $i < $length; ++$i) {
-            $events[] = WritableEvent::newInstance('Foo', ['foo' => 'bar']);
+            $events[] = WritableEvent::newInstance('Foo', ['foo' => 'bar'], $metadata);
         }
 
         $collection = new WritableEventCollection($events);

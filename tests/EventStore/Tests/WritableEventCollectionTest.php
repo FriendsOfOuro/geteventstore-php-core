@@ -6,16 +6,22 @@ use EventStore\WritableEvent;
 use EventStore\WritableEventCollection;
 use ValueObjects\Identity\UUID;
 
+/**
+ * Class WritableEventCollectionTest
+ * @package EventStore\Tests
+ */
 class WritableEventCollectionTest extends \PHPUnit_Framework_TestCase
 {
-    /** @test */
+    /**
+     * @test
+     */
     public function event_collection_is_converted_to_stream_data()
     {
         $uuid1  = new UUID();
-        $event1 = new WritableEvent($uuid1, 'Foo', 'bar');
+        $event1 = new WritableEvent($uuid1, 'Foo', ['bar']);
 
         $uuid2  = new UUID();
-        $event2 = new WritableEvent($uuid2, 'Baz', 'foo');
+        $event2 = new WritableEvent($uuid2, 'Baz', ['foo']);
 
         $eventCollection = new WritableEventCollection([$event1, $event2]);
 
@@ -23,11 +29,13 @@ class WritableEventCollectionTest extends \PHPUnit_Framework_TestCase
             [
                 'eventId'   => $uuid1->toNative(),
                 'eventType' => 'Foo',
-                'data'      => 'bar'
+                'data'      => ['bar'],
+                'metadata'  => []
             ], [
                 'eventId'   => $uuid2->toNative(),
                 'eventType' => 'Baz',
-                'data'      => 'foo'
+                'data'      => ['foo'],
+                'metadata'  => []
             ]
         ];
 
@@ -36,7 +44,7 @@ class WritableEventCollectionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * @expectedException EventStore\Exception\InvalidWritableEventObjectException
+     * @expectedException \EventStore\Exception\InvalidWritableEventObjectException
      */
     public function invalid_collection_throws_exception()
     {

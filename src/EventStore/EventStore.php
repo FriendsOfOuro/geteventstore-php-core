@@ -130,7 +130,21 @@ final class EventStore implements EventStoreInterface
 
         $jsonResponse = $this->lastResponse->json();
 
-        return new Event($jsonResponse);
+        return $this->createEventFromResponseContent($jsonResponse['content']);
+    }
+
+    /**
+     * @param  array $content
+     * @return Event
+     */
+    protected function createEventFromResponseContent(array $content)
+    {
+        $type = $content['eventType'];
+        $version = (integer) $content['eventNumber'];
+        $data = $content['data'];
+        $metadata = (!empty($content['metadata'])) ? $content['metadata'] : NULL;
+
+        return new Event($type, $version, $data, $metadata);
     }
 
     /**
@@ -225,7 +239,7 @@ final class EventStore implements EventStoreInterface
                 $uri,
                 [
                     'headers' => [
-                        'Accept' => 'application/json'
+                        'Accept' => 'application/vnd.eventstore.atom+json'
                     ]
                 ]
             )
