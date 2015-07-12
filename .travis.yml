@@ -23,6 +23,7 @@ matrix:
 cache:
   directories:
     - $HOME/composer/.cache
+    - $HOME/build/dbellettini/php-eventstore-client/bin
     - $HOME/build/dbellettini/php-eventstore-client/vendor
 
 before_install:
