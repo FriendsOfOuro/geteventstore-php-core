@@ -23,6 +23,7 @@ matrix:
 cache:
   directories:
     - $HOME/composer/.cache
+    - $HOME/build/dbellettini/php-eventstore-client/vendor
 
 before_install:
   - wget http://download.geteventstore.com/binaries/EventStore-OSS-Linux-${EVENT_STORE_VERSION}.tar.gz
