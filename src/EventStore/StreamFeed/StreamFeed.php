@@ -21,17 +21,17 @@ final class StreamFeed
     private $entryEmbedMode;
 
     /**
-     * @param array          $json_feed
-     * @param EntryEmbedMode $embed_mode
+     * @param array          $jsonFeed
+     * @param EntryEmbedMode $embedMode
      */
-    public function __construct(array $json_feed, EntryEmbedMode $embed_mode = null)
+    public function __construct(array $jsonFeed, EntryEmbedMode $embedMode = null)
     {
-        if ($embed_mode === null) {
-            $embed_mode = EntryEmbedMode::NONE();
+        if ($embedMode === null) {
+            $embedMode = EntryEmbedMode::NONE();
         }
 
-        $this->entryEmbedMode = $embed_mode;
-        $this->json           = $json_feed;
+        $this->entryEmbedMode = $embedMode;
+        $this->json           = $jsonFeed;
     }
 
     /**

@@ -29,7 +29,7 @@ final class WritableEventCollection implements WritableToStream
      */
     public function toStreamData()
     {
-        return array_map(function ($event) {
+        return array_map(function (WritableEvent $event) {
             return $event->toStreamData();
         }, $this->events);
     }

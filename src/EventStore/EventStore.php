@@ -59,12 +59,12 @@ final class EventStore implements EventStoreInterface
     /**
      * Delete a stream
      *
-     * @param string         $stream_name Name of the stream
-     * @param StreamDeletion $mode        Deletion mode (soft or hard)
+     * @param string         $streamName Name of the stream
+     * @param StreamDeletion $mode       Deletion mode (soft or hard)
      */
-    public function deleteStream($stream_name, StreamDeletion $mode)
+    public function deleteStream($streamName, StreamDeletion $mode)
     {
-        $request = $this->httpClient->createRequest('DELETE', $this->getStreamUrl($stream_name));
+        $request = $this->httpClient->createRequest('DELETE', $this->getStreamUrl($streamName));
 
         if ($mode == StreamDeletion::HARD) {
             $request->addHeader('ES-HardDelete', 'true');
@@ -86,47 +86,47 @@ final class EventStore implements EventStoreInterface
     /**
      * Navigate stream feed through link relations
      *
-     * @param  StreamFeed      $stream_feed The stream feed to navigate through
-     * @param  LinkRelation    $relation    The "direction" expressed as link relation
+     * @param  StreamFeed      $streamFeed The stream feed to navigate through
+     * @param  LinkRelation    $relation   The "direction" expressed as link relation
      * @return null|StreamFeed
      */
-    public function navigateStreamFeed(StreamFeed $stream_feed, LinkRelation $relation)
+    public function navigateStreamFeed(StreamFeed $streamFeed, LinkRelation $relation)
     {
-        $url = $stream_feed->getLinkUrl($relation);
+        $url = $streamFeed->getLinkUrl($relation);
 
         if (empty($url)) {
             return null;
         }
 
-        return $this->readStreamFeed($url, $stream_feed->getEntryEmbedMode());
+        return $this->readStreamFeed($url, $streamFeed->getEntryEmbedMode());
     }
 
     /**
      * Open a stream feed for read and navigation
      *
-     * @param  string         $stream_name The stream name
-     * @param  EntryEmbedMode $embed_mode  The event entries embed mode (none, rich or body)
+     * @param  string         $streamName The stream name
+     * @param  EntryEmbedMode $embedMode  The event entries embed mode (none, rich or body)
      * @return StreamFeed
      */
-    public function openStreamFeed($stream_name, EntryEmbedMode $embed_mode = null)
+    public function openStreamFeed($streamName, EntryEmbedMode $embedMode = null)
     {
-        $url = $this->getStreamUrl($stream_name);
+        $url = $this->getStreamUrl($streamName);
 
-        return $this->readStreamFeed($url, $embed_mode);
+        return $this->readStreamFeed($url, $embedMode);
     }
 
     /**
      * Read a single event
      *
-     * @param  string $event_url The url of the event
+     * @param  string $eventUrl The url of the event
      * @return Event
      */
-    public function readEvent($event_url)
+    public function readEvent($eventUrl)
     {
-        $request = $this->getJsonRequest($event_url);
+        $request = $this->getJsonRequest($eventUrl);
         $this->sendRequest($request);
 
-        $this->ensureStatusCodeIsGood($event_url);
+        $this->ensureStatusCodeIsGood($eventUrl);
 
         $jsonResponse = $this->lastResponse->json();
 
@@ -150,12 +150,12 @@ final class EventStore implements EventStoreInterface
     /**
      * Write one or more events to a stream
      *
-     * @param  string                                  $stream_name     The stream name
+     * @param  string                                  $streamName      The stream name
      * @param  WritableToStream                        $events          Single event or a collection of events
      * @param  int                                     $expectedVersion The expected version of the stream
      * @throws Exception\WrongExpectedVersionException
      */
-    public function writeToStream($stream_name, WritableToStream $events, $expectedVersion = ExpectedVersion::ANY)
+    public function writeToStream($streamName, WritableToStream $events, $expectedVersion = ExpectedVersion::ANY)
     {
         if ($events instanceof WritableEvent) {
             $events = new WritableEventCollection([$events]);
@@ -165,7 +165,7 @@ final class EventStore implements EventStoreInterface
             ->httpClient
             ->createRequest(
                 'POST',
-                $this->getStreamUrl($stream_name),
+                $this->getStreamUrl($streamName),
                 [
                     'json' => $events->toStreamData(),
                 ]
@@ -198,38 +198,42 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
-     * @param  string $stream_name
+     * @param  string $streamName
      * @return string
      */
-    private function getStreamUrl($stream_name)
+    private function getStreamUrl($streamName)
     {
-        return sprintf('%s/streams/%s', $this->url, $stream_name);
+        return sprintf('%s/streams/%s', $this->url, $streamName);
     }
 
     /**
-     * @param  string                            $stream_url
-     * @param  EntryEmbedMode                    $embed_mode
+     * @param  string                            $streamUrl
+     * @param  EntryEmbedMode                    $embedMode
      * @return StreamFeed
      * @throws Exception\StreamDeletedException
      * @throws Exception\StreamNotFoundException
      */
-    private function readStreamFeed($stream_url, EntryEmbedMode $embed_mode = null)
+    private function readStreamFeed($streamUrl, EntryEmbedMode $embedMode = null)
     {
-        $request = $this->getJsonRequest($stream_url);
+        $request = $this->getJsonRequest($streamUrl);
 
-        if ($embed_mode != null && $embed_mode != EntryEmbedMode::NONE()) {
-            $request->getQuery()->add('embed', $embed_mode->toNative());
+        if ($embedMode != null && $embedMode != EntryEmbedMode::NONE()) {
+            $request->getQuery()->add('embed', $embedMode->toNative());
         }
 
         $this->sendRequest($request);
 
-        $this->ensureStatusCodeIsGood($stream_url);
+        $this->ensureStatusCodeIsGood($streamUrl);
 
         $jsonResponse = $this->lastResponse->json();
 
-        return new StreamFeed($jsonResponse, $embed_mode);
+        return new StreamFeed($jsonResponse, $embedMode);
     }
 
+    /**
+     * @param  string                                       $uri
+     * @return \GuzzleHttp\Message\Request|RequestInterface
+     */
     private function getJsonRequest($uri)
     {
         return $this
@@ -259,46 +263,46 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
-     * @param $stream_url
+     * @param  string                            $streamUrl
      * @throws Exception\StreamDeletedException
      * @throws Exception\StreamNotFoundException
      * @throws Exception\UnauthorizedException
      */
-    private function ensureStatusCodeIsGood($stream_url)
+    private function ensureStatusCodeIsGood($streamUrl)
     {
         $code = $this->lastResponse->getStatusCode();
 
         if (array_key_exists($code, $this->badCodeHandlers)) {
-            $this->badCodeHandlers[$code]($stream_url);
+            $this->badCodeHandlers[$code]($streamUrl);
         }
     }
 
     private function initBadCodeHandlers()
     {
         $this->badCodeHandlers = [
-            ResponseCode::HTTP_NOT_FOUND => function ($stream_url) {
+            ResponseCode::HTTP_NOT_FOUND => function ($streamUrl) {
                     throw new StreamNotFoundException(
                         sprintf(
                             'No stream found at %s',
-                            $stream_url
+                            $streamUrl
                         )
                     );
                 },
 
-            ResponseCode::HTTP_GONE => function ($stream_url) {
+            ResponseCode::HTTP_GONE => function ($streamUrl) {
                     throw new StreamDeletedException(
                         sprintf(
                             'Stream at %s has been permanently deleted',
-                            $stream_url
+                            $streamUrl
                         )
                     );
                 },
 
-            ResponseCode::HTTP_UNAUTHORIZED => function ($stream_url) {
+            ResponseCode::HTTP_UNAUTHORIZED => function ($streamUrl) {
                     throw new UnauthorizedException(
                         sprintf(
                             'Tried to open stream %s got 401',
-                            $stream_url
+                            $streamUrl
                         )
                     );
                 }
