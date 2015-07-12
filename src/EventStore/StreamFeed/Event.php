@@ -6,7 +6,7 @@ namespace EventStore\StreamFeed;
  * Class Event
  * @package EventStore\StreamFeed
  */
-class Event
+final class Event
 {
     /**
      * @var string
