@@ -142,7 +142,7 @@ final class EventStore implements EventStoreInterface
         $type = $content['eventType'];
         $version = (integer) $content['eventNumber'];
         $data = $content['data'];
-        $metadata = (!empty($content['metadata'])) ? $content['metadata'] : NULL;
+        $metadata = (!empty($content['metadata'])) ? $content['metadata'] : null;
 
         return new Event($type, $version, $data, $metadata);
     }
