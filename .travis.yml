@@ -1,30 +1,31 @@
+# vim: set tabstop=2 shiftwidth=2 expandtab:
 language: php
 
 php:
-    - 5.4
-    - 5.5
-    - 5.6
-    - hhvm
-    - nightly
+  - 5.4
+  - 5.5
+  - 5.6
+  - hhvm
+  - nightly
 
 env:
-    - EVENT_STORE_VERSION='v3.0.3'
-    - EVENT_STORE_VERSION='v3.0.4'
-    - EVENT_STORE_VERSION='v3.0.5'
+  - EVENT_STORE_VERSION='v3.0.3'
+  - EVENT_STORE_VERSION='v3.0.4'
+  - EVENT_STORE_VERSION='v3.0.5'
 
 sudo: false
 
 matrix:
-    allow_failures:
-        - php: hhvm
-        - php: nightly
+  allow_failures:
+    - php: hhvm
+    - php: nightly
 
 before_install:
-    - wget http://download.geteventstore.com/binaries/EventStore-OSS-Linux-${EVENT_STORE_VERSION}.tar.gz
-    - tar xf EventStore*.tar.gz
-    - cd EventStore* && ./clusternode --mem-db 2>&1> eventstore.log &
+  - wget http://download.geteventstore.com/binaries/EventStore-OSS-Linux-${EVENT_STORE_VERSION}.tar.gz
+  - tar xf EventStore*.tar.gz
+  - cd EventStore* && ./clusternode --mem-db 2>&1> eventstore.log &
 install:
-    - composer install --dev --prefer-source --no-interaction
+  - composer install --dev --prefer-source --no-interaction
 
 script: bin/phpunit --coverage-clover=coverage.clover --coverage-text --testdox
 
