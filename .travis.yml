@@ -20,12 +20,16 @@ matrix:
     - php: hhvm
     - php: nightly
 
+cache:
+  directories:
+    - $HOME/composer/.cache
+
 before_install:
   - wget http://download.geteventstore.com/binaries/EventStore-OSS-Linux-${EVENT_STORE_VERSION}.tar.gz
   - tar xf EventStore*.tar.gz
   - cd EventStore* && ./clusternode --mem-db 2>&1> eventstore.log &
 install:
-  - composer install --dev --prefer-source --no-interaction
+  - composer install --prefer-dist --no-interaction
 
 script: bin/phpunit --coverage-clover=coverage.clover --coverage-text --testdox
 
