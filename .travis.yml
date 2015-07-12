@@ -8,10 +8,10 @@ php:
     - nightly
 
 env:
-    - EVENT_STORE_VERSION='v3.0.0'
-    - EVENT_STORE_VERSION='v3.0.1'
-    - EVENT_STORE_VERSION='v3.0.2'
     - EVENT_STORE_VERSION='v3.0.3'
+    - EVENT_STORE_VERSION='v3.0.4'
+    - EVENT_STORE_VERSION='v3.0.5'
+
 matrix:
     allow_failures:
         - php: hhvm
