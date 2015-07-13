@@ -24,8 +24,8 @@ cache:
   directories:
     - $HOME/downloads
     - $HOME/composer/.cache
-    - $HOME/build/dbellettini/php-eventstore-client/bin
     - $HOME/build/dbellettini/php-eventstore-client/vendor
+    - $HOME/build/dbellettini/php-eventstore-client/bin
 
 before_install:
   - travis/download-eventstore.sh ${EVENT_STORE_VERSION}
