@@ -30,12 +30,12 @@ cache:
 before_install:
   - travis/download-eventstore.sh ${EVENT_STORE_VERSION}
   - tar xf $HOME/downloads/EventStore-OSS-Linux-${EVENT_STORE_VERSION}.tar.gz
-  - cd EventStore* && ./clusternode --mem-db 2>&1> eventstore.log &
+  - cd EventStore* && ./clusternode --mem-db 2>&1> ~/eventstore.log &
 install:
   - composer install --prefer-dist --no-interaction
 
 before_script:
-  - while [`grep SPARTA eventstore.log | wc -l` -eq 0]; do sleep 1; done
+  - while [ `grep SPARTA ~/eventstore.log | wc -l` -eq 0 ]; do sleep 1; done
 
 script:
   - bin/phpunit --coverage-clover=coverage.clover --coverage-text --testdox
@@ -46,4 +46,4 @@ after_success:
 
 after_scripts:
   - killall -SIGINT clusternode
-  - cat EventStore*/eventstore.log
+  - cat ~/eventstore.log
