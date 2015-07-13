@@ -22,13 +22,14 @@ matrix:
 
 cache:
   directories:
+    - $HOME/downloads
     - $HOME/composer/.cache
     - $HOME/build/dbellettini/php-eventstore-client/bin
     - $HOME/build/dbellettini/php-eventstore-client/vendor
 
 before_install:
-  - wget http://download.geteventstore.com/binaries/EventStore-OSS-Linux-${EVENT_STORE_VERSION}.tar.gz
-  - tar xf EventStore*.tar.gz
+  - scripts/download-eventstore.sh ${EVENT_STORE_VERSION}
+  - tar xf $HOME/downloads/EventStore-OSS-Linux-${EVENT_STORE_VERSION}.tar.gz
   - cd EventStore* && ./clusternode --mem-db 2>&1> eventstore.log &
 install:
   - composer install --prefer-dist --no-interaction
