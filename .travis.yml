@@ -29,6 +29,7 @@ cache:
 
 before_install:
   - travis/download-eventstore.sh ${EVENT_STORE_VERSION}
+  - travis/download-ocular.sh
   - tar xf $HOME/downloads/EventStore-OSS-Linux-${EVENT_STORE_VERSION}.tar.gz
   - cd EventStore* && ./clusternode --mem-db 2>&1> ~/eventstore.log &
 install:
@@ -41,7 +42,6 @@ script:
   - bin/phpunit --coverage-clover=coverage.clover --coverage-text --testdox
 
 after_success:
-  - travis/download-ocular.sh
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 after_scripts:
