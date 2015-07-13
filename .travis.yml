@@ -28,7 +28,7 @@ cache:
     - $HOME/build/dbellettini/php-eventstore-client/vendor
 
 before_install:
-  - scripts/download-eventstore.sh ${EVENT_STORE_VERSION}
+  - travis/download-eventstore.sh ${EVENT_STORE_VERSION}
   - tar xf $HOME/downloads/EventStore-OSS-Linux-${EVENT_STORE_VERSION}.tar.gz
   - cd EventStore* && ./clusternode --mem-db 2>&1> eventstore.log &
 install:
