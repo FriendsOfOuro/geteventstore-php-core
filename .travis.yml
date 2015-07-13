@@ -41,7 +41,7 @@ script:
   - bin/phpunit --coverage-clover=coverage.clover --coverage-text --testdox
 
 after_success:
-  - wget https://scrutinizer-ci.com/ocular.phar
+  - travis/download-ocular.sh
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 after_scripts:
