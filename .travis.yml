@@ -34,7 +34,11 @@ before_install:
 install:
   - composer install --prefer-dist --no-interaction
 
-script: bin/phpunit --coverage-clover=coverage.clover --coverage-text --testdox
+before_script:
+  - while [`grep SPARTA eventstore.log | wc -l` -eq 0]; do sleep 1; done
+
+script:
+  - bin/phpunit --coverage-clover=coverage.clover --coverage-text --testdox
 
 after_success:
   - wget https://scrutinizer-ci.com/ocular.phar
