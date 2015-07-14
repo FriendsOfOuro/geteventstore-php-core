@@ -11,7 +11,7 @@ PHP client for [EventStore 3.x HTTP API](https://github.com/eventstore/eventstor
 Roadmap
 -------
 
-Development started in April 2014. Not ready for production use.
+Development started in April 2014. Not ready for production use. Things may break between versions.
 
 API can currently:
 
