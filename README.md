@@ -21,13 +21,10 @@ API can currently:
 - Write to streams
 - Delete streams
 
-Symfony 2 integration
----------------------
-[EventStore Client Bundle](https://github.com/dbellettini/eventstore-client-bundle) integrates this project in Symfony 2
-
-Broadway integration
---------------------
-http://github.com/dbellettini/broadway-eventstore
+Integrations
+------------
+* [EventStore Client Bundle](https://github.com/dbellettini/eventstore-client-bundle) integrates this project in Symfony 2
+* [Broadway Integration](http://github.com/dbellettini/broadway-eventstore)
 
 Documentation
 -------------
