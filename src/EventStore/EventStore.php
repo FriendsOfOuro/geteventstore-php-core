@@ -15,8 +15,10 @@ use EventStore\StreamFeed\StreamFeed;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Message\RequestInterface;
-use GuzzleHttp\Message\ResponseInterface;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Uri;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class EventStore
@@ -64,10 +66,10 @@ final class EventStore implements EventStoreInterface
      */
     public function deleteStream($streamName, StreamDeletion $mode)
     {
-        $request = $this->httpClient->createRequest('DELETE', $this->getStreamUrl($streamName));
+        $request = new Request('DELETE', $this->getStreamUrl($streamName));
 
         if ($mode == StreamDeletion::HARD) {
-            $request->addHeader('ES-HardDelete', 'true');
+            $request = $request->withHeader('ES-HardDelete', 'true');
         }
 
         $this->sendRequest($request);
@@ -128,7 +130,7 @@ final class EventStore implements EventStoreInterface
 
         $this->ensureStatusCodeIsGood($eventUrl);
 
-        $jsonResponse = $this->lastResponse->json();
+        $jsonResponse = $this->lastResponseAsJson();
 
         return $this->createEventFromResponseContent($jsonResponse['content']);
     }
@@ -161,19 +163,15 @@ final class EventStore implements EventStoreInterface
             $events = new WritableEventCollection([$events]);
         }
 
-        $request = $this
-            ->httpClient
-            ->createRequest(
-                'POST',
-                $this->getStreamUrl($streamName),
-                [
-                    'json' => $events->toStreamData(),
-                ]
-            )
-        ;
-
-        $request->setHeader('ES-ExpectedVersion', intval($expectedVersion));
-        $request->setHeader('Content-Type', 'application/vnd.eventstore.events+json');
+        $request = new Request(
+            'POST',
+            $this->getStreamUrl($streamName),
+            [
+                'ES-ExpectedVersion' => intval($expectedVersion),
+                'Content-Type' => 'application/vnd.eventstore.events+json',
+            ],
+            json_encode($events->toStreamData())
+        );
 
         $this->sendRequest($request);
 
@@ -190,7 +188,7 @@ final class EventStore implements EventStoreInterface
     private function checkConnection()
     {
         try {
-            $request = $this->httpClient->createRequest('GET', $this->url);
+            $request = new Request('GET', $this->url);
             $this->sendRequest($request);
         } catch (RequestException $e) {
             throw new ConnectionFailedException($e->getMessage());
@@ -218,16 +216,20 @@ final class EventStore implements EventStoreInterface
         $request = $this->getJsonRequest($streamUrl);
 
         if ($embedMode != null && $embedMode != EntryEmbedMode::NONE()) {
-            $request->getQuery()->add('embed', $embedMode->toNative());
+            $uri = Uri::withQueryValue(
+                $request->getUri(),
+                'embed',
+                $embedMode->toNative()
+            );
+
+            $request = $request->withUri($uri);
         }
 
         $this->sendRequest($request);
 
         $this->ensureStatusCodeIsGood($streamUrl);
 
-        $jsonResponse = $this->lastResponse->json();
-
-        return new StreamFeed($jsonResponse, $embedMode);
+        return new StreamFeed($this->lastResponseAsJson(), $embedMode);
     }
 
     /**
@@ -236,18 +238,13 @@ final class EventStore implements EventStoreInterface
      */
     private function getJsonRequest($uri)
     {
-        return $this
-            ->httpClient
-            ->createRequest(
-                'GET',
-                $uri,
-                [
-                    'headers' => [
-                        'Accept' => 'application/vnd.eventstore.atom+json'
-                    ]
-                ]
-            )
-        ;
+        return new Request(
+            'GET',
+            $uri,
+            [
+                'Accept' => 'application/vnd.eventstore.atom+json'
+            ]
+        );
     }
 
     /**
@@ -307,5 +304,10 @@ final class EventStore implements EventStoreInterface
                     );
                 }
         ];
+    }
+
+    private function lastResponseAsJson()
+    {
+        return json_decode($this->lastResponse->getBody(), true);
     }
 }
