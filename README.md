@@ -24,7 +24,7 @@ API can currently:
 Integrations
 ------------
 * [EventStore Client Bundle](https://github.com/dbellettini/eventstore-client-bundle) integrates this project in Symfony 2
-* [Broadway Integration](http://github.com/dbellettini/broadway-eventstore)
+* [Broadway Integration](https://github.com/dbellettini/broadway-eventstore)
 
 Documentation
 -------------
