@@ -9,7 +9,7 @@ if [ "$#" -ne 1 ]; then
     exit 2
 fi
 
-file="EventStore-OSS-Linux-$1.tar.gz"
+file="EventStore-OSS-$1.tar.gz"
 
 if [ ! -f "$HOME/downloads/$file" ]; then
     echo "File $file not cached, downloading..."

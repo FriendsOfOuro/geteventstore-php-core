@@ -8,8 +8,8 @@ php:
   - nightly
 
 env:
-  - EVENT_STORE_VERSION='v3.0.5'
-  - EVENT_STORE_VERSION='v3.1.0'
+  - EVENT_STORE_VERSION='Linux-v3.0.5'
+  - EVENT_STORE_VERSION='Ubuntu-v3.1.0'
 
 sudo: false
 
@@ -28,7 +28,7 @@ cache:
 before_install:
   - travis/download-eventstore.sh ${EVENT_STORE_VERSION}
   - travis/download-ocular.sh
-  - tar xf $HOME/downloads/EventStore-OSS-Linux-${EVENT_STORE_VERSION}.tar.gz
+  - tar xf $HOME/downloads/EventStore-OSS-${EVENT_STORE_VERSION}.tar.gz
   - cd EventStore* && ./clusternode --mem-db 2>&1> ~/eventstore.log &
 install:
   - composer install --prefer-dist --no-interaction
