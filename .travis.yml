@@ -34,7 +34,7 @@ install:
   - composer install --prefer-dist --no-interaction
 
 before_script:
-  - while [ `grep SPARTA ~/eventstore.log | wc -l` -eq 0 ]; do sleep 1; done
+  - while [ `grep 'IS MASTER' ~/eventstore.log | wc -l` -eq 0 ]; do sleep 1; done
 
 script:
   - bin/phpunit --coverage-clover=coverage.clover --coverage-text --testdox
