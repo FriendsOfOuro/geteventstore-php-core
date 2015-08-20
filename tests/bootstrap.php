@@ -11,5 +11,3 @@ $ phpunit
 EOT
     );
 }
-
-$loader->add('EventStore\\Tests', __DIR__);
