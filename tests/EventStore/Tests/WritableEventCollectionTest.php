@@ -4,7 +4,7 @@ namespace EventStore\Tests;
 
 use EventStore\WritableEvent;
 use EventStore\WritableEventCollection;
-use ValueObjects\Identity\UUID;
+use EventStore\ValueObjects\Identity\UUID;
 
 /**
  * Class WritableEventCollectionTest

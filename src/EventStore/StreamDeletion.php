@@ -2,7 +2,7 @@
 
 namespace EventStore;
 
-use ValueObjects\Enum\Enum;
+use EventStore\ValueObjects\Enum\Enum;
 
 /**
  * Class StreamDeletion

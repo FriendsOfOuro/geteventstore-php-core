@@ -2,7 +2,7 @@
 
 namespace EventStore;
 
-use ValueObjects\Identity\UUID;
+use EventStore\ValueObjects\Identity\UUID;
 
 /**
  * Class WritableEvent

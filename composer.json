@@ -26,10 +26,11 @@
     "require": {
         "php": ">=5.5.0",
         "guzzlehttp/guzzle": "~6.0",
-        "nicolopignatelli/valueobjects": "~3.0"
+        "ramsey/uuid": "~2.8",
+        "marc-mabe/php-enum": "~2.1"
     },
     "require-dev": {
-        "phpunit/phpunit": ">=3.7.0"
+        "phpunit/phpunit": "@stable"
     },
     "suggest": {
         "dbellettini/broadway-eventstore": "Integrate Event Store with Broadway",
@@ -41,6 +42,11 @@
     "autoload": {
         "psr-0": {
             "EventStore": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-0": {
+            "EventStore": "tests/"
         }
     },
     "extra": {
