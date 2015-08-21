@@ -1,9 +1,9 @@
 <?php
 
-namespace ValueObjects\Tests\Identity;
+namespace EventStore\ValueObjects\Tests\Identity;
 
-use ValueObjects\Identity\UUID;
-use ValueObjects\Tests\TestCase;
+use EventStore\ValueObjects\Identity\UUID;
+use EventStore\ValueObjects\Tests\TestCase;
 
 class UUIDTest extends TestCase
 {
@@ -31,11 +31,11 @@ class UUIDTest extends TestCase
         $this->assertTrue($uuid1->sameValueAs($uuid2));
         $this->assertFalse($uuid1->sameValueAs($uuid3));
 
-        $mock = $this->getMock('ValueObjects\ValueObjectInterface');
+        $mock = $this->getMock('EventStore\ValueObjects\ValueObjectInterface');
         $this->assertFalse($uuid1->sameValueAs($mock));
     }
 
-    /** @expectedException ValueObjects\Exception\InvalidNativeArgumentException */
+    /** @expectedException EventStore\ValueObjects\Exception\InvalidNativeArgumentException */
     public function testInvalid()
     {
         new UUID('invalid');

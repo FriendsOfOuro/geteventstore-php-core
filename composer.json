@@ -41,14 +41,12 @@
     },
     "autoload": {
         "psr-0": {
-            "EventStore": "src/",
-            "ValueObjects": "src/"
+            "EventStore": "src/"
         }
     },
     "autoload-dev": {
         "psr-0": {
-            "EventStore": "tests/",
-            "ValueObjects": "tests/"
+            "EventStore": "tests/"
         }
     },
     "extra": {

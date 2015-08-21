@@ -1,9 +1,9 @@
 <?php
 
-namespace ValueObjects\Tests\Util;
+namespace EventStore\ValueObjects\Tests\Util;
 
-use ValueObjects\Tests\TestCase;
-use ValueObjects\Util\Util;
+use EventStore\ValueObjects\Tests\TestCase;
+use EventStore\ValueObjects\Util\Util;
 
 class UtilTest extends TestCase
 {
@@ -19,7 +19,6 @@ class UtilTest extends TestCase
     public function testGetClassAsString()
     {
         $util = new Util();
-        $this->assertEquals('ValueObjects\Util\Util', Util::getClassAsString($util));
+        $this->assertEquals(Util::class, Util::getClassAsString($util));
     }
-
 }

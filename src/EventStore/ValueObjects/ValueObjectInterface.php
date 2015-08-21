@@ -1,6 +1,6 @@
 <?php
 
-namespace ValueObjects;
+namespace EventStore\ValueObjects;
 
 interface ValueObjectInterface
 {

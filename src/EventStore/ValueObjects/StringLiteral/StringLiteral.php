@@ -1,10 +1,10 @@
 <?php
 
-namespace ValueObjects\StringLiteral;
+namespace EventStore\ValueObjects\StringLiteral;
 
-use ValueObjects\Exception\InvalidNativeArgumentException;
-use ValueObjects\Util\Util;
-use ValueObjects\ValueObjectInterface;
+use EventStore\ValueObjects\Exception\InvalidNativeArgumentException;
+use EventStore\ValueObjects\Util\Util;
+use EventStore\ValueObjects\ValueObjectInterface;
 
 class StringLiteral implements ValueObjectInterface
 {

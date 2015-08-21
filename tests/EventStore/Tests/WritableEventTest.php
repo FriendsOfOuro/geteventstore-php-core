@@ -3,7 +3,7 @@
 namespace EventStore\Tests;
 
 use EventStore\WritableEvent;
-use ValueObjects\Identity\UUID;
+use EventStore\ValueObjects\Identity\UUID;
 
 /**
  * Class WritableEventTest

@@ -1,9 +1,9 @@
 <?php
 
-namespace ValueObjects\Tests\StringLiteral;
+namespace EventStore\ValueObjects\Tests\StringLiteral;
 
-use ValueObjects\Tests\TestCase;
-use ValueObjects\StringLiteral\StringLiteral;
+use EventStore\ValueObjects\Tests\TestCase;
+use EventStore\ValueObjects\StringLiteral\StringLiteral;
 
 class StringLiteralTest extends TestCase
 {
@@ -31,11 +31,11 @@ class StringLiteralTest extends TestCase
         $this->assertTrue($foo2->sameValueAs($foo1));
         $this->assertFalse($foo1->sameValueAs($bar));
 
-        $mock = $this->getMock('ValueObjects\ValueObjectInterface');
+        $mock = $this->getMock('EventStore\ValueObjects\ValueObjectInterface');
         $this->assertFalse($foo1->sameValueAs($mock));
     }
 
-    /** @expectedException \ValueObjects\Exception\InvalidNativeArgumentException */
+    /** @expectedException EventStore\ValueObjects\Exception\InvalidNativeArgumentException */
     public function testInvalidNativeArgument()
     {
         new StringLiteral(12);

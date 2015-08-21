@@ -1,6 +1,6 @@
 <?php
 
-namespace ValueObjects\Util;
+namespace EventStore\ValueObjects\Util;
 
 /**
  * Utility class for methods used all across the library

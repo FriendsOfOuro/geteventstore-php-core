@@ -2,7 +2,7 @@
 
 namespace EventStore\StreamFeed;
 
-use ValueObjects\Enum\Enum;
+use EventStore\ValueObjects\Enum\Enum;
 
 /**
  * Class EntryEmbedMode

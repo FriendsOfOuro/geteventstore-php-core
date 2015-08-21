@@ -1,10 +1,10 @@
 <?php
 
-namespace ValueObjects\Enum;
+namespace EventStore\ValueObjects\Enum;
 
 use MabeEnum\Enum as BaseEnum;
-use ValueObjects\Util\Util;
-use ValueObjects\ValueObjectInterface;
+use EventStore\ValueObjects\Util\Util;
+use EventStore\ValueObjects\ValueObjectInterface;
 
 abstract class Enum extends BaseEnum implements ValueObjectInterface
 {
