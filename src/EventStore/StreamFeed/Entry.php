@@ -33,6 +33,11 @@ final class Entry
         return $alternate;
     }
 
+    public function getTitle()
+    {
+        return $this->json['title'];
+    }
+
     /**
      * @return array
      */
