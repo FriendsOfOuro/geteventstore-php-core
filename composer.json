@@ -25,14 +25,16 @@
     ],
     "require": {
         "php": ">=5.5.0",
-        "guzzlehttp/guzzle": "~6.0",
+        "guzzlehttp/psr7": "~1.2",
         "ramsey/uuid": "~2.8",
         "marc-mabe/php-enum": "~2.1"
     },
     "require-dev": {
+        "guzzlehttp/guzzle": "~6.0",
         "phpunit/phpunit": "@stable"
     },
     "suggest": {
+        "guzzlehttp/guzzle": "Default PSR-7 implementation",
         "dbellettini/broadway-eventstore": "Integrate Event Store with Broadway",
         "dbellettini/eventstore-client-bundle": "Integrate Event Store with Symfony 2"
     },
