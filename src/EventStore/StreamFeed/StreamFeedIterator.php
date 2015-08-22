@@ -61,7 +61,10 @@ final class StreamFeedIterator implements \Iterator
     {
         $entry = $this->innerIterator->current();
 
-        return $this->eventStore->readEvent($entry->getEventUrl());
+        return new EntryWithEvent(
+            $entry,
+            $this->eventStore->readEvent($entry->getEventUrl())
+        );
     }
 
     public function next()

@@ -2,6 +2,7 @@
 namespace EventStore\Tests\StreamFeed;
 
 use EventStore\EventStore;
+use EventStore\StreamFeed\Entry;
 use EventStore\StreamFeed\Event;
 use EventStore\StreamFeed\StreamFeedIterator;
 use EventStore\WritableEvent;
@@ -34,7 +35,8 @@ class StreamFeedIteratorTest extends \PHPUnit_Framework_TestCase
         $events = iterator_to_array($iterator);
 
         $this->assertCount(1, $events);
-        $this->assertInstanceOf(Event::class, $events['0@'.$streamName]);
+        $this->assertInstanceOf(Event::class, $events['0@'.$streamName]->getEvent());
+        $this->assertInstanceOf(Entry::class, $events['0@'.$streamName]->getEntry());
     }
 
     /**
@@ -52,7 +54,8 @@ class StreamFeedIteratorTest extends \PHPUnit_Framework_TestCase
         $events = iterator_to_array($iterator);
 
         $this->assertCount(1, $events);
-        $this->assertInstanceOf(Event::class, $events['0@'.$streamName]);
+        $this->assertInstanceOf(Event::class, $events['0@'.$streamName]->getEvent());
+        $this->assertInstanceOf(Entry::class, $events['0@'.$streamName]->getEntry());
     }
 
     /**
