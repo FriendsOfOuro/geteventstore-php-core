@@ -12,6 +12,7 @@ use EventStore\StreamFeed\EntryEmbedMode;
 use EventStore\StreamFeed\Event;
 use EventStore\StreamFeed\LinkRelation;
 use EventStore\StreamFeed\StreamFeed;
+use EventStore\StreamFeed\StreamFeedIterator;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
@@ -180,6 +181,24 @@ final class EventStore implements EventStoreInterface
         if (ResponseCode::HTTP_BAD_REQUEST == $responseStatusCode) {
             throw new WrongExpectedVersionException();
         }
+    }
+
+    /**
+     * @param  string             $streamName
+     * @return StreamFeedIterator
+     */
+    public function forwardStreamFeedIterator($streamName)
+    {
+        return StreamFeedIterator::forward($this, $streamName);
+    }
+
+    /**
+     * @param  string             $streamName
+     * @return StreamFeedIterator
+     */
+    public function backwardStreamFeedIterator($streamName)
+    {
+        return StreamFeedIterator::backward($this, $streamName);
     }
 
     /**

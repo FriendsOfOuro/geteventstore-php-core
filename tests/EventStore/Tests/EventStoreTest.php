@@ -2,12 +2,13 @@
 
 namespace EventStore\Tests;
 
+use EventStore\EventStore;
+use EventStore\StreamDeletion;
 use EventStore\StreamFeed\Entry;
 use EventStore\StreamFeed\EntryEmbedMode;
 use EventStore\StreamFeed\LinkRelation;
+use EventStore\StreamFeed\StreamFeedIterator;
 use EventStore\WritableEvent;
-use EventStore\EventStore;
-use EventStore\StreamDeletion;
 use EventStore\WritableEventCollection;
 
 class EventStoreTest extends \PHPUnit_Framework_TestCase
@@ -250,6 +251,38 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $this->es->deleteStream($streamName, StreamDeletion::HARD());
 
         $event      = $this->es->readEvent($eventUrl);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_create_a_forward_iterator()
+    {
+        $streamName = $this->prepareTestStream(1);
+
+        $this->assertEquals(
+            StreamFeedIterator::forward(
+                $this->es,
+                $streamName
+            ),
+            $this->es->forwardStreamFeedIterator($streamName)
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_create_a_backward_iterator()
+    {
+        $streamName = $this->prepareTestStream(1);
+
+        $this->assertEquals(
+            StreamFeedIterator::backward(
+                $this->es,
+                $streamName
+            ),
+            $this->es->backwardStreamFeedIterator($streamName)
+        );
     }
 
     /**
