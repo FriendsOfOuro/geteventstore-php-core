@@ -7,13 +7,14 @@ use EventStore\Exception\StreamDeletedException;
 use EventStore\Exception\StreamNotFoundException;
 use EventStore\Exception\UnauthorizedException;
 use EventStore\Exception\WrongExpectedVersionException;
+use EventStore\Http\GuzzleHttpClient;
+use EventStore\Http\HttpClientInterface;
 use EventStore\Http\ResponseCode;
 use EventStore\StreamFeed\EntryEmbedMode;
 use EventStore\StreamFeed\Event;
 use EventStore\StreamFeed\LinkRelation;
 use EventStore\StreamFeed\StreamFeed;
 use EventStore\StreamFeed\StreamFeedIterator;
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
@@ -49,12 +50,13 @@ final class EventStore implements EventStoreInterface
 
     /**
      * @param string $url Endpoint of the EventStore HTTP API
+     * @param HttpClientInterface the http client
      */
-    public function __construct($url)
+    public function __construct($url, HttpClientInterface $httpClient = null)
     {
         $this->url = $url;
 
-        $this->httpClient = new Client();
+        $this->httpClient = $httpClient ?: new GuzzleHttpClient();
         $this->checkConnection();
         $this->initBadCodeHandlers();
     }
