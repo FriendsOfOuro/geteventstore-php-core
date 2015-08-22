@@ -98,6 +98,24 @@ class StreamFeedIteratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     */
+    public function it_should_optimize_http_call_on_rewind()
+    {
+        $streamName = $this->prepareTestStream(1);
+
+        $iterator = StreamFeedIterator::backward($this->es, $streamName);
+
+        $iterator->rewind();
+        $response1 = $this->es->getLastResponse();
+
+        $iterator->rewind();
+        $response2 = $this->es->getLastResponse();
+
+        $this->assertSame($response1, $response2);
+    }
+
+    /**
      * @param  int    $length
      * @param  array  $metadata
      * @return string

@@ -20,6 +20,8 @@ final class StreamFeedIterator implements \Iterator
 
     private $arraySortingFunction;
 
+    private $rewinded;
+
     private function __construct(
         EventStoreInterface $eventStore,
         $streamName,
@@ -69,6 +71,7 @@ final class StreamFeedIterator implements \Iterator
 
     public function next()
     {
+        $this->rewinded = false;
         $this->innerIterator->next();
 
         if (!$this->innerIterator->valid()) {
@@ -96,6 +99,10 @@ final class StreamFeedIterator implements \Iterator
 
     public function rewind()
     {
+        if ($this->rewinded) {
+            return;
+        }
+
         $this->feed = $this->eventStore->openStreamFeed($this->streamName);
 
         if ($this->feed->hasLink($this->startingRelation)) {
@@ -109,6 +116,8 @@ final class StreamFeedIterator implements \Iterator
         }
 
         $this->createInnerIterator();
+
+        $this->rewinded = true;
     }
 
     private function createInnerIterator()
