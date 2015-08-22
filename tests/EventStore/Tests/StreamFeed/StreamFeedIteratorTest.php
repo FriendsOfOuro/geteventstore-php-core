@@ -29,7 +29,7 @@ class StreamFeedIteratorTest extends \PHPUnit_Framework_TestCase
         $event = WritableEvent::newInstance('SomethingHappened', ['foo' => 'bar']);
         $this->es->writeToStream($streamName, $event);
 
-        $iterator = StreamFeedIterator::fromLast($this->es, $streamName);
+        $iterator = StreamFeedIterator::forward($this->es, $streamName);
 
         $events = iterator_to_array($iterator);
 
@@ -47,7 +47,7 @@ class StreamFeedIteratorTest extends \PHPUnit_Framework_TestCase
         $event = WritableEvent::newInstance('SomethingHappened', ['foo' => 'bar']);
         $this->es->writeToStream($streamName, $event);
 
-        $iterator = StreamFeedIterator::fromFirst($this->es, $streamName);
+        $iterator = StreamFeedIterator::backward($this->es, $streamName);
 
         $events = iterator_to_array($iterator);
 
@@ -63,7 +63,7 @@ class StreamFeedIteratorTest extends \PHPUnit_Framework_TestCase
         $streamLength = 21;
         $streamName = $this->prepareTestStream($streamLength);
 
-        $iterator = StreamFeedIterator::fromLast($this->es, $streamName);
+        $iterator = StreamFeedIterator::forward($this->es, $streamName);
 
         $events = iterator_to_array($iterator);
 
@@ -77,7 +77,7 @@ class StreamFeedIteratorTest extends \PHPUnit_Framework_TestCase
     {
         $streamName = $this->prepareTestStream(21);
 
-        $iterator = StreamFeedIterator::fromLast($this->es, $streamName);
+        $iterator = StreamFeedIterator::forward($this->es, $streamName);
 
         $this->assertEventSorted(iterator_to_array($iterator));
     }
@@ -89,7 +89,7 @@ class StreamFeedIteratorTest extends \PHPUnit_Framework_TestCase
     {
         $streamName = $this->prepareTestStream(21);
 
-        $iterator = StreamFeedIterator::fromFirst($this->es, $streamName);
+        $iterator = StreamFeedIterator::backward($this->es, $streamName);
 
         $this->assertEventSorted(iterator_to_array($iterator), -1);
     }

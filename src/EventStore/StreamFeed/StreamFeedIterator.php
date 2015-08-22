@@ -35,7 +35,7 @@ final class StreamFeedIterator implements \Iterator
         $this->arraySortingFunction = $arraySortingFunction;
     }
 
-    public static function fromLast(EventStoreInterface $eventStore, $streamName)
+    public static function forward(EventStoreInterface $eventStore, $streamName)
     {
         return new self(
             $eventStore,
@@ -46,7 +46,7 @@ final class StreamFeedIterator implements \Iterator
         );
     }
 
-    public static function fromFirst(EventStoreInterface $eventStore, $streamName)
+    public static function backward(EventStoreInterface $eventStore, $streamName)
     {
         return new self(
             $eventStore,
