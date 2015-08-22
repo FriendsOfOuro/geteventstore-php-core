@@ -2,11 +2,12 @@
 
 namespace EventStore;
 
-use EventStore\StreamFeed\StreamFeed;
 use EventStore\StreamFeed\EntryEmbedMode;
-use GuzzleHttp\Message\ResponseInterface;
 use EventStore\StreamFeed\Event;
 use EventStore\StreamFeed\LinkRelation;
+use EventStore\StreamFeed\StreamFeed;
+use EventStore\StreamFeed\StreamFeedIterator;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Interface EventStoreInterface
@@ -64,4 +65,16 @@ interface EventStoreInterface
      * @return StreamFeed
      */
     public function openStreamFeed($streamName, EntryEmbedMode $embedMode = null);
+
+    /**
+     * @param  string             $streamName
+     * @return StreamFeedIterator
+     */
+    public function forwardStreamFeedIterator($streamName);
+
+    /**
+     * @param  string             $streamName
+     * @return StreamFeedIterator
+     */
+    public function backwardStreamFeedIterator($streamName);
 }
