@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Interface EventStore\EventStoreInterface</title>
+
+	<link rel="stylesheet" href="resources/style.css?e99947befd7bf673c6b43ff75e9e0f170c88a60e">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Namespaces</h3>
+			<ul>
+				<li class="active">
+					<a href="namespace-EventStore.html">
+						EventStore<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-EventStore.Exception.html">
+						Exception					</a>
+
+						</li>
+				<li>
+					<a href="namespace-EventStore.Http.html">
+						Http<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-EventStore.Http.Exception.html">
+						Exception					</a>
+
+						</li>
+							</ul></li>
+				<li>
+					<a href="namespace-EventStore.StreamFeed.html">
+						StreamFeed					</a>
+
+						</li>
+				<li>
+					<a href="namespace-EventStore.ValueObjects.html">
+						ValueObjects<span></span>
+					</a>
+
+						<ul>
+				<li>
+					<a href="namespace-EventStore.ValueObjects.Enum.html">
+						Enum					</a>
+
+						</li>
+				<li>
+					<a href="namespace-EventStore.ValueObjects.Exception.html">
+						Exception					</a>
+
+						</li>
+				<li>
+					<a href="namespace-EventStore.ValueObjects.Identity.html">
+						Identity					</a>
+
+						</li>
+				<li>
+					<a href="namespace-EventStore.ValueObjects.StringLiteral.html">
+						StringLiteral					</a>
+
+						</li>
+				<li>
+					<a href="namespace-EventStore.ValueObjects.Util.html">
+						Util					</a>
+
+						</li>
+							</ul></li></ul></li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-EventStore.EventStore.html">EventStore</a></li>
+				<li><a href="class-EventStore.ExpectedVersion.html">ExpectedVersion</a></li>
+				<li><a href="class-EventStore.StreamDeletion.html">StreamDeletion</a></li>
+				<li><a href="class-EventStore.WritableEvent.html">WritableEvent</a></li>
+				<li><a href="class-EventStore.WritableEventCollection.html">WritableEventCollection</a></li>
+			</ul>
+
+			<h3>Interfaces</h3>
+			<ul>
+				<li class="active"><a href="class-EventStore.EventStoreInterface.html">EventStoreInterface</a></li>
+				<li><a href="class-EventStore.WritableToStream.html">WritableToStream</a></li>
+			</ul>
+
+
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-EventStore.html" title="Summary of EventStore"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Interface EventStoreInterface</h1>
+
+
+	<div class="description">
+	<p>Interface EventStoreInterface</p>
+	</div>
+
+
+
+
+
+	<div>
+		<h4>Direct known implementers</h4>
+			<a href="class-EventStore.EventStore.html">EventStore\EventStore</a>
+	</div>
+
+
+
+
+	<div class="info">
+		
+		
+		<b>Namespace:</b> <a href="namespace-EventStore.html">EventStore</a><br>
+		<b>Package:</b> EventStore<br>
+
+			<b>Located at</b> <a href="source-class-EventStore.EventStoreInterface.html#12-80" title="Go to source code">EventStore/EventStoreInterface.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="navigateStreamFeed" id="_navigateStreamFeed">
+
+		<td class="attributes"><code>
+			 public 
+
+			null|<code><a href="class-EventStore.StreamFeed.StreamFeed.html">EventStore\StreamFeed\StreamFeed</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_navigateStreamFeed">#</a>
+		<code><a href="source-class-EventStore.EventStoreInterface.html#18-25" title="Go to source code">navigateStreamFeed</a>( <span><code><a href="class-EventStore.StreamFeed.StreamFeed.html">EventStore\StreamFeed\StreamFeed</a></code> <var>$streamFeed</var></span>, <span><code><a href="class-EventStore.StreamFeed.LinkRelation.html">EventStore\StreamFeed\LinkRelation</a></code> <var>$relation</var></span> )</code>
+
+		<div class="description short">
+			<p>Navigate stream feed through link relations</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Navigate stream feed through link relations</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$streamFeed</var></dt>
+					<dd>The stream feed to navigate through</dd>
+					<dt><var>$relation</var></dt>
+					<dd>The "direction" expressed as link relation</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					null|<code><a href="class-EventStore.StreamFeed.StreamFeed.html">EventStore\StreamFeed\StreamFeed</a></code>
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getLastResponse" id="_getLastResponse">
+
+		<td class="attributes"><code>
+			 public 
+
+			Psr\Http\Message\ResponseInterface
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_getLastResponse">#</a>
+		<code><a href="source-class-EventStore.EventStoreInterface.html#27-32" title="Go to source code">getLastResponse</a>( )</code>
+
+		<div class="description short">
+			<p>Get the response from the last HTTP call to the EventStore API</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Get the response from the last HTTP call to the EventStore API</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					Psr\Http\Message\ResponseInterface
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="writeToStream" id="_writeToStream">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_writeToStream">#</a>
+		<code><a href="source-class-EventStore.EventStoreInterface.html#34-42" title="Go to source code">writeToStream</a>( <span>string <var>$streamName</var></span>, <span><code><a href="class-EventStore.WritableToStream.html">EventStore\WritableToStream</a></code> <var>$events</var></span>, <span>integer <var>$expectedVersion</var> = <code><a href="class-EventStore.ExpectedVersion.html#ANY">EventStore\ExpectedVersion::<b>ANY</b></a></code></span> )</code>
+
+		<div class="description short">
+			<p>Write one or more events to a stream</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Write one or more events to a stream</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$streamName</var></dt>
+					<dd>The stream name</dd>
+					<dt><var>$events</var></dt>
+					<dd>Single event or a collection of events</dd>
+					<dt><var>$expectedVersion</var></dt>
+					<dd>The expected version of the stream</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-EventStore.Exception.WrongExpectedVersionException.html">EventStore\Exception\WrongExpectedVersionException</a></code>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="readEvent" id="_readEvent">
+
+		<td class="attributes"><code>
+			 public 
+
+			<code><a href="class-EventStore.StreamFeed.Event.html">EventStore\StreamFeed\Event</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_readEvent">#</a>
+		<code><a href="source-class-EventStore.EventStoreInterface.html#44-50" title="Go to source code">readEvent</a>( <span>string <var>$eventUrl</var></span> )</code>
+
+		<div class="description short">
+			<p>Read a single event</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Read a single event</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$eventUrl</var></dt>
+					<dd>The url of the event</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-EventStore.StreamFeed.Event.html">EventStore\StreamFeed\Event</a></code>
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="deleteStream" id="_deleteStream">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_deleteStream">#</a>
+		<code><a href="source-class-EventStore.EventStoreInterface.html#52-58" title="Go to source code">deleteStream</a>( <span>string <var>$streamName</var></span>, <span><code><a href="class-EventStore.StreamDeletion.html">EventStore\StreamDeletion</a></code> <var>$mode</var></span> )</code>
+
+		<div class="description short">
+			<p>Delete a stream</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Delete a stream</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$streamName</var></dt>
+					<dd>Name of the stream</dd>
+					<dt><var>$mode</var></dt>
+					<dd>Deletion mode (soft or hard)</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="openStreamFeed" id="_openStreamFeed">
+
+		<td class="attributes"><code>
+			 public 
+
+			<code><a href="class-EventStore.StreamFeed.StreamFeed.html">EventStore\StreamFeed\StreamFeed</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_openStreamFeed">#</a>
+		<code><a href="source-class-EventStore.EventStoreInterface.html#60-67" title="Go to source code">openStreamFeed</a>( <span>string <var>$streamName</var></span>, <span><code><a href="class-EventStore.StreamFeed.EntryEmbedMode.html">EventStore\StreamFeed\EntryEmbedMode</a></code> <var>$embedMode</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			<p>Open a stream feed for read and navigation</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Open a stream feed for read and navigation</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$streamName</var></dt>
+					<dd>The stream name</dd>
+					<dt><var>$embedMode</var></dt>
+					<dd>The event entries embed mode (none, rich or body)</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-EventStore.StreamFeed.StreamFeed.html">EventStore\StreamFeed\StreamFeed</a></code>
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="forwardStreamFeedIterator" id="_forwardStreamFeedIterator">
+
+		<td class="attributes"><code>
+			 public 
+
+			<code><a href="class-EventStore.StreamFeed.StreamFeedIterator.html">EventStore\StreamFeed\StreamFeedIterator</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_forwardStreamFeedIterator">#</a>
+		<code><a href="source-class-EventStore.EventStoreInterface.html#69-73" title="Go to source code">forwardStreamFeedIterator</a>( <span>string <var>$streamName</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$streamName</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-EventStore.StreamFeed.StreamFeedIterator.html">EventStore\StreamFeed\StreamFeedIterator</a></code>
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="backwardStreamFeedIterator" id="_backwardStreamFeedIterator">
+
+		<td class="attributes"><code>
+			 public 
+
+			<code><a href="class-EventStore.StreamFeed.StreamFeedIterator.html">EventStore\StreamFeed\StreamFeedIterator</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		<a class="anchor" href="#_backwardStreamFeedIterator">#</a>
+		<code><a href="source-class-EventStore.EventStoreInterface.html#75-79" title="Go to source code">backwardStreamFeedIterator</a>( <span>string <var>$streamName</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$streamName</var></dt>
+					<dd></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-EventStore.StreamFeed.StreamFeedIterator.html">EventStore\StreamFeed\StreamFeedIterator</a></code>
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		 API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
+</body>
+</html>
