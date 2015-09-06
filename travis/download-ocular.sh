@@ -7,5 +7,5 @@ if [ ! -f "$HOME/downloads/$file" ]; then
     wget "https://scrutinizer-ci.com/$file" -O "$HOME/downloads/$file"
 else
     echo "File $file found in cache"
-    cp "$HOME/downloads/$file" .
+    cp "$HOME/downloads/$file" ~
 fi
