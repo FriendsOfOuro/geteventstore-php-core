@@ -1,6 +1,8 @@
 EventStore PHP client
 =====================
 
+[![Join the chat at https://gitter.im/dbellettini/php-eventstore-client](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dbellettini/php-eventstore-client?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 PHP client for [EventStore 3.x HTTP API](http://docs.geteventstore.com/http-api/latest)
 
 [![Latest Stable Version](https://poser.pugx.org/dbellettini/eventstore-client/v/stable.svg)](https://packagist.org/packages/dbellettini/eventstore-client) [![Total Downloads](https://poser.pugx.org/dbellettini/eventstore-client/downloads.svg)](https://packagist.org/packages/dbellettini/eventstore-client) [![Latest Unstable Version](https://poser.pugx.org/dbellettini/eventstore-client/v/unstable.svg)](https://packagist.org/packages/dbellettini/eventstore-client) [![License](https://poser.pugx.org/dbellettini/eventstore-client/license.svg)](https://packagist.org/packages/dbellettini/eventstore-client)
