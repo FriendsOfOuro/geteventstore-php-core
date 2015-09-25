@@ -1,0 +1,11 @@
+forge "https://forgeapi.puppetlabs.com"
+
+mod "attachmentgenie/locales"
+mod "saz/timezone"
+mod "maestrodev/wget"
+mod "puppetlabs/apt"
+mod "puppetlabs/stdlib"
+
+mod "jfryman/nginx"
+mod "nodes/php", :git => "git://github.com/dbellettini/puppet-php.git"
+mod "dbellettini/puppet-eventstore", :git => "git://github.com/dbellettini/puppet-eventstore.git"

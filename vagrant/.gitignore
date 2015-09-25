@@ -1,0 +1,4 @@
+*.iml
+*.swp
+.idea
+.vagrant
