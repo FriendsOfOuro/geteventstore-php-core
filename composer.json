@@ -31,10 +31,14 @@
     },
     "require-dev": {
         "guzzlehttp/guzzle": "~6.0",
-        "phpunit/phpunit": "~4.0"
+        "phpunit/phpunit": "~4.0",
+        "kevinrob/guzzle-cache-middleware": "^0.7.1",
+        "doctrine/cache": "~1.4"
     },
     "suggest": {
         "guzzlehttp/guzzle": "Default PSR-7 implementation",
+        "kevinrob/guzzle-cache-middleware": "Cache HTTP requests",
+        "doctrine/cache": "Use Doctrine to cache HTTP requests",
         "dbellettini/broadway-eventstore": "Integrate Event Store with Broadway",
         "dbellettini/eventstore-client-bundle": "Integrate Event Store with Symfony 2"
     },
