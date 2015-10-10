@@ -139,6 +139,35 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
+     * Read a single event
+     *
+     * @param  string $eventUrl The url of the event
+     * @return Event
+     */
+    public function readEventBatch(array $eventUrls)
+    {
+        $requests = array_map(
+            function ($eventUrl) {
+                return $this->getJsonRequest($eventUrl);
+            },
+            $eventUrls
+        );
+
+        $responses = $this->httpClient->sendRequestBatch($requests);
+
+        return array_map(
+            function ($response) {
+                return $this
+                    ->createEventFromResponseContent(
+                        json_decode($response->getBody(), true)['content']
+                    )
+                ;
+            },
+            $responses
+        );
+    }
+
+    /**
      * @param  array $content
      * @return Event
      */

@@ -61,12 +61,7 @@ final class StreamFeedIterator implements \Iterator
 
     public function current()
     {
-        $entry = $this->innerIterator->current();
-
-        return new EntryWithEvent(
-            $entry,
-            $this->eventStore->readEvent($entry->getEventUrl())
-        );
+        return $this->innerIterator->current();
     }
 
     public function next()
@@ -89,7 +84,7 @@ final class StreamFeedIterator implements \Iterator
 
     public function key()
     {
-        return $this->innerIterator->current()->getTitle();
+        return $this->innerIterator->current()->getEntry()->getTitle();
     }
 
     public function valid()
@@ -128,10 +123,34 @@ final class StreamFeedIterator implements \Iterator
             $entries = [];
         }
 
+        if (empty($entries)) {
+            $this->innerIterator = new ArrayIterator([]);
+
+            return;
+        }
+
+        $entries = call_user_func(
+            $this->arraySortingFunction,
+            $entries
+        );
+
+        $urls = array_map(
+            function ($entry) {
+                return $entry->getEventUrl();
+            },
+            $entries
+        );
+
         $this->innerIterator = new ArrayIterator(
-            call_user_func(
-                $this->arraySortingFunction,
-                $entries
+            array_map(
+                function ($entry, $event) {
+                    return new EntryWithEvent(
+                        $entry,
+                        $event
+                    );
+                },
+                $entries,
+                $this->eventStore->readEventBatch($urls)
             )
         );
     }
