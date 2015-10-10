@@ -28,7 +28,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
      */
     public function client_successfully_connects_to_event_store()
     {
-        $this->assertRegExp('/^[2-3][0-9]{2}$/', (string)$this->es->getLastResponse()->getStatusCode());
+        $this->assertRegExp('/^[2-3][0-9]{2}$/', (string) $this->es->getLastResponse()->getStatusCode());
     }
 
     /**
