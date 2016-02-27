@@ -44,6 +44,10 @@ License
 EventStore PHP Client is released under the MIT License. See the bundled
 [LICENSE](/LICENSE) file for details.
 
+See also
+--------
+If you are looking for the TCP implementation you may be interested in [madkom/event-store-client](https://github.com/madkom/event-store-client)
+
 Disclaimer
 ----------
 
