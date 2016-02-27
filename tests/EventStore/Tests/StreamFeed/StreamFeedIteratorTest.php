@@ -150,6 +150,24 @@ class StreamFeedIteratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     */
+    public function it_should_resume_backward()
+    {
+        $n = 2;
+        $eventsPerPage = 20;
+
+        $streamName = $this->prepareTestStream($n * $eventsPerPage + 5);
+
+        $iterator = StreamFeedIterator::backward($this->es, $streamName, $n);
+        iterator_to_array($iterator);
+
+
+        $iterator = StreamFeedIterator::resumeBackward($iterator->nextUrl());
+        $this->assertCount(5, iterator_to_array($iterator));
+    }
+
+    /**
      * @param  int    $length
      * @param  array  $metadata
      * @return string
