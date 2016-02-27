@@ -17,6 +17,7 @@ use EventStore\StreamFeed\Event;
 use EventStore\StreamFeed\LinkRelation;
 use EventStore\StreamFeed\StreamFeed;
 use EventStore\StreamFeed\StreamFeedIterator;
+use EventStore\StreamFeed\StreamUrl;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\RequestInterface;
@@ -251,7 +252,7 @@ final class EventStore implements EventStoreInterface
      */
     private function getStreamUrl($streamName)
     {
-        return sprintf('%s/streams/%s', $this->url, $streamName);
+        return (string) StreamUrl::fromBaseUrlAndName($this->url, $streamName);
     }
 
     /**
