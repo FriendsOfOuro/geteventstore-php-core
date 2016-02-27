@@ -22,12 +22,15 @@ final class StreamFeedIterator implements \Iterator
 
     private $rewinded;
 
+    private $pagesLeft;
+
     private function __construct(
         EventStoreInterface $eventStore,
         $streamName,
         LinkRelation $startingRelation,
         LinkRelation $navigationRelation,
-        callable $arraySortingFunction
+        callable $arraySortingFunction,
+        $limit
     )
     {
         $this->eventStore = $eventStore;
@@ -35,27 +38,30 @@ final class StreamFeedIterator implements \Iterator
         $this->startingRelation = $startingRelation;
         $this->navigationRelation = $navigationRelation;
         $this->arraySortingFunction = $arraySortingFunction;
+        $this->pagesLeft = $limit;
     }
 
-    public static function forward(EventStoreInterface $eventStore, $streamName)
+    public static function forward(EventStoreInterface $eventStore, $streamName, $limit = PHP_INT_MAX)
     {
         return new self(
             $eventStore,
             $streamName,
             LinkRelation::LAST(),
             LinkRelation::PREVIOUS(),
-            'array_reverse'
+            'array_reverse',
+            $limit
         );
     }
 
-    public static function backward(EventStoreInterface $eventStore, $streamName)
+    public static function backward(EventStoreInterface $eventStore, $streamName, $limit = PHP_INT_MAX)
     {
         return new self(
             $eventStore,
             $streamName,
             LinkRelation::FIRST(),
             LinkRelation::NEXT(),
-            function (array $array) { return $array; }
+            function (array $array) { return $array; },
+            $limit
         );
     }
 
@@ -69,7 +75,7 @@ final class StreamFeedIterator implements \Iterator
         $this->rewinded = false;
         $this->innerIterator->next();
 
-        if (!$this->innerIterator->valid()) {
+        if (!$this->innerIterator->valid() && !$this->limitReached()) {
             $this->feed = $this
                 ->eventStore
                 ->navigateStreamFeed(
@@ -153,5 +159,10 @@ final class StreamFeedIterator implements \Iterator
                 $this->eventStore->readEventBatch($urls)
             )
         );
+    }
+
+    private function limitReached()
+    {
+        return --$this->pagesLeft <= 0;
     }
 }

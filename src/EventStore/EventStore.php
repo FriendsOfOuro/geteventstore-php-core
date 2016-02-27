@@ -219,18 +219,18 @@ final class EventStore implements EventStoreInterface
      * @param  string             $streamName
      * @return StreamFeedIterator
      */
-    public function forwardStreamFeedIterator($streamName)
+    public function forwardStreamFeedIterator($streamName, $limit = PHP_INT_MAX)
     {
-        return StreamFeedIterator::forward($this, $streamName);
+        return StreamFeedIterator::forward($this, $streamName, $limit);
     }
 
     /**
      * @param  string             $streamName
      * @return StreamFeedIterator
      */
-    public function backwardStreamFeedIterator($streamName)
+    public function backwardStreamFeedIterator($streamName, $limit = PHP_INT_MAX)
     {
-        return StreamFeedIterator::backward($this, $streamName);
+        return StreamFeedIterator::backward($this, $streamName, $limit);
     }
 
     /**
