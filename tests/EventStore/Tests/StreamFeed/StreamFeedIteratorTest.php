@@ -131,6 +131,25 @@ class StreamFeedIteratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     */
+    public function it_should_give_an_url()
+    {
+        $n = 2;
+        $eventsPerPage = 20;
+
+        $streamName = $this->prepareTestStream($n * $eventsPerPage + 5);
+
+        $iterator = StreamFeedIterator::backward($this->es, $streamName, $n);
+        iterator_to_array($iterator);
+
+        $this->assertEquals(
+            'http://127.0.0.1:2113/streams/' . $streamName . '/4/backward/20',
+            $iterator->nextUrl()
+        );
+    }
+
+    /**
      * @param  int    $length
      * @param  array  $metadata
      * @return string

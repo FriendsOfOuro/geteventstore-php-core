@@ -121,6 +121,11 @@ final class StreamFeedIterator implements \Iterator
         $this->rewinded = true;
     }
 
+    public function nextUrl()
+    {
+        return $this->feed->getLinkUrl($this->navigationRelation);
+    }
+
     private function createInnerIterator()
     {
         if (null !== $this->feed) {
