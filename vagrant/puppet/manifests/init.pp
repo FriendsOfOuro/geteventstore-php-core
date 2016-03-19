@@ -3,8 +3,15 @@ apt::ppa { 'ppa:ondrej/php5-5.6': }->
 class { 'phpenv': }
 class { 'l10n': }->
 
-class { 'eventstore': }
-
+packagecloud::repo {'EventStore/EventStore-OSS':
+  type => 'deb'
+}->
+package {'eventstore-oss':
+  ensure => latest
+}->
+service {'eventstore':
+  enable => true
+}
 
 $toolpkg = [
     'htop',

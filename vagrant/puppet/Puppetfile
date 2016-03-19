@@ -5,7 +5,7 @@ mod "saz/timezone"
 mod "maestrodev/wget"
 mod "puppetlabs/apt"
 mod "puppetlabs/stdlib"
+mod "computology/packagecloud"
 
 mod "jfryman/nginx"
 mod "nodes/php", :git => "git://github.com/dbellettini/puppet-php.git"
-mod "dbellettini/puppet-eventstore", :git => "git://github.com/dbellettini/puppet-eventstore.git"
