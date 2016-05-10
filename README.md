@@ -10,6 +10,9 @@ PHP client for [EventStore 3.x HTTP API](http://docs.geteventstore.com/http-api/
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/dbellettini/php-eventstore-client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/dbellettini/php-eventstore-client/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/dbellettini/php-eventstore-client/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/dbellettini/php-eventstore-client/?branch=master)
 [![Build Status](https://travis-ci.org/dbellettini/php-eventstore-client.svg?branch=master)](https://travis-ci.org/dbellettini/php-eventstore-client)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/dbellettini/php-eventstore-client.svg)](http://isitmaintained.com/project/dbellettini/php-eventstore-client "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/dbellettini/php-eventstore-client.svg)](http://isitmaintained.com/project/dbellettini/php-eventstore-client "Percentage of issues still open")
+
 Roadmap
 -------
 
