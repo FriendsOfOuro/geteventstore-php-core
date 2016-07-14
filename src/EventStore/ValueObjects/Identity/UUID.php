@@ -6,7 +6,7 @@ use EventStore\ValueObjects\Exception\InvalidNativeArgumentException;
 use EventStore\ValueObjects\StringLiteral\StringLiteral;
 use EventStore\ValueObjects\Util\Util;
 use EventStore\ValueObjects\ValueObjectInterface;
-use Rhumsaa\Uuid\Uuid as BaseUuid;
+use Ramsey\Uuid\Uuid as BaseUuid;
 
 class UUID extends StringLiteral
 {
