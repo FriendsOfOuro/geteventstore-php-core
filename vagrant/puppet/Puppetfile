@@ -8,4 +8,4 @@ mod "puppetlabs/stdlib"
 mod "computology/packagecloud"
 
 mod "jfryman/nginx"
-mod "nodes/php", :git => "git://github.com/dbellettini/puppet-php.git"
+mod "nodes/php"
