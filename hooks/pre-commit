@@ -1,20 +1,16 @@
 #!/bin/sh
 
 PROJECTROOT=`echo $(cd ${0%/*}/../../ && pwd -P)`/
-FIXER=php-cs-fixer.phar
+FIXER=bin/php-cs-fixer
 
+echo "Running php-cs-fixer to fix the coding standard"
 if [ ! -e ${PROJECTROOT}${FIXER} ]; then
-	echo "PHP-CS-Fixer not available, downloading to ${PROJECTROOT}${FIXER}..."
-	curl -s http://cs.sensiolabs.org/get/$FIXER > ${PROJECTROOT}${FIXER}
-	echo "Done. First time to check the Coding Standards."
-	echo ""
+    echo "PHP-CS-Fixer not available, please install development dependencies!"
+    exit 1
 fi
 
-RES=`php ${PROJECTROOT}${FIXER} fix $PROJECTROOT --verbose`
-if [ "$RES" != "" ]; then
-	echo "Coding standards are not correct, cancelling your commit."
-	echo ""
-	echo $RES
-	echo ""
-	exit 1
-fi	
+cd ${PROJECTROOT} && php ${FIXER} fix --verbose
+if [ "$?" -ne 0 ]; then
+    echo "Coding standards are not correct, cancelling your commit."
+    exit 1
+fi

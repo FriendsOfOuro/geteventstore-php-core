@@ -1,9 +1,8 @@
 <?php
-
 namespace EventStore\ValueObjects\Tests\StringLiteral;
 
-use EventStore\ValueObjects\Tests\TestCase;
 use EventStore\ValueObjects\StringLiteral\StringLiteral;
+use EventStore\ValueObjects\Tests\TestCase;
 
 class StringLiteralTest extends TestCase
 {

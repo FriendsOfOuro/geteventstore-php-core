@@ -1,5 +1,4 @@
 <?php
-
 namespace EventStore;
 
 use EventStore\StreamFeed\EntryEmbedMode;

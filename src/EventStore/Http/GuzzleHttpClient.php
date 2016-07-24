@@ -3,19 +3,19 @@ namespace EventStore\Http;
 
 use Doctrine\Common\Cache\ApcCache;
 use Doctrine\Common\Cache\Cache;
+use Doctrine\Common\Cache\FilesystemCache;
 use Exception as PhpException;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException as GuzzleClientException;
 use GuzzleHttp\Exception\RequestException as GuzzleRequestException;
-use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\CurlMultiHandler;
+use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Pool;
 use Kevinrob\GuzzleCache\CacheMiddleware;
 use Kevinrob\GuzzleCache\Storage\DoctrineCacheStorage;
 use Kevinrob\GuzzleCache\Strategy\PublicCacheStrategy;
 use Psr\Http\Message\RequestInterface;
-use Doctrine\Common\Cache\FilesystemCache;
 
 final class GuzzleHttpClient implements HttpClientInterface
 {

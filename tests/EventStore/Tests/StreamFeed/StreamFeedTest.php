@@ -1,10 +1,9 @@
 <?php
-
 namespace EventStore\Tests\StreamFeed;
 
 use EventStore\StreamFeed\EntryEmbedMode;
-use EventStore\StreamFeed\StreamFeed;
 use EventStore\StreamFeed\LinkRelation;
+use EventStore\StreamFeed\StreamFeed;
 
 /**
  * Class StreamFeedTest

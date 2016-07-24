@@ -1,9 +1,8 @@
 <?php
-
 namespace EventStore\ValueObjects\Tests\Enum;
 
-use EventStore\ValueObjects\Tests\TestCase;
 use EventStore\ValueObjects\Enum\Enum;
+use EventStore\ValueObjects\Tests\TestCase;
 
 class EnumTest extends TestCase
 {

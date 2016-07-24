@@ -142,8 +142,8 @@ class StreamFeedIteratorTest extends \PHPUnit_Framework_TestCase
         uksort(
             $events,
             function ($a, $b) use ($sign) {
-                list($ida,) = explode('@', $a);
-                list($idb,) = explode('@', $b);
+                list($ida, ) = explode('@', $a);
+                list($idb, ) = explode('@', $b);
 
                 return $sign * ($ida - $idb);
             }

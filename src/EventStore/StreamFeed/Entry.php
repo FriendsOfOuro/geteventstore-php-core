@@ -1,5 +1,4 @@
 <?php
-
 namespace EventStore\StreamFeed;
 
 /**
@@ -20,7 +19,7 @@ final class Entry
      */
     public function __construct(array $json)
     {
-       $this->json = $json;
+        $this->json = $json;
     }
 
     /**

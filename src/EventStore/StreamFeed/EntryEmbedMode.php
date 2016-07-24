@@ -1,5 +1,4 @@
 <?php
-
 namespace EventStore\StreamFeed;
 
 use EventStore\ValueObjects\Enum\Enum;

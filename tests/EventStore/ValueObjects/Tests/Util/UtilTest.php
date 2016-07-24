@@ -1,5 +1,4 @@
 <?php
-
 namespace EventStore\ValueObjects\Tests\Util;
 
 use EventStore\ValueObjects\Tests\TestCase;

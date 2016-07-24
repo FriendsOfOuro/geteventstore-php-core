@@ -1,9 +1,8 @@
 <?php
-
 namespace EventStore\Tests;
 
-use EventStore\WritableEvent;
 use EventStore\ValueObjects\Identity\UUID;
+use EventStore\WritableEvent;
 
 /**
  * Class WritableEventTest

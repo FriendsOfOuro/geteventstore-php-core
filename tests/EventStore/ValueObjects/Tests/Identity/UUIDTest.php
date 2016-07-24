@@ -1,5 +1,4 @@
 <?php
-
 namespace EventStore\ValueObjects\Tests\Identity;
 
 use EventStore\ValueObjects\Identity\UUID;

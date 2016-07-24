@@ -1,5 +1,4 @@
 <?php
-
 namespace EventStore\Tests;
 
 use EventStore\EventStore;

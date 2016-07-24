@@ -28,8 +28,7 @@ final class StreamFeedIterator implements \Iterator
         LinkRelation $startingRelation,
         LinkRelation $navigationRelation,
         callable $arraySortingFunction
-    )
-    {
+    ) {
         $this->eventStore = $eventStore;
         $this->streamName = $streamName;
         $this->startingRelation = $startingRelation;

@@ -33,7 +33,8 @@ $streamName = prepare_test_stream($es, $count = 1000);
 $start = microtime(true);
 
 $stream = $es->forwardStreamFeedIterator($streamName);
-foreach ($stream as $event) {}
+foreach ($stream as $event) {
+}
 
 $end = microtime(true);
 
@@ -42,7 +43,8 @@ printf('Reading %d events took %f seconds%s', $count, $end - $start, PHP_EOL);
 $start = microtime(true);
 
 $stream = $es->forwardStreamFeedIterator($streamName);
-foreach ($stream as $event) {}
+foreach ($stream as $event) {
+}
 
 $end = microtime(true);
 

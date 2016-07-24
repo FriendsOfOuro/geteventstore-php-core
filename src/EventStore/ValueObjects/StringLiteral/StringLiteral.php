@@ -1,5 +1,4 @@
 <?php
-
 namespace EventStore\ValueObjects\StringLiteral;
 
 use EventStore\ValueObjects\Exception\InvalidNativeArgumentException;
