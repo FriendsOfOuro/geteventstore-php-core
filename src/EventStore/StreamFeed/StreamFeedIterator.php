@@ -54,7 +54,9 @@ final class StreamFeedIterator implements \Iterator
             $streamName,
             LinkRelation::FIRST(),
             LinkRelation::NEXT(),
-            function (array $array) { return $array; }
+            function (array $array) {
+                return $array;
+            }
         );
     }
 

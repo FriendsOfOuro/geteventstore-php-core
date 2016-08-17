@@ -327,31 +327,31 @@ final class EventStore implements EventStoreInterface
     {
         $this->badCodeHandlers = [
             ResponseCode::HTTP_NOT_FOUND => function ($streamUrl) {
-                    throw new StreamNotFoundException(
+                throw new StreamNotFoundException(
                         sprintf(
                             'No stream found at %s',
                             $streamUrl
                         )
                     );
-                },
+            },
 
             ResponseCode::HTTP_GONE => function ($streamUrl) {
-                    throw new StreamDeletedException(
+                throw new StreamDeletedException(
                         sprintf(
                             'Stream at %s has been permanently deleted',
                             $streamUrl
                         )
                     );
-                },
+            },
 
             ResponseCode::HTTP_UNAUTHORIZED => function ($streamUrl) {
-                    throw new UnauthorizedException(
+                throw new UnauthorizedException(
                         sprintf(
                             'Tried to open stream %s got 401',
                             $streamUrl
                         )
                     );
-                }
+            }
         ];
     }
 
