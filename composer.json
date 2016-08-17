@@ -20,7 +20,7 @@
         },
         {
             "name": "Contributors",
-            "homepage": "https://github.com/dbellettini/php-eventstore-client/graphs/contributors"
+            "homepage": "https://github.com/dbellettini/geteventstore-php-core/graphs/contributors"
         }
     ],
     "replaces": {
