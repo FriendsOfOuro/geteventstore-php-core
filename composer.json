@@ -23,7 +23,7 @@
             "homepage": "https://github.com/dbellettini/geteventstore-php-core/graphs/contributors"
         }
     ],
-    "replaces": {
+    "replace": {
         "dbellettini/php-eventstore-client": "self.version"
     },
     "require": {
