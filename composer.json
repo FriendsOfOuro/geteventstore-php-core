@@ -1,6 +1,6 @@
 {
-    "name": "dbellettini/geteventstore-php-core",
-    "description": "EventStore client for PHP",
+    "name": "dbellettini/geteventstore-core",
+    "description": "EventStore client for PHP (core)",
     "type": "library",
     "keywords": [
         "eventsourcing",
