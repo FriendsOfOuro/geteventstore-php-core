@@ -1,5 +1,5 @@
 {
-    "name": "dbellettini/eventstore-client",
+    "name": "dbellettini/geteventstore-php-core",
     "description": "EventStore client for PHP",
     "type": "library",
     "keywords": [
@@ -23,6 +23,9 @@
             "homepage": "https://github.com/dbellettini/php-eventstore-client/graphs/contributors"
         }
     ],
+    "replaces": {
+        "dbellettini/php-eventstore-client": "self.version"
+    },
     "require": {
         "php": ">=5.5.0",
         "guzzlehttp/psr7": "~1.2",
