@@ -8,7 +8,6 @@ use EventStore\Exception\UnauthorizedException;
 use EventStore\Exception\WrongExpectedVersionException;
 use EventStore\Http\Exception\ClientException;
 use EventStore\Http\Exception\RequestException;
-use EventStore\Http\GuzzleHttpClient;
 use EventStore\Http\HttpClientInterface;
 use EventStore\Http\ResponseCode;
 use EventStore\StreamFeed\EntryEmbedMode;
@@ -33,7 +32,7 @@ final class EventStore implements EventStoreInterface
     private $url;
 
     /**
-     * @var Client
+     * @var HttpClientInterface
      */
     private $httpClient;
 
@@ -49,13 +48,13 @@ final class EventStore implements EventStoreInterface
 
     /**
      * @param string $url Endpoint of the EventStore HTTP API
-     * @param HttpClientInterface the http client
+     * @param HttpClientInterface $httpClient the http client
      */
-    public function __construct($url, HttpClientInterface $httpClient = null)
+    public function __construct($url, HttpClientInterface $httpClient)
     {
         $this->url = $url;
+        $this->httpClient = $httpClient;
 
-        $this->httpClient = $httpClient ?: new GuzzleHttpClient();
         $this->checkConnection();
         $this->initBadCodeHandlers();
     }

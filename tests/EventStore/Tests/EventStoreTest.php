@@ -2,6 +2,7 @@
 namespace EventStore\Tests;
 
 use EventStore\EventStore;
+use EventStore\Http\GuzzleHttpClient;
 use EventStore\StreamDeletion;
 use EventStore\StreamFeed\Entry;
 use EventStore\StreamFeed\EntryEmbedMode;
@@ -19,7 +20,8 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->es = new EventStore('http://127.0.0.1:2113');
+        $httpClient = new GuzzleHttpClient();
+        $this->es = new EventStore('http://127.0.0.1:2113', $httpClient);
     }
 
     /**
@@ -105,7 +107,8 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
      */
     public function unreacheable_event_store_throws_exception()
     {
-        new EventStore('http://127.0.0.1:12345/');
+        $httpClient = new GuzzleHttpClient();
+        new EventStore('http://127.0.0.1:12345/', $httpClient);
     }
 
     /**
