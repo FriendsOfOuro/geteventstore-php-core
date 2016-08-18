@@ -2,6 +2,7 @@
 namespace EventStore\Tests\StreamFeed;
 
 use EventStore\EventStore;
+use EventStore\Http\GuzzleHttpClient;
 use EventStore\StreamFeed\Entry;
 use EventStore\StreamFeed\Event;
 use EventStore\StreamFeed\StreamFeedIterator;
@@ -17,7 +18,8 @@ class StreamFeedIteratorTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->es = new EventStore('http://127.0.0.1:2113');
+        $httpClient = new GuzzleHttpClient();
+        $this->es = new EventStore('http://127.0.0.1:2113', $httpClient);
     }
 
     /**
