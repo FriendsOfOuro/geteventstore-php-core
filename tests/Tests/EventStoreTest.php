@@ -315,6 +315,27 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     */
+    public function it_can_process_the_all_stream_with_a_forward_iterator()
+    {
+        $client = new \GuzzleHttp\Client([
+            'auth' => ['admin', 'changeit'],
+            'handler' => new \GuzzleHttp\Handler\CurlMultiHandler(),
+        ]);
+        $httpClient = new GuzzleHttpClient($client);
+        $this->es = new EventStore('http://127.0.0.1:2113', $httpClient);
+
+        $this->prepareTestStream(1);
+        $streamName = rawurlencode('$all');
+
+        $this->assertGreaterThan(
+            0,
+            iterator_count($this->es->forwardStreamFeedIterator($streamName))
+        );
+    }
+
+    /**
      * @param  int    $length
      * @param  array  $metadata
      * @return string

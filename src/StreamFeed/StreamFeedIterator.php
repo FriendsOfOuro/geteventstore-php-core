@@ -143,15 +143,23 @@ final class StreamFeedIterator implements \Iterator
         );
 
         $this->innerIterator = new ArrayIterator(
-            array_map(
-                function ($entry, $event) {
-                    return new EntryWithEvent(
-                        $entry,
-                        $event
-                    );
-                },
-                $entries,
-                $this->eventStore->readEventBatch($urls)
+            array_filter(
+                array_map(
+                    function ($entry, $event) {
+                        if ($entry === null || $event === null) {
+                            return null;
+                        }
+                        return new EntryWithEvent(
+                            $entry,
+                            $event
+                        );
+                    },
+                    $entries,
+                    $this->eventStore->readEventBatch($urls)
+                ),
+                function ($entryWithEvent) {
+                    return ($entryWithEvent !== null);
+                }
             )
         );
     }
