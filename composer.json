@@ -50,13 +50,13 @@
         "bin-dir": "bin"
     },
     "autoload": {
-        "psr-0": {
-            "EventStore": "src/"
+        "psr-4": {
+            "EventStore\\": "src/"
         }
     },
     "autoload-dev": {
-        "psr-0": {
-            "EventStore": "tests/"
+        "psr-4": {
+            "EventStore\\": "tests/"
         }
     },
     "extra": {
