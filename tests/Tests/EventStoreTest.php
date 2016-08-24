@@ -8,6 +8,7 @@ use EventStore\StreamFeed\Entry;
 use EventStore\StreamFeed\EntryEmbedMode;
 use EventStore\StreamFeed\LinkRelation;
 use EventStore\StreamFeed\StreamFeedIterator;
+use EventStore\ValueObjects\Identity\UUID;
 use EventStore\WritableEvent;
 use EventStore\WritableEventCollection;
 
@@ -181,6 +182,31 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('EventStore\StreamFeed\Event', $event);
         $this->assertEquals(['foo' => 'bar'], $event->getData());
         $this->assertSame(null, $event->getMetadata());
+    }
+
+    /**
+     * @test
+     */
+    public function get_single_event_with_provided_event_id()
+    {
+        $eventId = new UUID();
+        $streamName = $this->prepareTestStream(1);
+
+        $event = new WritableEvent($eventId, 'Foo', ['foo' => 'bar']);
+        $this->es->writeToStream($streamName, $event);
+
+        $feed = $this->es->openStreamFeed($streamName);
+        /** @var Entry $entry */
+        list($entry) = $feed->getEntries();
+        $eventUrl = $entry->getEventUrl();
+        $readEvent = $this->es->readEvent($eventUrl);
+
+        if (getenv('EVENT_STORE_VERSION') === 'Linux-v3.0.5') {
+            // EventId was introduced in version 3.1.0
+            $this->assertNull($readEvent->getEventId());
+        } else {
+            $this->assertEquals($eventId, $readEvent->getEventId());
+        }
     }
 
     /**
