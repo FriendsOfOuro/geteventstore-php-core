@@ -187,6 +187,7 @@ final class EventStore implements EventStoreInterface
      * @param  string                                  $streamName      The stream name
      * @param  WritableToStream                        $events          Single event or a collection of events
      * @param  int                                     $expectedVersion The expected version of the stream
+     * @return int|bool                                Either the created version or false otherwise
      * @throws Exception\WrongExpectedVersionException
      */
     public function writeToStream($streamName, WritableToStream $events, $expectedVersion = ExpectedVersion::ANY)
@@ -195,9 +196,11 @@ final class EventStore implements EventStoreInterface
             $events = new WritableEventCollection([$events]);
         }
 
+        $streamUrl = $this->getStreamUrl($streamName);
+
         $request = new Request(
             'POST',
-            $this->getStreamUrl($streamName),
+            $streamUrl,
             [
                 'ES-ExpectedVersion' => intval($expectedVersion),
                 'Content-Type' => 'application/vnd.eventstore.events+json',
@@ -208,10 +211,11 @@ final class EventStore implements EventStoreInterface
         $this->sendRequest($request);
 
         $responseStatusCode = $this->getLastResponse()->getStatusCode();
-
         if (ResponseCode::HTTP_BAD_REQUEST == $responseStatusCode) {
             throw new WrongExpectedVersionException();
         }
+
+        return $this->extractStreamVersionFromLastResponse($streamUrl);
     }
 
     /**
@@ -354,6 +358,33 @@ final class EventStore implements EventStoreInterface
                     );
             }
         ];
+    }
+
+    /**
+     * Extracts created version after writing to a stream.
+     *
+     * The Event Store responds with a HTTP message containing a Location
+     * header pointing to the newly created stream. This method extracts
+     * the last part of that URI an returns the value.
+     *
+     * http://127.0.0.1:2113/streams/newstream/13 -> 13
+     *
+     * @param string $streamUrl Initial stream URL
+     * @return int|bool Either the created version or false otherwise
+     */
+    private function extractStreamVersionFromLastResponse($streamUrl)
+    {
+        $locationHeaders = $this->getLastResponse()->getHeader('Location');
+
+        if (
+            !empty($locationHeaders[0])
+            && strpos($locationHeaders[0], $streamUrl) === 0
+        ) {
+            $version = substr($locationHeaders[0], strlen($streamUrl));
+            return (int)trim($version, '/');
+        }
+
+        return false;
     }
 
     private function lastResponseAsJson()
