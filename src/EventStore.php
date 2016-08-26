@@ -155,11 +155,13 @@ final class EventStore implements EventStoreInterface
 
         return array_map(
             function ($response) {
-                return $this
-                    ->createEventFromResponseContent(
-                        json_decode($response->getBody(), true)['content']
-                    )
-                ;
+                $data = json_decode($response->getBody(), true);
+                if (!isset($data['content'])) {
+                    return null;
+                }
+                return $this->createEventFromResponseContent(
+                    $data['content']
+                );
             },
             $responses
         );
