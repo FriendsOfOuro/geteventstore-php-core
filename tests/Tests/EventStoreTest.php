@@ -44,6 +44,18 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     */
+    public function version_is_provided_after_writing_to_stream()
+    {
+        $streamName = $this->prepareTestStream();
+        $event = WritableEvent::newInstance('Foo', ['foo' => 'bar']);
+
+        $version = $this->es->writeToStream($streamName, $event);
+        $this->assertSame(1, $version);
+    }
+
+    /**
+     * @test
      * @expectedException \EventStore\Exception\WrongExpectedVersionException
      */
     public function wrong_expected_version_should_throw_exception()
