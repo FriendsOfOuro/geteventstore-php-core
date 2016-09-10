@@ -1,6 +1,8 @@
 <?php
 namespace EventStore\StreamFeed;
 
+use EventStore\ValueObjects\Identity\UUID;
+
 /**
  * Class Event
  * @package EventStore\StreamFeed
@@ -28,17 +30,24 @@ final class Event
     private $metadata;
 
     /**
+     * @var UUID
+     */
+    private $eventId;
+
+    /**
      * @param string  $type
      * @param integer $version
      * @param array   $data
      * @param array   $metadata
+     * @param UUID    $eventId
      */
-    public function __construct($type, $version, array $data, array $metadata = null)
+    public function __construct($type, $version, array $data, array $metadata = null, UUID $eventId = null)
     {
         $this->type = $type;
         $this->version = (integer) $version;
         $this->data = $data;
         $this->metadata = $metadata;
+        $this->eventId = $eventId;
     }
 
     /**
@@ -71,5 +80,13 @@ final class Event
     public function getMetadata()
     {
         return $this->metadata;
+    }
+
+    /**
+     * @return UUID
+     */
+    public function getEventId()
+    {
+        return $this->eventId;
     }
 }
