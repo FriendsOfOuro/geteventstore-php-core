@@ -44,8 +44,8 @@
     "guzzlehttp/guzzle": "Default PSR-7 implementation",
     "kevinrob/guzzle-cache-middleware": "Cache HTTP requests",
     "doctrine/cache": "Use Doctrine to cache HTTP requests",
-    "dbellettini/broadway-eventstore": "Integrate Event Store with Broadway",
-    "dbellettini/eventstore-client-bundle": "Integrate Event Store with Symfony 2"
+    "friendsofouro/broadway-eventstore": "Integrate Event Store with Broadway",
+    "friendsofouro/geteventstore-bundle": "Integrate Event Store with Symfony 2"
   },
   "config": {
     "bin-dir": "bin"
