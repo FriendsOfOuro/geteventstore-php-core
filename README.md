@@ -3,8 +3,6 @@ EventStore PHP client
 
 PHP client for [EventStore 3.x HTTP API](http://docs.geteventstore.com/http-api/latest)
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/FriendsOfOuro/geteventstore-php-core?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
 [![Latest Stable Version](https://poser.pugx.org/friendsofouro/geteventstore-core/v/stable.svg)](https://packagist.org/packages/friendsofouro/geteventstore-core) [![Total Downloads](https://poser.pugx.org/friendsofouro/geteventstore-core/downloads.svg)](https://packagist.org/packages/friendsofouro/geteventstore-core) [![Latest Unstable Version](https://poser.pugx.org/friendsofouro/geteventstore-core/v/unstable.svg)](https://packagist.org/packages/friendsofouro/geteventstore-core) [![License](https://poser.pugx.org/friendsofouro/geteventstore-core/license.svg)](https://packagist.org/packages/friendsofouro/geteventstore-core)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/FriendsOfOuro/geteventstore-php-core/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/FriendsOfOuro/geteventstore-php-core/?branch=master)
