@@ -21,8 +21,9 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
+        $uri = getenv('EVENTSTORE_URI') ?: 'http://127.0.0.1:2113';
         $httpClient = new GuzzleHttpClient();
-        $this->es = new EventStore('http://127.0.0.1:2113', $httpClient);
+        $this->es = new EventStore($uri, $httpClient);
     }
 
     /**
