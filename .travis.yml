@@ -7,9 +7,8 @@ php:
   - 7.1
 
 env:
-  - EVENT_STORE_VERSION='Linux-v3.0.5' EVENT_STORE_DAEMON='clusternode'
-  - EVENT_STORE_VERSION='Ubuntu-v3.1.0' EVENT_STORE_DAEMON='eventstored'
   - EVENT_STORE_VERSION='Ubuntu-v3.2.2' EVENT_STORE_DAEMON='eventstored'
+  - EVENT_STORE_VERSION='Ubuntu-v3.9.2' EVENT_STORE_DAEMON='eventstored'
 
 sudo: false
 
