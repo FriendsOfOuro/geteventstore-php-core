@@ -31,14 +31,14 @@
     "php": ">=5.5.0",
     "guzzlehttp/psr7": "~1.2",
     "ramsey/uuid": "^3.4.1",
-    "marc-mabe/php-enum": "~2.1",
-    "friendsofphp/php-cs-fixer": "^1.11"
+    "marc-mabe/php-enum": "~2.1"
   },
   "require-dev": {
     "guzzlehttp/guzzle": "~6.0",
     "phpunit/phpunit": "~4.0",
     "kevinrob/guzzle-cache-middleware": "^0.7.1",
-    "doctrine/cache": "~1.4"
+    "doctrine/cache": "~1.4",
+    "friendsofphp/php-cs-fixer": "^1.11"
   },
   "suggest": {
     "guzzlehttp/guzzle": "Default PSR-7 implementation",
