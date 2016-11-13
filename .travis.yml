@@ -7,8 +7,9 @@ php:
   - 7.1
 
 env:
-  - EVENT_STORE_VERSION='Ubuntu-v3.2.2' EVENT_STORE_DAEMON='eventstored'
   - EVENT_STORE_VERSION='Ubuntu-14.04-v3.9.2' EVENT_STORE_DAEMON='eventstored'
+  - EVENT_STORE_VERSION='Ubuntu-14.04-v3.8.1' EVENT_STORE_DAEMON='eventstored'
+  - EVENT_STORE_VERSION='Ubuntu-14.04-v3.7.0' EVENT_STORE_DAEMON='eventstored'
 
 sudo: false
 
