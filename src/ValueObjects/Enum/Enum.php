@@ -8,9 +8,10 @@ use MabeEnum\Enum as BaseEnum;
 abstract class Enum extends BaseEnum implements ValueObjectInterface
 {
     /**
-     * Returns a new Enum object from passed value matching argument
+     * Returns a new Enum object from passed value matching argument.
      *
-     * @param  string $value
+     * @param string $value
+     *
      * @return static
      */
     public static function fromNative()
@@ -19,7 +20,7 @@ abstract class Enum extends BaseEnum implements ValueObjectInterface
     }
 
     /**
-     * Returns the PHP native value of the enum
+     * Returns the PHP native value of the enum.
      *
      * @return mixed
      */
@@ -29,9 +30,10 @@ abstract class Enum extends BaseEnum implements ValueObjectInterface
     }
 
     /**
-     * Tells whether two Enum objects are sameValueAs by comparing their values
+     * Tells whether two Enum objects are sameValueAs by comparing their values.
      *
-     * @param  Enum $enum
+     * @param Enum $enum
+     *
      * @return bool
      */
     public function sameValueAs(ValueObjectInterface $enum)
@@ -44,7 +46,7 @@ abstract class Enum extends BaseEnum implements ValueObjectInterface
     }
 
     /**
-     * Returns a native string representation of the Enum value
+     * Returns a native string representation of the Enum value.
      *
      * @return string
      */

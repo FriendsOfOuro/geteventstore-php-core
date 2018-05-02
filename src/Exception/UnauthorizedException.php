@@ -2,8 +2,7 @@
 namespace EventStore\Exception;
 
 /**
- * Class UnauthorizedException
- * @package EventStore\Exception
+ * Class UnauthorizedException.
  */
 class UnauthorizedException extends \Exception
 {

@@ -2,8 +2,7 @@
 namespace EventStore\Exception;
 
 /**
- * Class InvalidWritableEventObjectException
- * @package EventStore\Exception
+ * Class InvalidWritableEventObjectException.
  */
 final class InvalidWritableEventObjectException extends \InvalidArgumentException
 {

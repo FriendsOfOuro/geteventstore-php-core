@@ -38,7 +38,7 @@
     "phpunit/phpunit": "~4.0",
     "kevinrob/guzzle-cache-middleware": "^0.7.1",
     "doctrine/cache": "~1.4",
-    "friendsofphp/php-cs-fixer": "^1.11"
+    "friendsofphp/php-cs-fixer": "~2.2"
   },
   "suggest": {
     "guzzlehttp/guzzle": "Default PSR-7 implementation",

@@ -4,8 +4,7 @@ namespace EventStore;
 use EventStore\ValueObjects\Identity\UUID;
 
 /**
- * Class WritableEvent
- * @package EventStore
+ * Class WritableEvent.
  */
 final class WritableEvent implements WritableToStream
 {
@@ -30,9 +29,10 @@ final class WritableEvent implements WritableToStream
     private $metadata;
 
     /**
-     * @param  string        $type
-     * @param  array         $data
-     * @param  array         $metadata
+     * @param string $type
+     * @param array  $data
+     * @param array  $metadata
+     *
      * @return WritableEvent
      */
     public static function newInstance($type, array $data, array $metadata = [])
@@ -60,10 +60,10 @@ final class WritableEvent implements WritableToStream
     public function toStreamData()
     {
         return [
-            'eventId'   => $this->uuid->toNative(),
+            'eventId' => $this->uuid->toNative(),
             'eventType' => $this->type,
-            'data'      => $this->data,
-            'metadata'  => $this->metadata
+            'data' => $this->data,
+            'metadata' => $this->metadata,
         ];
     }
 }

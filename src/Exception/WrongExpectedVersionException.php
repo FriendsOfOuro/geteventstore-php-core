@@ -2,8 +2,7 @@
 namespace EventStore\Exception;
 
 /**
- * Class WrongExpectedVersionException
- * @package EventStore\Exception
+ * Class WrongExpectedVersionException.
  */
 class WrongExpectedVersionException extends \Exception
 {

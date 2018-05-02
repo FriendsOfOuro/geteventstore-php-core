@@ -37,8 +37,8 @@ class StreamFeedIteratorTest extends \PHPUnit_Framework_TestCase
         $events = iterator_to_array($iterator);
 
         $this->assertCount(1, $events);
-        $this->assertInstanceOf(Event::class, $events['0@'.$streamName]->getEvent());
-        $this->assertInstanceOf(Entry::class, $events['0@'.$streamName]->getEntry());
+        $this->assertInstanceOf(Event::class, $events['0@' . $streamName]->getEvent());
+        $this->assertInstanceOf(Entry::class, $events['0@' . $streamName]->getEntry());
     }
 
     /**
@@ -56,8 +56,8 @@ class StreamFeedIteratorTest extends \PHPUnit_Framework_TestCase
         $events = iterator_to_array($iterator);
 
         $this->assertCount(1, $events);
-        $this->assertInstanceOf(Event::class, $events['0@'.$streamName]->getEvent());
-        $this->assertInstanceOf(Entry::class, $events['0@'.$streamName]->getEntry());
+        $this->assertInstanceOf(Event::class, $events['0@' . $streamName]->getEvent());
+        $this->assertInstanceOf(Entry::class, $events['0@' . $streamName]->getEntry());
     }
 
     /**
@@ -118,14 +118,15 @@ class StreamFeedIteratorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param  int    $length
-     * @param  array  $metadata
+     * @param int   $length
+     * @param array $metadata
+     *
      * @return string
      */
     private function prepareTestStream($length = 1, $metadata = [])
     {
         $streamName = uniqid();
-        $events     = [];
+        $events = [];
 
         for ($i = 0; $i < $length; ++$i) {
             $events[] = WritableEvent::newInstance('Foo', ['foo' => 'bar'], $metadata);
@@ -144,8 +145,8 @@ class StreamFeedIteratorTest extends \PHPUnit_Framework_TestCase
         uksort(
             $events,
             function ($a, $b) use ($sign) {
-                list($ida, ) = explode('@', $a);
-                list($idb, ) = explode('@', $b);
+                list($ida) = explode('@', $a);
+                list($idb) = explode('@', $b);
 
                 return $sign * ($ida - $idb);
             }

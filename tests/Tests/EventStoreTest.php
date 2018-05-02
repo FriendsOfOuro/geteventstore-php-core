@@ -63,7 +63,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     public function wrong_expected_version_should_throw_exception()
     {
         $streamName = $this->prepareTestStream();
-        $event      = WritableEvent::newInstance('Foo', ['foo' => 'bar']);
+        $event = WritableEvent::newInstance('Foo', ['foo' => 'bar']);
 
         $this->es->writeToStream($streamName, $event, 3);
     }
@@ -158,8 +158,8 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     public function event_stream_feed_returns_entries()
     {
         $streamName = $this->prepareTestStream(40);
-        $feed       = $this->es->openStreamFeed($streamName);
-        $entries    = $feed->getEntries();
+        $feed = $this->es->openStreamFeed($streamName);
+        $entries = $feed->getEntries();
 
         $this->assertCount(20, $entries);
         $this->assertContainsOnlyInstancesOf('EventStore\StreamFeed\Entry', $entries);
@@ -170,14 +170,14 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
      */
     public function get_single_event_from_event_stream()
     {
-        $streamName  = $this->prepareTestStream(1);
-        $feed        = $this->es->openStreamFeed($streamName);
+        $streamName = $this->prepareTestStream(1);
+        $feed = $this->es->openStreamFeed($streamName);
 
         /** @var Entry $entry */
         list($entry) = $feed->getEntries();
-        $eventUrl    = $entry->getEventUrl();
+        $eventUrl = $entry->getEventUrl();
 
-        $event       = $this->es->readEvent($eventUrl);
+        $event = $this->es->readEvent($eventUrl);
 
         $this->assertSame(0, $event->getVersion());
         $this->assertInstanceOf('EventStore\StreamFeed\Event', $event);
@@ -202,7 +202,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $eventUrl = $entry->getEventUrl();
         $readEvent = $this->es->readEvent($eventUrl);
 
-        if (getenv('EVENT_STORE_VERSION') === 'Linux-v3.0.5') {
+        if ('Linux-v3.0.5' === getenv('EVENT_STORE_VERSION')) {
             // EventId was introduced in version 3.1.0
             $this->assertNull($readEvent->getEventId());
         } else {
@@ -215,8 +215,8 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
      */
     public function get_event_batch_from_event_stream()
     {
-        $streamName  = $this->prepareTestStream(20);
-        $feed        = $this->es->openStreamFeed($streamName);
+        $streamName = $this->prepareTestStream(20);
+        $feed = $this->es->openStreamFeed($streamName);
 
         $eventUrls = array_map(
             function (Entry $entry) {
@@ -228,7 +228,7 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
         $events = $this->es->readEventBatch($eventUrls);
         $this->assertNotEmpty($events);
 
-        $i=19;
+        $i = 19;
         foreach ($events as $event) {
             $this->assertSame($i--, $event->getVersion());
             $this->assertInstanceOf('EventStore\StreamFeed\Event', $event);
@@ -242,18 +242,18 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
      */
     public function get_single_event_with_metadata_from_event_stream()
     {
-        $metadata = array(
-            'user' => 'akii'
-        );
+        $metadata = [
+            'user' => 'akii',
+        ];
 
-        $streamName  = $this->prepareTestStream(1, $metadata);
-        $feed        = $this->es->openStreamFeed($streamName);
+        $streamName = $this->prepareTestStream(1, $metadata);
+        $feed = $this->es->openStreamFeed($streamName);
 
         /** @var Entry $entry */
         list($entry) = $feed->getEntries();
-        $eventUrl    = $entry->getEventUrl();
+        $eventUrl = $entry->getEventUrl();
 
-        $event       = $this->es->readEvent($eventUrl);
+        $event = $this->es->readEvent($eventUrl);
 
         $this->assertSame(0, $event->getVersion());
         $this->assertInstanceOf('EventStore\StreamFeed\Event', $event);
@@ -312,13 +312,13 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     public function fetching_event_of_a_deleted_stream_throws_an_exception()
     {
         $streamName = $this->prepareTestStream(1);
-        $feed       = $this->es->openStreamFeed($streamName);
-        $entries    = $feed->getEntries();
-        $eventUrl   = $entries[0]->getEventUrl();
+        $feed = $this->es->openStreamFeed($streamName);
+        $entries = $feed->getEntries();
+        $eventUrl = $entries[0]->getEventUrl();
 
         $this->es->deleteStream($streamName, StreamDeletion::HARD());
 
-        $event      = $this->es->readEvent($eventUrl);
+        $event = $this->es->readEvent($eventUrl);
     }
 
     /**
@@ -375,14 +375,15 @@ class EventStoreTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param  int    $length
-     * @param  array  $metadata
+     * @param int   $length
+     * @param array $metadata
+     *
      * @return string
      */
     private function prepareTestStream($length = 1, $metadata = [])
     {
         $streamName = uniqid();
-        $events     = [];
+        $events = [];
 
         for ($i = 0; $i < $length; ++$i) {
             $events[] = WritableEvent::newInstance('Foo', ['foo' => 'bar'], $metadata);

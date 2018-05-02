@@ -2,8 +2,7 @@
 namespace EventStore\Exception;
 
 /**
- * Class StreamNotFoundException
- * @package EventStore\Exception
+ * Class StreamNotFoundException.
  */
 class StreamNotFoundException extends \Exception
 {

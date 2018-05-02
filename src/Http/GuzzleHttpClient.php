@@ -56,7 +56,7 @@ final class GuzzleHttpClient implements HttpClientInterface
         );
 
         $client = new Client([
-            'handler' => $stack
+            'handler' => $stack,
         ]);
 
         return new self($client);

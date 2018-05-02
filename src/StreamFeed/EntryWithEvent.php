@@ -21,7 +21,7 @@ final class EntryWithEvent
     }
 
     /**
-     * return @Event
+     * return @Event.
      */
     public function getEvent()
     {

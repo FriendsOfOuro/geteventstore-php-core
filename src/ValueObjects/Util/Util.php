@@ -2,16 +2,16 @@
 namespace EventStore\ValueObjects\Util;
 
 /**
- * Utility class for methods used all across the library
- * @package ValueObjects\Util
+ * Utility class for methods used all across the library.
  */
 class Util
 {
     /**
-     * Tells whether two objects are of the same class
+     * Tells whether two objects are of the same class.
      *
-     * @param  object $object_a
-     * @param  object $object_b
+     * @param object $object_a
+     * @param object $object_b
+     *
      * @return bool
      */
     public static function classEquals($object_a, $object_b)
@@ -20,9 +20,10 @@ class Util
     }
 
     /**
-     * Returns full namespaced class as string
+     * Returns full namespaced class as string.
      *
      * @param $object
+     *
      * @return string
      */
     public static function getClassAsString($object)

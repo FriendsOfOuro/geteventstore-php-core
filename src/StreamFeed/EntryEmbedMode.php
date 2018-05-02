@@ -4,8 +4,8 @@ namespace EventStore\StreamFeed;
 use EventStore\ValueObjects\Enum\Enum;
 
 /**
- * Class EntryEmbedMode
- * @package EventStore\StreamFeed
+ * Class EntryEmbedMode.
+ *
  * @static @method EntryEmbedMode NONE()
  * @static @method EntryEmbedMode RICH()
  * @static @method EntryEmbedMode BODY()

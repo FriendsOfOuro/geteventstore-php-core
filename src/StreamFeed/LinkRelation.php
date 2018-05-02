@@ -4,8 +4,7 @@ namespace EventStore\StreamFeed;
 use EventStore\ValueObjects\Enum\Enum;
 
 /**
- * Class LinkRelation
- * @package EventStore\StreamFeed
+ * Class LinkRelation.
  *
  * @static @method LinkRelation FIRST()
  * @static @method LinkRelation LAST()
@@ -16,10 +15,10 @@ use EventStore\ValueObjects\Enum\Enum;
  */
 final class LinkRelation extends Enum
 {
-    const FIRST     = 'first';
-    const LAST      = 'last';
-    const PREVIOUS  = 'previous';
-    const NEXT      = 'next';
-    const METADATA  = 'metadata';
+    const FIRST = 'first';
+    const LAST = 'last';
+    const PREVIOUS = 'previous';
+    const NEXT = 'next';
+    const METADATA = 'metadata';
     const ALTERNATE = 'alternate';
 }

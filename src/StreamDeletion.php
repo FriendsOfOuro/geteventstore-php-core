@@ -4,8 +4,8 @@ namespace EventStore;
 use EventStore\ValueObjects\Enum\Enum;
 
 /**
- * Class StreamDeletion
- * @package EventStore
+ * Class StreamDeletion.
+ *
  * @static @method StreamDeletion SOFT()
  * @static @method StreamDeletion HARD()
  */

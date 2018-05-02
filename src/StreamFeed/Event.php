@@ -4,8 +4,7 @@ namespace EventStore\StreamFeed;
 use EventStore\ValueObjects\Identity\UUID;
 
 /**
- * Class Event
- * @package EventStore\StreamFeed
+ * Class Event.
  */
 final class Event
 {
@@ -15,7 +14,7 @@ final class Event
     private $type;
 
     /**
-     * @var integer
+     * @var int
      */
     private $version;
 
@@ -35,16 +34,16 @@ final class Event
     private $eventId;
 
     /**
-     * @param string  $type
-     * @param integer $version
-     * @param array   $data
-     * @param array   $metadata
-     * @param UUID    $eventId
+     * @param string $type
+     * @param int    $version
+     * @param array  $data
+     * @param array  $metadata
+     * @param UUID   $eventId
      */
     public function __construct($type, $version, array $data, array $metadata = null, UUID $eventId = null)
     {
         $this->type = $type;
-        $this->version = (integer) $version;
+        $this->version = (int) $version;
         $this->data = $data;
         $this->metadata = $metadata;
         $this->eventId = $eventId;
@@ -59,7 +58,7 @@ final class Event
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getVersion()
     {

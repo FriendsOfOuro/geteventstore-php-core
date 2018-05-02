@@ -2,8 +2,7 @@
 namespace EventStore;
 
 /**
- * Interface WritableToStream
- * @package EventStore
+ * Interface WritableToStream.
  */
 interface WritableToStream
 {

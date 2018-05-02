@@ -13,26 +13,28 @@ class UUID extends StringLiteral
     protected $value;
 
     /**
-     * @param  string                                                 $uuid
+     * @param string $uuid
+     *
      * @return UUID
+     *
      * @throws \ValueObjects\Exception\InvalidNativeArgumentException
      */
     public static function fromNative()
     {
         $uuid_str = \func_get_arg(0);
-        $uuid     = new static($uuid_str);
+        $uuid = new static($uuid_str);
 
         return $uuid;
     }
 
     /**
-     * Generate a new UUID string
+     * Generate a new UUID string.
      *
      * @return string
      */
     public static function generateAsString()
     {
-        $uuid       = new static();
+        $uuid = new static();
         $uuidString = $uuid->toNative();
 
         return $uuidString;
@@ -43,10 +45,10 @@ class UUID extends StringLiteral
         $uuid_str = BaseUuid::uuid4();
 
         if (null !== $value) {
-            $pattern = '/'.BaseUuid::VALID_PATTERN.'/';
+            $pattern = '/' . BaseUuid::VALID_PATTERN . '/';
 
-            if (! \preg_match($pattern, $value)) {
-                throw new InvalidNativeArgumentException($value, array('UUID string'));
+            if (!\preg_match($pattern, $value)) {
+                throw new InvalidNativeArgumentException($value, ['UUID string']);
             }
 
             $uuid_str = $value;
@@ -56,9 +58,10 @@ class UUID extends StringLiteral
     }
 
     /**
-     * Tells whether two UUID are equal by comparing their values
+     * Tells whether two UUID are equal by comparing their values.
      *
-     * @param  UUID $uuid
+     * @param UUID $uuid
+     *
      * @return bool
      */
     public function sameValueAs(ValueObjectInterface $uuid)

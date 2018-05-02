@@ -22,8 +22,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Class EventStore
- * @package EventStore
+ * Class EventStore.
  */
 final class EventStore implements EventStoreInterface
 {
@@ -48,7 +47,7 @@ final class EventStore implements EventStoreInterface
     private $badCodeHandlers = [];
 
     /**
-     * @param string $url Endpoint of the EventStore HTTP API
+     * @param string              $url        Endpoint of the EventStore HTTP API
      * @param HttpClientInterface $httpClient the http client
      */
     public function __construct($url, HttpClientInterface $httpClient)
@@ -61,7 +60,7 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
-     * Delete a stream
+     * Delete a stream.
      *
      * @param string         $streamName Name of the stream
      * @param StreamDeletion $mode       Deletion mode (soft or hard)
@@ -70,7 +69,7 @@ final class EventStore implements EventStoreInterface
     {
         $request = new Request('DELETE', $this->getStreamUrl($streamName));
 
-        if ($mode == StreamDeletion::HARD) {
+        if (StreamDeletion::HARD == $mode) {
             $request = $request->withHeader('ES-HardDelete', 'true');
         }
 
@@ -78,7 +77,7 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
-     * Get the response from the last HTTP call to the EventStore API
+     * Get the response from the last HTTP call to the EventStore API.
      *
      * @return ResponseInterface
      */
@@ -88,10 +87,11 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
-     * Navigate stream feed through link relations
+     * Navigate stream feed through link relations.
      *
-     * @param  StreamFeed      $streamFeed The stream feed to navigate through
-     * @param  LinkRelation    $relation   The "direction" expressed as link relation
+     * @param StreamFeed   $streamFeed The stream feed to navigate through
+     * @param LinkRelation $relation   The "direction" expressed as link relation
+     *
      * @return null|StreamFeed
      */
     public function navigateStreamFeed(StreamFeed $streamFeed, LinkRelation $relation)
@@ -106,10 +106,11 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
-     * Open a stream feed for read and navigation
+     * Open a stream feed for read and navigation.
      *
-     * @param  string         $streamName The stream name
-     * @param  EntryEmbedMode $embedMode  The event entries embed mode (none, rich or body)
+     * @param string         $streamName The stream name
+     * @param EntryEmbedMode $embedMode  The event entries embed mode (none, rich or body)
+     *
      * @return StreamFeed
      */
     public function openStreamFeed($streamName, EntryEmbedMode $embedMode = null)
@@ -120,9 +121,10 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
-     * Read a single event
+     * Read a single event.
      *
-     * @param  string $eventUrl The url of the event
+     * @param string $eventUrl The url of the event
+     *
      * @return Event
      */
     public function readEvent($eventUrl)
@@ -138,9 +140,10 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
-     * Read a single event
+     * Read a single event.
      *
-     * @param  string $eventUrl The url of the event
+     * @param string $eventUrl The url of the event
+     *
      * @return Event
      */
     public function readEventBatch(array $eventUrls)
@@ -160,6 +163,7 @@ final class EventStore implements EventStoreInterface
                 if (!isset($data['content'])) {
                     return null;
                 }
+
                 return $this->createEventFromResponseContent(
                     $data['content']
                 );
@@ -169,13 +173,14 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
-     * @param  array $content
+     * @param array $content
+     *
      * @return Event
      */
-    protected function createEventFromResponseContent(array $content)
+    private function createEventFromResponseContent(array $content)
     {
         $type = $content['eventType'];
-        $version = (integer) $content['eventNumber'];
+        $version = (int) $content['eventNumber'];
         $data = $content['data'];
         $metadata = (!empty($content['metadata'])) ? $content['metadata'] : null;
         $eventId = (!empty($content['eventId']) ? UUID::fromNative($content['eventId']) : null);
@@ -184,12 +189,14 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
-     * Write one or more events to a stream
+     * Write one or more events to a stream.
      *
-     * @param  string                                  $streamName      The stream name
-     * @param  WritableToStream                        $events          Single event or a collection of events
-     * @param  int                                     $expectedVersion The expected version of the stream
-     * @return int|bool                                Either the created version or false otherwise
+     * @param string           $streamName      The stream name
+     * @param WritableToStream $events          Single event or a collection of events
+     * @param int              $expectedVersion The expected version of the stream
+     *
+     * @return int|bool Either the created version or false otherwise
+     *
      * @throws Exception\WrongExpectedVersionException
      */
     public function writeToStream($streamName, WritableToStream $events, $expectedVersion = ExpectedVersion::ANY)
@@ -221,7 +228,8 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
-     * @param  string             $streamName
+     * @param string $streamName
+     *
      * @return StreamFeedIterator
      */
     public function forwardStreamFeedIterator($streamName)
@@ -230,7 +238,8 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
-     * @param  string             $streamName
+     * @param string $streamName
+     *
      * @return StreamFeedIterator
      */
     public function backwardStreamFeedIterator($streamName)
@@ -252,7 +261,8 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
-     * @param  string $streamName
+     * @param string $streamName
+     *
      * @return string
      */
     private function getStreamUrl($streamName)
@@ -261,9 +271,11 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
-     * @param  string                            $streamUrl
-     * @param  EntryEmbedMode                    $embedMode
+     * @param string         $streamUrl
+     * @param EntryEmbedMode $embedMode
+     *
      * @return StreamFeed
+     *
      * @throws Exception\StreamDeletedException
      * @throws Exception\StreamNotFoundException
      */
@@ -271,7 +283,7 @@ final class EventStore implements EventStoreInterface
     {
         $request = $this->getJsonRequest($streamUrl);
 
-        if ($embedMode != null && $embedMode != EntryEmbedMode::NONE()) {
+        if (null != $embedMode && $embedMode != EntryEmbedMode::NONE()) {
             $uri = Uri::withQueryValue(
                 $request->getUri(),
                 'embed',
@@ -289,7 +301,8 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
-     * @param  string                                       $uri
+     * @param string $uri
+     *
      * @return \GuzzleHttp\Message\Request|RequestInterface
      */
     private function getJsonRequest($uri)
@@ -298,7 +311,7 @@ final class EventStore implements EventStoreInterface
             'GET',
             $uri,
             [
-                'Accept' => 'application/vnd.eventstore.atom+json'
+                'Accept' => 'application/vnd.eventstore.atom+json',
             ]
         );
     }
@@ -316,7 +329,8 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
-     * @param  string                            $streamUrl
+     * @param string $streamUrl
+     *
      * @throws Exception\StreamDeletedException
      * @throws Exception\StreamNotFoundException
      * @throws Exception\UnauthorizedException
@@ -358,7 +372,7 @@ final class EventStore implements EventStoreInterface
                             $streamUrl
                         )
                     );
-            }
+            },
         ];
     }
 
@@ -372,6 +386,7 @@ final class EventStore implements EventStoreInterface
      * http://127.0.0.1:2113/streams/newstream/13 -> 13
      *
      * @param string $streamUrl Initial stream URL
+     *
      * @return int|bool Either the created version or false otherwise
      */
     private function extractStreamVersionFromLastResponse($streamUrl)
@@ -380,9 +395,10 @@ final class EventStore implements EventStoreInterface
 
         if (
             !empty($locationHeaders[0])
-            && strpos($locationHeaders[0], $streamUrl) === 0
+            && 0 === strpos($locationHeaders[0], $streamUrl)
         ) {
             $version = substr($locationHeaders[0], strlen($streamUrl));
+
             return (int)trim($version, '/');
         }
 

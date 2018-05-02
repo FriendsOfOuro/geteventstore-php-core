@@ -3,9 +3,9 @@ namespace EventStore\Http;
 
 /**
  * Class ResponseCode
- * Constants from Symfony 2
+ * Constants from Symfony 2.
+ *
  * @author Fabien Potencier
- * @package EventStore\Http
  */
 final class ResponseCode
 {

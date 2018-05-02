@@ -4,8 +4,7 @@ namespace EventStore;
 use EventStore\Exception\InvalidWritableEventObjectException;
 
 /**
- * Class WritableEventCollection
- * @package EventStore
+ * Class WritableEventCollection.
  */
 final class WritableEventCollection implements WritableToStream
 {

@@ -146,9 +146,10 @@ final class StreamFeedIterator implements \Iterator
             array_filter(
                 array_map(
                     function ($entry, $event) {
-                        if ($entry === null || $event === null) {
+                        if (null === $entry || null === $event) {
                             return null;
                         }
+
                         return new EntryWithEvent(
                             $entry,
                             $event
@@ -158,7 +159,7 @@ final class StreamFeedIterator implements \Iterator
                     $this->eventStore->readEventBatch($urls)
                 ),
                 function ($entryWithEvent) {
-                    return ($entryWithEvent !== null);
+                    return null !== $entryWithEvent;
                 }
             )
         );

@@ -2,8 +2,7 @@
 namespace EventStore\Exception;
 
 /**
- * Class ConnectionFailedException
- * @package EventStore\Exception
+ * Class ConnectionFailedException.
  */
 final class ConnectionFailedException extends \Exception
 {

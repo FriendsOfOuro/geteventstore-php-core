@@ -12,7 +12,8 @@ class StringLiteral implements ValueObjectInterface
     /**
      * Returns a StringLiteral object given a PHP native string as parameter.
      *
-     * @param  string        $value
+     * @param string $value
+     *
      * @return StringLiteral
      */
     public static function fromNative()
@@ -30,14 +31,14 @@ class StringLiteral implements ValueObjectInterface
     public function __construct($value)
     {
         if (false === \is_string($value)) {
-            throw new InvalidNativeArgumentException($value, array('string'));
+            throw new InvalidNativeArgumentException($value, ['string']);
         }
 
         $this->value = $value;
     }
 
     /**
-     * Returns the value of the string
+     * Returns the value of the string.
      *
      * @return string
      */
@@ -47,9 +48,10 @@ class StringLiteral implements ValueObjectInterface
     }
 
     /**
-     * Tells whether two string literals are equal by comparing their values
+     * Tells whether two string literals are equal by comparing their values.
      *
-     * @param  ValueObjectInterface $stringLiteral
+     * @param ValueObjectInterface $stringLiteral
+     *
      * @return bool
      */
     public function sameValueAs(ValueObjectInterface $stringLiteral)
@@ -62,17 +64,17 @@ class StringLiteral implements ValueObjectInterface
     }
 
     /**
-     * Tells whether the StringLiteral is empty
+     * Tells whether the StringLiteral is empty.
      *
      * @return bool
      */
     public function isEmpty()
     {
-        return \strlen($this->toNative()) == 0;
+        return 0 == \strlen($this->toNative());
     }
 
     /**
-     * Returns the string value itself
+     * Returns the string value itself.
      *
      * @return string
      */

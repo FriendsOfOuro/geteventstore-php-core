@@ -2,8 +2,7 @@
 namespace EventStore\StreamFeed;
 
 /**
- * Class StreamFeed
- * @package EventStore\StreamFeed
+ * Class StreamFeed.
  */
 final class StreamFeed
 {
@@ -25,12 +24,12 @@ final class StreamFeed
      */
     public function __construct(array $jsonFeed, EntryEmbedMode $embedMode = null)
     {
-        if ($embedMode === null) {
+        if (null === $embedMode) {
             $embedMode = EntryEmbedMode::NONE();
         }
 
         $this->entryEmbedMode = $embedMode;
-        $this->json           = $jsonFeed;
+        $this->json = $jsonFeed;
     }
 
     /**

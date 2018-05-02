@@ -2,8 +2,7 @@
 namespace EventStore\StreamFeed;
 
 /**
- * Class HasLinks
- * @package EventStore\StreamFeed
+ * Class HasLinks.
  */
 trait HasLinks
 {
@@ -13,7 +12,8 @@ trait HasLinks
     abstract protected function getLinks();
 
     /**
-     * @param  LinkRelation $relation
+     * @param LinkRelation $relation
+     *
      * @return null|string
      */
     public function getLinkUrl(LinkRelation $relation)
@@ -30,11 +30,12 @@ trait HasLinks
     }
 
     /**
-     * @param  LinkRelation $relation
-     * @return boolean
+     * @param LinkRelation $relation
+     *
+     * @return bool
      */
     public function hasLink(LinkRelation $relation)
     {
-        return $this->getLinkUrl($relation) !== null;
+        return null !== $this->getLinkUrl($relation);
     }
 }

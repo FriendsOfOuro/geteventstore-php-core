@@ -1,4 +1,5 @@
 <?php
+
 require __DIR__ . '/../vendor/autoload.php';
 
 use EventStore\EventStore;
@@ -7,14 +8,15 @@ use EventStore\WritableEvent;
 use EventStore\WritableEventCollection;
 
 /**
- * @param  int    $length
- * @param  array  $metadata
+ * @param int   $length
+ * @param array $metadata
+ *
  * @return string
  */
 function prepare_test_stream(EventStore $es, $length = 1, $metadata = [])
 {
     $streamName = uniqid();
-    $events     = [];
+    $events = [];
 
     for ($i = 0; $i < $length; ++$i) {
         $events[] = WritableEvent::newInstance('Foo', ['foo' => 'bar'], $metadata);

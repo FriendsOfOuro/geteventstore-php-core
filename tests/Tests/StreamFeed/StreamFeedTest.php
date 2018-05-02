@@ -6,14 +6,14 @@ use EventStore\StreamFeed\LinkRelation;
 use EventStore\StreamFeed\StreamFeed;
 
 /**
- * Class StreamFeedTest
- * @package EventStore\Tests\StreamFeed
+ * Class StreamFeedTest.
  */
 class StreamFeedTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
      * @dataProvider modeProvider
+     *
      * @param EntryEmbedMode $mode
      * @param EntryEmbedMode $expected
      */
@@ -40,6 +40,7 @@ class StreamFeedTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider relationProvider
      * @test
+     *
      * @param LinkRelation $relation
      */
     public function get_link_url_returns_proper_url(LinkRelation $relation)
@@ -50,9 +51,9 @@ class StreamFeedTest extends \PHPUnit_Framework_TestCase
             'links' => [
                 [
                     'relation' => (string) $relation,
-                    'uri' => $uri
-                ]
-            ]
+                    'uri' => $uri,
+                ],
+            ],
         ]);
 
         $this->assertEquals($uri, $feed->getLinkUrl($relation));
@@ -67,9 +68,9 @@ class StreamFeedTest extends \PHPUnit_Framework_TestCase
             'links' => [
                 [
                     'relation' => 'last',
-                    'uri' => 'http://sample.uri:12345/stream'
-                ]
-            ]
+                    'uri' => 'http://sample.uri:12345/stream',
+                ],
+            ],
         ]);
 
         $this->assertTrue($feed->hasLink(LinkRelation::LAST()));
@@ -84,9 +85,9 @@ class StreamFeedTest extends \PHPUnit_Framework_TestCase
             'links' => [
                 [
                     'relation' => 'first',
-                    'uri' => 'http://sample.uri:12345/stream'
-                ]
-            ]
+                    'uri' => 'http://sample.uri:12345/stream',
+                ],
+            ],
         ]);
 
         $this->assertFalse($feed->hasLink(LinkRelation::LAST()));
@@ -101,9 +102,9 @@ class StreamFeedTest extends \PHPUnit_Framework_TestCase
             'links' => [
                 [
                     'relation' => 'first',
-                    'uri' => 'http://sample.uri:12345/stream'
-                ]
-            ]
+                    'uri' => 'http://sample.uri:12345/stream',
+                ],
+            ],
         ]);
 
         $this->assertNull($feed->getLinkUrl(LinkRelation::LAST()));
@@ -113,7 +114,7 @@ class StreamFeedTest extends \PHPUnit_Framework_TestCase
     {
         return [
             [LinkRelation::FIRST()],
-            [LinkRelation::LAST()]
+            [LinkRelation::LAST()],
         ];
     }
 }

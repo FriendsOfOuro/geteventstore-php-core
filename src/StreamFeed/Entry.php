@@ -2,8 +2,7 @@
 namespace EventStore\StreamFeed;
 
 /**
- * Class Entry
- * @package EventStore\StreamFeed
+ * Class Entry.
  */
 final class Entry
 {

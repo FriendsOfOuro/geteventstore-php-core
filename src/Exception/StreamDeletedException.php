@@ -2,8 +2,7 @@
 namespace EventStore\Exception;
 
 /**
- * Class StreamDeletedException
- * @package EventStore\Exception
+ * Class StreamDeletedException.
  */
 class StreamDeletedException extends \Exception
 {
