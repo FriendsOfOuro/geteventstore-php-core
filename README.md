@@ -1,7 +1,7 @@
 EventStore PHP client
 =====================
 
-PHP client for [EventStore 3.x HTTP API](http://docs.geteventstore.com/http-api/latest)
+PHP client for [EventStore 4.x HTTP API](http://docs.geteventstore.com/http-api/latest)
 
 [![Latest Stable Version](https://poser.pugx.org/friendsofouro/geteventstore-core/v/stable.svg)](https://packagist.org/packages/friendsofouro/geteventstore-core) [![Total Downloads](https://poser.pugx.org/friendsofouro/geteventstore-core/downloads.svg)](https://packagist.org/packages/friendsofouro/geteventstore-core) [![Latest Unstable Version](https://poser.pugx.org/friendsofouro/geteventstore-core/v/unstable.svg)](https://packagist.org/packages/friendsofouro/geteventstore-core) [![License](https://poser.pugx.org/friendsofouro/geteventstore-core/license.svg)](https://packagist.org/packages/friendsofouro/geteventstore-core)
 
