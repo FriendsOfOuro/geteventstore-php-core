@@ -28,7 +28,7 @@
     "dbellettini/geteventstore-core": "self.version"
   },
   "require": {
-    "php": ">=5.5.0",
+    "php": "~7.2",
     "guzzlehttp/psr7": "~1.2",
     "ramsey/uuid": "^3.4.1",
     "marc-mabe/php-enum": "~2.1"
