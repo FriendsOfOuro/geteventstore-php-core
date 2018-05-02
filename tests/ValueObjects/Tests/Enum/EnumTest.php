@@ -1,14 +1,15 @@
 <?php
 namespace EventStore\ValueObjects\Tests\Enum;
 
+use EventStore\ValueObjects\Enum\Enum;
 use EventStore\ValueObjects\Tests\TestCase;
 
 class EnumTest extends TestCase
 {
     public function testSameValueAs()
     {
-        $stub1 = $this->getMock('EventStore\ValueObjects\Enum\Enum', [], [], '', false);
-        $stub2 = $this->getMock('EventStore\ValueObjects\Enum\Enum', [], [], '', false);
+        $stub1 = $this->createMock(Enum::class, [], [], '', false);
+        $stub2 = $this->createMock(Enum::class, [], [], '', false);
 
         $stub1->expects($this->any())
               ->method('sameValueAs')
@@ -19,7 +20,7 @@ class EnumTest extends TestCase
 
     public function testToString()
     {
-        $stub = $this->getMock('EventStore\ValueObjects\Enum\Enum', [], [], '', false);
+        $stub = $this->createMock(Enum::class, [], [], '', false);
 
         $this->assertEquals('', $stub->__toString());
     }

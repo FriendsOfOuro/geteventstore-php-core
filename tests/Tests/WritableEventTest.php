@@ -3,11 +3,12 @@ namespace EventStore\Tests;
 
 use EventStore\ValueObjects\Identity\UUID;
 use EventStore\WritableEvent;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class WritableEventTest.
  */
-class WritableEventTest extends \PHPUnit_Framework_TestCase
+class WritableEventTest extends TestCase
 {
     /**
      * @test

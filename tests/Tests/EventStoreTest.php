@@ -11,8 +11,9 @@ use EventStore\StreamFeed\StreamFeedIterator;
 use EventStore\ValueObjects\Identity\UUID;
 use EventStore\WritableEvent;
 use EventStore\WritableEventCollection;
+use PHPUnit\Framework\TestCase;
 
-class EventStoreTest extends \PHPUnit_Framework_TestCase
+class EventStoreTest extends TestCase
 {
     /**
      * @var EventStore

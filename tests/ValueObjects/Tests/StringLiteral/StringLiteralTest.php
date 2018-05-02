@@ -3,6 +3,7 @@ namespace EventStore\ValueObjects\Tests\StringLiteral;
 
 use EventStore\ValueObjects\StringLiteral\StringLiteral;
 use EventStore\ValueObjects\Tests\TestCase;
+use EventStore\ValueObjects\ValueObjectInterface;
 
 class StringLiteralTest extends TestCase
 {
@@ -30,7 +31,7 @@ class StringLiteralTest extends TestCase
         $this->assertTrue($foo2->sameValueAs($foo1));
         $this->assertFalse($foo1->sameValueAs($bar));
 
-        $mock = $this->getMock('EventStore\ValueObjects\ValueObjectInterface');
+        $mock = $this->createMock(ValueObjectInterface::class);
         $this->assertFalse($foo1->sameValueAs($mock));
     }
 

@@ -8,8 +8,9 @@ use EventStore\StreamFeed\Event;
 use EventStore\StreamFeed\StreamFeedIterator;
 use EventStore\WritableEvent;
 use EventStore\WritableEventCollection;
+use PHPUnit\Framework\TestCase;
 
-class StreamFeedIteratorTest extends \PHPUnit_Framework_TestCase
+class StreamFeedIteratorTest extends TestCase
 {
     /**
      * @var EventStore

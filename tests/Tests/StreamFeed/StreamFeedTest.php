@@ -4,11 +4,12 @@ namespace EventStore\Tests\StreamFeed;
 use EventStore\StreamFeed\EntryEmbedMode;
 use EventStore\StreamFeed\LinkRelation;
 use EventStore\StreamFeed\StreamFeed;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class StreamFeedTest.
  */
-class StreamFeedTest extends \PHPUnit_Framework_TestCase
+class StreamFeedTest extends TestCase
 {
     /**
      * @test
