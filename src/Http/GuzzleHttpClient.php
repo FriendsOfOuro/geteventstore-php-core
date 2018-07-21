@@ -19,6 +19,11 @@ use Psr\Http\Message\RequestInterface;
 
 final class GuzzleHttpClient implements HttpClientInterface
 {
+    /**
+     * @var ClientInterface
+     */
+    private $client;
+
     public function __construct(ClientInterface $client = null)
     {
         $this->client = $client ?: new Client([

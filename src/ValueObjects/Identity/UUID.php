@@ -54,7 +54,8 @@ class UUID extends StringLiteral
             $uuid_str = $value;
         }
 
-        $this->value = \strval($uuid_str);
+        $value = \strval($uuid_str);
+        parent::__construct($value);
     }
 
     /**
