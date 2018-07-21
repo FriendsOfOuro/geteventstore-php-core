@@ -62,7 +62,7 @@ final class GuzzleHttpClient implements HttpClientInterface
         return new self($client);
     }
 
-    public function sendRequestBatch(array $requests)
+    public function sendRequestBatch(array $requests): array
     {
         $responses = Pool::batch(
             $this->client,
@@ -78,7 +78,7 @@ final class GuzzleHttpClient implements HttpClientInterface
         return $responses;
     }
 
-    public function send(RequestInterface $request)
+    public function sendRequest(RequestInterface $request)
     {
         try {
             return $this->client->send($request);

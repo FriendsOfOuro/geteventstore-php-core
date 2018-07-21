@@ -322,7 +322,7 @@ final class EventStore implements EventStoreInterface
     private function sendRequest(RequestInterface $request)
     {
         try {
-            $this->lastResponse = $this->httpClient->send($request);
+            $this->lastResponse = $this->httpClient->sendRequest($request);
         } catch (ClientException $e) {
             $this->lastResponse = $e->getResponse();
         }

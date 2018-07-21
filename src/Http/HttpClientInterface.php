@@ -1,15 +1,9 @@
 <?php
 namespace EventStore\Http;
 
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
+use Http\Client\HttpClient;
 
-interface HttpClientInterface
+interface HttpClientInterface extends HttpClient
 {
-    /**
-     * @param RequestInterface $request
-     *
-     * @return ResponseInterface
-     */
-    public function send(RequestInterface $request);
+    public function sendRequestBatch(array $requests): array;
 }
