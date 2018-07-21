@@ -17,7 +17,7 @@ class UUID extends StringLiteral
      *
      * @return UUID
      *
-     * @throws \ValueObjects\Exception\InvalidNativeArgumentException
+     * @throws InvalidNativeArgumentException
      */
     public static function fromNative()
     {
