@@ -213,21 +213,24 @@ final class EventStore implements EventStoreInterface
      *
      * @throws Exception\WrongExpectedVersionException
      */
-    public function writeToStream($streamName, WritableToStream $events, $expectedVersion = ExpectedVersion::ANY)
+    public function writeToStream($streamName, WritableToStream $events, $expectedVersion = ExpectedVersion::ANY, array $additionalHeaders = [])
     {
         if ($events instanceof WritableEvent) {
             $events = new WritableEventCollection([$events]);
         }
 
         $streamUrl = $this->getStreamUrl($streamName);
+        $headers = [
+                'ES-ExpectedVersion' => intval($expectedVersion),
+                'Content-Type'       => 'application/vnd.eventstore.events+json',
+                'Content-Length'     => 0,
+        ];
 
+        $headers = $additionalHeaders + $headers;
         $request = new Request(
             'POST',
             $streamUrl,
-            [
-                'ES-ExpectedVersion' => intval($expectedVersion),
-                'Content-Type' => 'application/vnd.eventstore.events+json',
-            ],
+            $headers,
             json_encode($events->toStreamData())
         );
 
