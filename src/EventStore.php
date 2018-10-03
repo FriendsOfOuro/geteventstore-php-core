@@ -227,6 +227,7 @@ final class EventStore implements EventStoreInterface
             [
                 'ES-ExpectedVersion' => intval($expectedVersion),
                 'Content-Type' => 'application/vnd.eventstore.events+json',
+                'Content-Length' => 0,
             ],
             json_encode($events->toStreamData())
         );
