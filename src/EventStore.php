@@ -203,15 +203,7 @@ final class EventStore implements EventStoreInterface
     }
 
     /**
-     * Writes one or more events to a stream.
-     *
-     * @param string           $streamName      The stream name
-     * @param WritableToStream $events          Single event or a collection of events
-     * @param int              $expectedVersion The expected version of the stream
-     *
-     * @return int|bool Either the created version or false otherwise
-     *
-     * @throws Exception\WrongExpectedVersionException
+     * {@inheritdoc}
      */
     public function writeToStream($streamName, WritableToStream $events, $expectedVersion = ExpectedVersion::ANY, array $additionalHeaders = [])
     {

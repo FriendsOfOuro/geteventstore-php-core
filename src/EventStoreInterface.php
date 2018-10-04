@@ -33,13 +33,14 @@ interface EventStoreInterface
     /**
      * Write one or more events to a stream.
      *
-     * @param string           $streamName      The stream name
-     * @param WritableToStream $events          Single event or a collection of events
-     * @param int              $expectedVersion The expected version of the stream
+     * @param string           $streamName        The stream name
+     * @param WritableToStream $events            Single event or a collection of events
+     * @param int              $expectedVersion   The expected version of the stream
+     * @param array            $additionalHeaders Additional HTTP headers
      *
      * @throws Exception\WrongExpectedVersionException
      */
-    public function writeToStream($streamName, WritableToStream $events, $expectedVersion = ExpectedVersion::ANY);
+    public function writeToStream($streamName, WritableToStream $events, $expectedVersion = ExpectedVersion::ANY, array $additionalHeaders);
 
     /**
      * Read a single event.
