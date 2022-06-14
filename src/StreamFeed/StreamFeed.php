@@ -19,17 +19,25 @@ final class StreamFeed
     private $entryEmbedMode;
 
     /**
-     * @param array          $jsonFeed
+     * @var array
+     */
+    private $credentials;
+
+    /**
      * @param EntryEmbedMode $embedMode
      */
-    public function __construct(array $jsonFeed, EntryEmbedMode $embedMode = null)
-    {
+    public function __construct(
+        array $jsonFeed,
+        EntryEmbedMode $embedMode = null,
+        array $credentials = ['user' => null, 'pass' => null]
+    ) {
         if (null === $embedMode) {
             $embedMode = EntryEmbedMode::NONE();
         }
 
         $this->entryEmbedMode = $embedMode;
         $this->json = $jsonFeed;
+        $this->credentials = $credentials;
     }
 
     /**
@@ -39,7 +47,7 @@ final class StreamFeed
     {
         return array_map(
             function (array $jsonEntry) {
-                return new Entry($jsonEntry);
+                return new Entry($jsonEntry, $this->credentials);
             },
             $this->json['entries']
         );
@@ -67,5 +75,13 @@ final class StreamFeed
     protected function getLinks()
     {
         return $this->json['links'];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCredentials()
+    {
+        return $this->credentials;
     }
 }
