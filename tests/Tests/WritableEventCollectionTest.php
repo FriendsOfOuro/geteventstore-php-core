@@ -1,6 +1,7 @@
 <?php
 namespace EventStore\Tests;
 
+use EventStore\Exception\InvalidWritableEventObjectException;
 use EventStore\ValueObjects\Identity\UUID;
 use EventStore\WritableEvent;
 use EventStore\WritableEventCollection;
@@ -43,10 +44,10 @@ class WritableEventCollectionTest extends TestCase
 
     /**
      * @test
-     * @expectedException \EventStore\Exception\InvalidWritableEventObjectException
      */
     public function invalid_collection_throws_exception()
     {
+        $this->expectException(InvalidWritableEventObjectException::class);
         new WritableEventCollection(['foobar']);
     }
 }

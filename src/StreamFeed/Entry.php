@@ -14,19 +14,22 @@ final class Entry
     private $json;
 
     /**
-     * @param array $json
+     * @var array
      */
-    public function __construct(array $json)
+    private $credentials;
+
+    public function __construct(array $json, array $credentials)
     {
+        $this->credentials = $credentials;
         $this->json = $json;
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getEventUrl()
     {
-        $alternate = $this->getLinkUrl(LinkRelation::ALTERNATE());
+        $alternate = $this->getLinkUrl(LinkRelation::ALTERNATE(), $this->credentials);
 
         return $alternate;
     }
